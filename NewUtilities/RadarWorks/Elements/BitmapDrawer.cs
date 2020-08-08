@@ -32,7 +32,7 @@ namespace Utilities.RadarWorks
                 bmp?.Dispose();
                 imgChanged = false;
             }
-            catch(Exception e)
+            catch
             {
 
             }
