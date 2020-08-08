@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B18A0E9F-684A-43A4-82BB-FCF0D8BFBFA8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NewUtilities</RootNamespace>
+    <AssemblyName>NewUtilities</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.WindowsAPICodePack.DirectX, Version=1.1.0.0, Culture=neutral, processorArchitecture=x86">
+      <HintPath>..\packages\WindowsAPICodePack-DirectX.1.1.2\lib\Microsoft.WindowsAPICodePack.DirectX.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Remoting" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Async\TaskAsyncHelper.cs" />
+    <Compile Include="Circlation\RangedInt.cs" />
+    <Compile Include="Collections\Slide.cs" />
+    <Compile Include="Coordinates\PolarCoordinate.cs" />
+    <Compile Include="Coordinates\RectangularCoordinate.cs" />
+    <Compile Include="Extentions\DrawingExtionFuncs.cs" />
+    <Compile Include="Extentions\RandomExtionFuncs.cs" />
+    <Compile Include="Functions\Functions.cs" />
+    <Compile Include="Guard\Guard.cs" />
+    <Compile Include="InputValidation\InputValidator.cs" />
+    <Compile Include="InputValidation\TextBoxValueDoesntMatchRuleException.cs" />
+    <Compile Include="Mapper\Area.cs" />
+    <Compile Include="Mapper\IMapperDecorator.cs" />
+    <Compile Include="Mapper\IScreenToCoordinateMapper.cs" />
+    <Compile Include="Mapper\PolarRotateDecorator.cs" />
+    <Compile Include="Mapper\ScreenToCoordinateMapper.cs" />
+    <Compile Include="Mapper\SquaredScreenRectDecorator.cs" />
+    <Compile Include="Mapper\ValueMapper.cs" />
+    <Compile Include="Mapper\ZoomRectDecorator.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadarWorks\Elements\AxisX.cs" />
+    <Compile Include="RadarWorks\Elements\AxisY.cs" />
+    <Compile Include="RadarWorks\Elements\BitmapDrawer.cs" />
+    <Compile Include="RadarWorks\Elements\Button\ButtenProperties.cs" />
+    <Compile Include="RadarWorks\Elements\Button\ButtonElement.cs" />
+    <Compile Include="RadarWorks\Elements\Button\PushDownButton.cs" />
+    <Compile Include="RadarWorks\Elements\Button\ReboundButton.cs" />
+    <Compile Include="RadarWorks\Elements\Chart_Bar.cs" />
+    <Compile Include="RadarWorks\Elements\LabelElement.cs" />
+    <Compile Include="RadarWorks\Elements\LocationDisplayer\CoordinateLocation.cs" />
+    <Compile Include="RadarWorks\Elements\LocationDisplayer\CoordinateType.cs" />
+    <Compile Include="RadarWorks\Elements\LocationDisplayer\LocationDisplay.cs" />
+    <Compile Include="RadarWorks\Elements\LocationDisplayer\LocationDisplayModel.cs" />
+    <Compile Include="RadarWorks\Elements\MapElement.cs" />
+    <Compile Include="RadarWorks\Elements\MarkerElement.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\MovabaleMarkerManager.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\MovableXAxisMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\MovableYAxisMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\XAxisMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\YAxisMarker.cs" />
+    <Compile Include="RadarWorks\Elements\MouseDragger.cs" />
+    <Compile Include="RadarWorks\Elements\MouseDragger1.cs" />
+    <Compile Include="RadarWorks\Elements\NorthLine.cs" />
+    <Compile Include="RadarWorks\Elements\PpiOriginalVideoDot.cs" />
+    <Compile Include="RadarWorks\Elements\PpiRotationController.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\DistanceMarkerAnimation.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\MarkerModel.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\PolarAngleMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\PolarDistanceMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\PpiAntenna.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\PpiTarget.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController1.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateController.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector2.cs" />
+    <Compile Include="RadarWorks\Elements\RotationController.cs" />
+    <Compile Include="RadarWorks\Elements\RotationController1.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\AnalogSignalPlotter.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\DiscreteSignalPlotter.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\Plotter.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\SeriePlotter.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\SeriesProperties.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\XAxisMeasure.cs" />
+    <Compile Include="RadarWorks\Elements\Target.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\ILocatable.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\ITrack.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\IVideo.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\TrackElement.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\VideoElment.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\RectangleSelection.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\SelectStrategy.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\SquareSelection.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\XAxisSelection.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\YAxisSelection.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\ZoomAnimator.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\ZoomController.cs" />
+    <Compile Include="RadarWorks\Elements\ZoomController\ZoomController1.cs" />
+    <Compile Include="RadarWorks\framework\BitmapConverter.cs" />
+    <Compile Include="RadarWorks\framework\ButtonLayout\IButtonLayout.cs" />
+    <Compile Include="RadarWorks\framework\ButtonLayout\LeftBottomButtonLayout.cs" />
+    <Compile Include="RadarWorks\framework\ButtonLayout\LeftTopButtonLayout.cs" />
+    <Compile Include="RadarWorks\framework\ButtonLayout\RightBottomButtonLayout.cs" />
+    <Compile Include="RadarWorks\framework\ButtonLayout\RightTopButtonLayout.cs" />
+    <Compile Include="RadarWorks\framework\ButtonOrgnizer.cs" />
+    <Compile Include="RadarWorks\framework\Displayer.cs" />
+    <Compile Include="RadarWorks\framework\DisplayerGroupManager.cs" />
+    <Compile Include="RadarWorks\framework\DrawInfo.cs" />
+    <Compile Include="RadarWorks\framework\DynamicElement.cs" />
+    <Compile Include="RadarWorks\framework\ExclusiveSwitchableManager.cs" />
+    <Compile Include="RadarWorks\framework\GraphicElement.cs" />
+    <Compile Include="RadarWorks\framework\Layer.cs" />
+    <Compile Include="RadarWorks\framework\LayerManager.cs" />
+    <Compile Include="RadarWorks\framework\LiveObject.cs" />
+    <Compile Include="RadarWorks\framework\LiveObjectGroup.cs" />
+    <Compile Include="RadarWorks\framework\OriginalVideoManager.cs" />
+    <Compile Include="RadarWorks\framework\ReferenceSystem.cs" />
+    <Compile Include="RadarWorks\framework\RotatableElement.cs" />
+    <Compile Include="RadarWorks\framework\Sensor.cs" />
+    <Compile Include="RadarWorks\framework\SquaredReferenceSystem.cs" />
+    <Compile Include="RadarWorks\framework\Swtichable.cs" />
+    <Compile Include="RadarWorks\GDI.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveCircle.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveGeomitry.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveLine.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveLineGeometry.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveRect.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveRoundedRectangle.cs" />
+    <Compile Include="RadarWorks\LiveObjects\LiveSectorRing.cs" />
+    <Compile Include="RadarWorks\MouseDragDetector.cs" />
+    <Compile Include="RadarWorks\Sensors\MouseClickObjectSensor.cs" />
+    <Compile Include="RadarWorks\Sensors\MouseClickSensor1.cs" />
+    <Compile Include="RadarWorks\Sensors\MouseClickSensor2.cs" />
+    <Compile Include="RadarWorks\Sensors\MouseClickSensor3.cs" />
+    <Compile Include="RadarWorks\Sensors\MouseDoubleClickSensor.cs" />
+    <Compile Include="RadarWorks\Sensors\MouseMoveSensor.cs" />
+    <Compile Include="RadarWorks\TernaryRasterOperations.cs" />
+    <Compile Include="Rule\AndRule.cs" />
+    <Compile Include="Rule\CompositeRule.cs" />
+    <Compile Include="Rule\DoubleStrInRange.cs" />
+    <Compile Include="Rule\IntStrInRange.cs" />
+    <Compile Include="Rule\IRule.cs" />
+    <Compile Include="Rule\LetterLengthRule.cs" />
+    <Compile Include="Rule\OrRule.cs" />
+    <Compile Include="Rule\StringRule.cs" />
+    <Compile Include="Signals\AreaAnimateIterator.cs" />
+    <Compile Include="Signals\RandomPulseGenerator.cs" />
+    <Compile Include="Signals\SignalGenerator.cs" />
+    <Compile Include="Singleton\Singleton.cs" />
+    <Compile Include="Statistics\MultipleSeriesStatistics2D.cs" />
+    <Compile Include="Statistics\SingleSeriesStatistics2D.cs" />
+    <Compile Include="ValueInterval\CloseCloseInterval.cs" />
+    <Compile Include="ValueInterval\CloseOpenInterval.cs" />
+    <Compile Include="ValueInterval\MaxNotBiggerThanMin.cs" />
+    <Compile Include="ValueInterval\OpenCloseInterval.cs" />
+    <Compile Include="ValueInterval\OpenOpenInterval.cs" />
+    <Compile Include="ValueInterval\ValueInterval.cs" />
+    <Compile Include="ValueInterval\ValueNotInRange.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\Debug\NewUtilities.csprojAssemblyReference.cache" />
+    <None Include="obj\x64\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="obj\x64\Debug\NewUtilities.csproj.CopyComplete" />
+    <None Include="obj\x64\Debug\NewUtilities.csproj.CoreCompileInputs.cache" />
+    <None Include="obj\x64\Debug\NewUtilities.csprojAssemblyReference.cache" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\x64\Debug\Microsoft.WindowsAPICodePack.DirectX.dll" />
+    <Content Include="bin\x64\Debug\NewUtilities.dll" />
+    <Content Include="bin\x64\Debug\NewUtilities.pdb" />
+    <Content Include="obj\x64\Debug\NewUtilities.csproj.FileListAbsolute.txt" />
+    <Content Include="obj\x64\Debug\NewUtilities.dll" />
+    <Content Include="obj\x64\Debug\NewUtilities.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
+    <Folder Include="bin\Release\" />
+    <Folder Include="bin\x86\Debug\" />
+    <Folder Include="obj\Debug\TempPE\" />
+    <Folder Include="obj\x64\Debug\TempPE\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets" Condition="Exists('..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets'))" />
+  </Target>
+</Project>
