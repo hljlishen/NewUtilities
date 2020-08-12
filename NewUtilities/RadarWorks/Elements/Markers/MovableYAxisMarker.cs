@@ -1,11 +1,8 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
-using System;
+using NewUtilities.RadarWorks;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks.Elements.Markers
@@ -37,45 +34,23 @@ namespace Utilities.RadarWorks.Elements.Markers
         public override void SetDisplayer(Displayer d)
         {
             base.SetDisplayer(d);
-            dragDetector = new MouseDragDetector(d.Panel);
+
+            dragDetector = new ConditionalMouseDragDetector(d.Panel, IsPointNearAnyObject);
             dragDetector.Off();
-            dragDetector.MouseDown += DragDetector_MouseDown;
+            dragDetector.MouseDrag += DragDetector_MouseDrag;
         }
 
-        private void DragDetector_MouseDown(Point obj)
+        private void DragDetector_MouseDrag(Point arg1, Point arg2)
         {
-            if (IsPointNearAnyObject(obj))
-            {
-                dragDetector.MouseDrag += DragDetector_MouseDrag;
-                dragDetector.MouseDragFinish += DragDetector_MouseDragFinish;
-            }
-        }
-
-        private void DragDetector_MouseDragFinish(Point arg1, Point arg2)
-        {
-            dragDetector.MouseDrag -= DragDetector_MouseDrag;
-            dragDetector.MouseDragFinish -= DragDetector_MouseDragFinish;
-        }
-
-        private void DragDetector_MouseDrag(Point arg1, Point arg2) => Update(Mapper.GetCoordinateY(arg2.Y));
-
-        private bool IsPointNearAnyObject(Point mouseDownPoint)
-        {
-            lock (Locker)
-            {
-                foreach (var o in Objects)
-                {
-                    if (o.IsPointNear(mouseDownPoint))
-                        return true;
-                }
-                return false;
-            }
+            Update(Mapper.GetCoordinateY(arg2.Y));
         }
 
         public override void Dispose()
         {
             base.Dispose();
             dragDetector.Dispose();
+            brush.Dispose();
+            format.Dispose();
         }
 
         protected override IEnumerable<LiveObject> GetObjects()

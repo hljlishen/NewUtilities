@@ -19,6 +19,7 @@ namespace Utilities.RadarWorks
         public object Value { get; set; }
         public virtual bool Selected { get; set; } = false;
         public abstract bool IsPointNear(PointF mouseLocation);
+
         public void Draw(RenderTarget rt)
         {
             if (Selected)

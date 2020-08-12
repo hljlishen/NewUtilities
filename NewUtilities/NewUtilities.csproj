@@ -96,6 +96,7 @@
     <Compile Include="Mapper\ValueMapper.cs" />
     <Compile Include="Mapper\ZoomRectDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadarWorks\ConditionalMouseDragDetector.cs" />
     <Compile Include="RadarWorks\Elements\AxisX.cs" />
     <Compile Include="RadarWorks\Elements\AxisY.cs" />
     <Compile Include="RadarWorks\Elements\BitmapDrawer.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="RadarWorks\Elements\Markers\MovabaleMarkerManager.cs" />
     <Compile Include="RadarWorks\Elements\Markers\MovableXAxisMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\MovableYAxisMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\StadyXAxisMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\XAxisMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\YAxisMarker.cs" />
     <Compile Include="RadarWorks\Elements\MouseDragger.cs" />
@@ -139,6 +141,7 @@
     <Compile Include="RadarWorks\Elements\Signal\Plotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\SeriePlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\SeriesProperties.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\SignalMarker.cs" />
     <Compile Include="RadarWorks\Elements\Signal\XAxisMeasure.cs" />
     <Compile Include="RadarWorks\Elements\Target.cs" />
     <Compile Include="RadarWorks\Elements\Targets\ILocatable.cs" />

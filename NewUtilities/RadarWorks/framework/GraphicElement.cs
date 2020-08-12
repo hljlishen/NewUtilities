@@ -112,5 +112,18 @@ namespace Utilities.RadarWorks
             displayer.AfterRebindTarget -= Displayer_AfterRebindTarget;
             UnbindEvents(Panel);
         }
+
+        protected bool IsPointNearAnyObject(Point mouseDownPoint)
+        {
+            lock (Locker)
+            {
+                foreach (var o in Objects)
+                {
+                    if (o.IsPointNear(mouseDownPoint))
+                        return true;
+                }
+                return false;
+            }
+        }
     }
 }

@@ -16,17 +16,11 @@ namespace Utilities.Mapper
 
         internal static Area ZoomRectangle(double left, double right, double top, double bottom, double percent)
         {
-            var r = new Area();
             var zoomedWidth = Math.Abs(right - left) * percent;
             var zoomedHeight = Math.Abs(bottom - top) * percent;
             var center = new PointF((float)(right + left) / 2, (float)(bottom + top) / 2);
 
-            r.Left = center.X - zoomedWidth / 2;
-            r.Right = center.X + zoomedWidth / 2;
-            r.Top = center.Y - zoomedHeight / 2;
-            r.Bottom = center.Y + zoomedHeight / 2;
-
-            return r;
+            return new Area(center.X - zoomedWidth / 2, center.X + zoomedWidth / 2, center.Y - zoomedHeight / 2, center.Y + zoomedHeight / 2);
         }
         internal void SetScreenArea(Area a)
         {

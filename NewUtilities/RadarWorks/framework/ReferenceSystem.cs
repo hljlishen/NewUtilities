@@ -57,6 +57,11 @@ namespace Utilities.RadarWorks
                 AnimateSetArea(left, right, top, bottom);
         }
 
+        public void SetArea(Area area)
+        {
+            SetArea(area.Left, area.Right, area.Top, area.Bottom);
+        }
+
         internal void DoSetArea(double left, double right, double top, double bottom)
         {
             Left = left;

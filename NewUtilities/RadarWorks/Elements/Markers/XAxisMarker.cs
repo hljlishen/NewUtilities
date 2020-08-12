@@ -27,12 +27,13 @@ namespace Utilities.RadarWorks
 
         protected override IEnumerable<LiveObject> GetObjects()
         {
-            var step = (ReferenceSystem.Right - ReferenceSystem.Left) / Model.ObjectNumber;
+            //var step = (ReferenceSystem.Right - ReferenceSystem.Left) / Model.ObjectNumber;
+            var step = (Mapper.CoordinateRight - Mapper.CoordinateLeft) / Model.ObjectNumber;
             var yBottom = Mapper.GetScreenY(ReferenceSystem.Bottom);
             var yTop = Mapper.GetScreenY(ReferenceSystem.Top);
             for (int i = 0; i < Model.ObjectNumber + 1; i++)
             {
-                double value = ReferenceSystem.Left + step * i;
+                double value = Mapper.CoordinateLeft + step * i;
                 var x = Mapper.GetScreenX(value);
                 yield return new LiveLine(new PointF((float)x, (float)yBottom), new PointF((float)x, (float)yTop)) { Value = value };
             }
@@ -47,7 +48,7 @@ namespace Utilities.RadarWorks
         protected void DrawObjectSelected(RenderTarget rt, LiveLine l)
         {
             rt.DrawLine(l.P1.ToPoint2F(), l.P2.ToPoint2F(), selectedLineBrush, Model.SelectedLineWidth, stroke);
-            rt.DrawText(l.Value.ToString(), selectedTextFormat, new RectangleF(l.MouseLocation.X + 20, l.MouseLocation.Y, 100, 100).ToRectF(), selectedTextBrush);
+            rt.DrawText(((double)l.Value).ToString("0.00"), selectedTextFormat, new RectangleF(l.MouseLocation.X + 20, l.MouseLocation.Y, 100, 100).ToRectF(), selectedTextBrush);
         }
 
         protected override void DrawDynamicElement(RenderTarget rt)

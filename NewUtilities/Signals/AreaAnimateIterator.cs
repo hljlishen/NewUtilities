@@ -54,7 +54,7 @@ namespace Utilities.Signals
     //    }
     //}
 
-    abstract class ValueAnimator<T> where T : struct
+    abstract class ValueAnimator<T>
     {
         public T Source { get; private set; }
         public T Destny { get; private set; }

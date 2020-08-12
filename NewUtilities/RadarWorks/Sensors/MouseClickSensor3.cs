@@ -13,12 +13,15 @@ namespace Utilities.RadarWorks.Sensors
         private void Panel_MouseUp(object sender, MouseEventArgs e)
         {
             bool shouldInvoke = false;
-            foreach (var o in objects)
+            lock (locker)
             {
-                if (o.Selected)
+                foreach (var o in objects)
                 {
-                    o.Selected = false;
-                    shouldInvoke = true;
+                    if (o.Selected)
+                    {
+                        o.Selected = false;
+                        shouldInvoke = true;
+                    }
                 }
             }
             if (shouldInvoke)
@@ -28,12 +31,15 @@ namespace Utilities.RadarWorks.Sensors
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
             bool shouldInvoke = false;
-            foreach (var o in objects)
+            lock (locker)
             {
-                if (o.IsPointNear(e.Location))
+                foreach (var o in objects)
                 {
-                    o.Selected = true;
-                    shouldInvoke = true;
+                    if (o.IsPointNear(e.Location))
+                    {
+                        o.Selected = true;
+                        shouldInvoke = true;
+                    }
                 }
             }
             if (shouldInvoke)

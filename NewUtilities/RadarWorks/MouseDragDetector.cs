@@ -65,7 +65,7 @@ namespace Utilities.RadarWorks
             MouseDrag?.Invoke(mouseDownPos, mouseCurrentPos);
         }
 
-        private void Panel_MouseDown(object sender, MouseEventArgs e)
+        protected virtual void Panel_MouseDown(object sender, MouseEventArgs e)
         {
             if (!IsOn || e.Button != MouseButtons.Left)
                 return;

@@ -12,7 +12,7 @@ namespace Utilities.RadarWorks
 
         public void Lock(object ob)
         {
-            lock(Locker)
+            lock (Locker)
             {
                 if (isLocked)
                     throw new System.Exception("该Layer已经被锁定，不能执行Lock操作");
@@ -27,7 +27,7 @@ namespace Utilities.RadarWorks
             {
                 if (!isLocked)
                     return;
-                if(ReferenceEquals(owner, ob))
+                if (ReferenceEquals(owner, ob))
                 {
                     isLocked = false;
                     owner = null;
@@ -103,16 +103,16 @@ namespace Utilities.RadarWorks
 
         public void AddRange(IEnumerable<GraphicElement> es)
         {
-            lock(Locker)
+            lock (Locker)
             {
-                foreach(var e in es)
+                foreach (var e in es)
                 {
                     elements.Add(e);
                     e.LayerId = LayerId;
                     e.SetDisplayer(displayer);
                 }
-                UpdateView();
             }
+            UpdateView();   //2020-8-11将updateView移出Lock块
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace Utilities.RadarWorks
             lock (Locker)
             {
                 //清空当前图层的所有元素
-                foreach(var e in elements)
+                foreach (var e in elements)
                 {
                     e.Dispose();
                 }
@@ -137,8 +137,8 @@ namespace Utilities.RadarWorks
                     e.LayerId = LayerId;
                     e.SetDisplayer(displayer);
                 }
-                UpdateView();
             }
+            UpdateView();//2020-8-11将updateView移出Lock块
         }
 
         public void RemoveElement(GraphicElement e)
@@ -177,7 +177,7 @@ namespace Utilities.RadarWorks
             {
                 bitmapRt?.Dispose();
                 bitmapRt = rt.CreateCompatibleRenderTarget(new CompatibleRenderTargetOptions(), rt.Size);
-            }    
+            }
             //bitmapRt.Transform = rt.Transform;
             DrawLayerOnBitmap();
             DrawLayerToTarget(rt);

@@ -26,31 +26,30 @@ namespace Utilities.Mapper
             bool isXIncreasing = right > left;
             bool isYIncreaseing = top > bottom;
 
-            Area ret;
-
+            double Left = 0, Right = 0, Top = 0, Bottom = 0;
             if (isXIncreasing)
             {
-                ret.Left = center.X - width;
-                ret.Right = center.X + width;
+                Left = center.X - width;
+                Right = center.X + width;
             }
             else
             {
-                ret.Left = center.X + width;
-                ret.Right = center.X - width;
+                Left = center.X + width;
+                Right = center.X - width;
             }
 
             if (isYIncreaseing)
             {
-                ret.Top = center.Y + width;
-                ret.Bottom = center.Y - width;
+                Top = center.Y + width;
+                Bottom = center.Y - width;
             }
             else
             {
-                ret.Top = center.Y - width;
-                ret.Bottom = center.Y + width;
+                Top = center.Y - width;
+                Bottom = center.Y + width;
             }
 
-            return ret;
+            return new Area(Left, Right, Top, Bottom);
         }
     }
 }

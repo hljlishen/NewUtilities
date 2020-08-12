@@ -10,7 +10,7 @@ namespace Utilities.RadarWorks
     {
         private Brush fillBrush;
         private Brush frameBrush;
-        private Rectangle coverRect;
+        private Rectangle selectedRect;
         public MouseDragDetector dragDetector;
         public bool Animation { get; set; } = true;
         public SelectStrategy SelectStrategy { get; protected set; }
@@ -55,27 +55,27 @@ namespace Utilities.RadarWorks
 
         private void DragDetector_MouseUp(Point obj)
         {
-            if (!SelectStrategy.IsRectBigEnough(coverRect, Mapper))
+            if (!SelectStrategy.IsRectBigEnough(selectedRect, Mapper))
             {
                 UpdateView();
             }
             else
             {
-                var left = Mapper.GetCoordinateX(coverRect.Left);
-                var right = Mapper.GetCoordinateX(coverRect.Right);
-                var top = Mapper.GetCoordinateY(coverRect.Top);
-                var bottom = Mapper.GetCoordinateY(coverRect.Bottom);
+                var left = Mapper.GetCoordinateX(selectedRect.Left);
+                var right = Mapper.GetCoordinateX(selectedRect.Right);
+                var top = Mapper.GetCoordinateY(selectedRect.Top);
+                var bottom = Mapper.GetCoordinateY(selectedRect.Bottom);
                 SetMapperRange(left, right, top, bottom);
             }
 
             //此处必须清零coverRect，原因是：当鼠标只做点击不拖动时，coverRect会保留上次放缩时计算的CoverRect值，因此会通过IsRectBigEnough的校验
-            coverRect = new Rectangle(0, 0, 0, 0);
+            selectedRect = new Rectangle(0, 0, 0, 0);
             return;
         }
 
         private void DragDetector_MouseDrag(Point arg1, Point arg2)
         {
-            coverRect = SelectStrategy.CalRect(arg1, arg2);
+            selectedRect = SelectStrategy.CalRect(arg1, arg2);
             UpdateView();
         }
 
@@ -95,7 +95,7 @@ namespace Utilities.RadarWorks
 
         protected override void DrawElement(RenderTarget rt)
         {
-            SelectStrategy.DrawZoomView(coverRect.ToRectF(), rt, fillBrush, frameBrush, 2);
+            SelectStrategy.DrawZoomView(selectedRect.ToRectF(), rt, fillBrush, frameBrush, 2);
         }
 
         public void SetStrategy(SelectStrategy s)
