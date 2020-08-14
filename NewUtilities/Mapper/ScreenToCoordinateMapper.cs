@@ -5,9 +5,8 @@ namespace Utilities.Mapper
 {
     public class ScreenToCoordinateMapper : IScreenToCoordinateMapper
     {
-        private ValueMapper XAxisMapper { get;  set; } = new ValueMapper();
-        private ValueMapper YAxisMapper { get;  set; } = new ValueMapper();
-        private bool isInitializing = true;
+        private ValueMapper XAxisMapper { get; set; } = new ValueMapper();
+        private ValueMapper YAxisMapper { get; set; } = new ValueMapper();
 
         public double ScreenLeft => XAxisMapper.Value1Left;
 
@@ -33,9 +32,10 @@ namespace Utilities.Mapper
 
         public ScreenToCoordinateMapper(double screenLeft, double screenRight, double coordinateXLeft, double coordinateXRight, double screenTop, double screenBottom, double coordinateYTop, double coordinateYBottom)
         {
-            SetCoordinateArea(coordinateXLeft, coordinateXRight, coordinateYTop, coordinateYBottom);
-            SetScreenArea(screenLeft, screenRight, screenTop, screenBottom);
-            isInitializing = false;
+            XAxisMapper.SetRange1(coordinateXLeft, coordinateXRight);
+            YAxisMapper.SetRange1(coordinateYTop, coordinateYBottom);
+            XAxisMapper.SetRange2(screenLeft, screenRight);
+            YAxisMapper.SetRange2(screenTop, screenBottom);
         }
 
         public ScreenToCoordinateMapper() : this(screenLeft: 0, screenRight: 1, coordinateXLeft: 0, coordinateXRight: 1, screenTop: 1, screenBottom: 0, coordinateYTop: 1, coordinateYBottom: 0)
@@ -54,16 +54,14 @@ namespace Utilities.Mapper
         {
             XAxisMapper.SetRange1(left, right);
             YAxisMapper.SetRange1(top, bottom);
-            if (!isInitializing)
-                MapperStateChanged?.Invoke(this);
+            MapperStateChanged?.Invoke(this);
         }
 
         public void SetCoordinateArea(double left, double right, double top, double bottom)
         {
             XAxisMapper.SetRange2(left, right);
             YAxisMapper.SetRange2(top, bottom);
-            if (!isInitializing)
-                MapperStateChanged?.Invoke(this);
+            MapperStateChanged?.Invoke(this);
         }
     }
 }
