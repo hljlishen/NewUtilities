@@ -54,8 +54,10 @@ namespace NewUtilities.RadarWorks.Elements.Signal
 
         private void DragDetector_MouseDrag(Point arg1, Point arg2)
         {
-            if (!Locked)
-                Update(Mapper.GetCoordinateLocation(arg2.X, arg2.Y));
+            if (Locked)
+                return;
+
+            base.Update(base.Mapper.GetCoordinateLocation(arg2.X, arg2.Y));
         }
 
         protected override void DoUpdate(PointF t)
@@ -64,12 +66,11 @@ namespace NewUtilities.RadarWorks.Elements.Signal
                 base.DoUpdate(t);
             else
             {
-                var p = FindNearestPoint(SeriePlotter.Model, t.X);
-                base.DoUpdate(p);
+                base.DoUpdate(FindNearestPoint(SeriePlotter.Model, t.X));
             }
         }
 
-        private PointF FindNearestPoint(List<PointF> data, double x)
+        public static PointF FindNearestPoint(List<PointF> data, double x)
         {
             if (data == null || data.Count == 0)
                 return new PointF();
