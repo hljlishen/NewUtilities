@@ -121,7 +121,7 @@ namespace Utilities.RadarWorks
             {
                 var animation = new PolarAngleMarkerAnimator(this, Model.ObjectNumber, t.ObjectNumber)
                 {
-                    AnimateInterval = displayer.UpdateInterval
+                    AnimateInterval = ParentDispalyer.UpdateInterval
                 };
                 animation.StartChangeMarkerCount();
             }

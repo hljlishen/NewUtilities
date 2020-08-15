@@ -115,7 +115,7 @@ namespace Utilities.RadarWorks
 
         private void RefreshLayer(int id)
         {
-            var layer = displayer.Elements.GetLayer(id);
+            var layer = ParentDispalyer.Elements.GetLayer(id);
             layer.RefreshLayerElements(GetLayerDots(id).ToList());
         }
     }

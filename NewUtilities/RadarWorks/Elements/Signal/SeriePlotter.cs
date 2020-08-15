@@ -144,14 +144,14 @@ namespace Utilities.RadarWorks.Elements.Signal
                 Markers.Add(marker);
             }
 
-            displayer.Elements.Add(LayerId, marker);
+            ParentDispalyer.Elements.Add(LayerId, marker);
         }
 
         public void RemoveMarker()
         {
             if (Markers.Count <= 0)
                 return;
-            displayer.Elements.Remove(LayerId, Markers[0]);
+            ParentDispalyer.Elements.Remove(LayerId, Markers[0]);
             lock (markerLocker)
             {
                 Markers[0].Dispose();

@@ -28,7 +28,7 @@ namespace Utilities.RadarWorks
                 if (!layers.ContainsKey(layerId))
                 {
                     Layer layer = new Layer(layerId);
-                    layer.SetDisplayer(displayer);
+                    layer.SetDisplayer(ParentDispalyer);
                     layers[layerId] = layer;
                 }
                 layers[layerId].Add(e);
@@ -43,7 +43,7 @@ namespace Utilities.RadarWorks
                 if (layers.ContainsKey(layerId))
                     return;
                 Layer layer = new Layer(layerId);
-                layer.SetDisplayer(displayer);
+                layer.SetDisplayer(ParentDispalyer);
                 layers.Add(layerId, layer);
             }
         }
