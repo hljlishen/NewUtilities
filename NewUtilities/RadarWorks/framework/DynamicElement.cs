@@ -23,7 +23,7 @@ namespace Utilities.RadarWorks
             {
                 DoUpdate(t);
                 RefreshObjects();
-                UpdateView();
+                Redraw();
             }
         }
 

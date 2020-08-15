@@ -16,14 +16,13 @@ namespace Utilities.RadarWorks
         protected readonly object Locker = new object();
         protected Sensor sensor;
         public Control Panel => displayer.Panel;
-
         public Rectangle ScreenRect => new Rectangle((int)Mapper.ScreenLeft, (int)Mapper.ScreenTop, (int)Mapper.ScreenWidth, (int)Mapper.ScreenHeight);
         public virtual IScreenToCoordinateMapper Mapper => displayer.Mapper;
         public ReferenceSystem ReferenceSystem => displayer.ReferenceSystem;
         protected abstract void DrawElement(RenderTarget rt);
         protected virtual void InitializeComponents(RenderTarget rt) { }
         public virtual bool HasChanged() => Changed;
-        public virtual void UpdateView() => Changed = true;
+        public virtual void Redraw() => Changed = true;
         public List<LiveObject> Objects { get; protected set; } = new List<LiveObject>();
         protected bool Initialized { get; set; } = true;
 
@@ -44,8 +43,15 @@ namespace Utilities.RadarWorks
             }
         }
 
-        protected virtual void Sensor_ObjectStateChanged(Sensor obj) => UpdateView();
+        protected virtual void Sensor_ObjectStateChanged(Sensor obj) => Redraw();
 
+        /// <summary>
+        /// 重新生成LiveObject对象集合
+        /// 次函数的调用时机：
+        /// 1.Mapper状态改变时，此时保持LiveObject的选中状态
+        /// 2.DynamicElement的Update函数调用
+        /// 3.SetDisplayer时调用
+        /// </summary>
         protected virtual void RefreshObjects()
         {
             lock (Locker)
@@ -73,20 +79,41 @@ namespace Utilities.RadarWorks
             Mapper.MapperStateChanged += Mapper_MapperStateChanged;
             displayer.BeforeRebindTarget += Displayer_BeforeRebindTarget;
             displayer.AfterRebindTarget += Displayer_AfterRebindTarget;
-            BindEvents(Panel);
+            BindEvents(d.Panel);
         }
 
-        private void Displayer_AfterRebindTarget()
+        /// <summary>
+        /// Displayer更换显示控件之前每个Displayer.Elements中的元素会收到通知，主要处理绑定p的事件
+        /// </summary>
+        private void Displayer_AfterRebindTarget(Control p)
         {
-            BindEvents(Panel);
-            Initialized = true;
-            UpdateView();
+            BindEvents(p);      //更换显示控件之后需重新绑定事件
+            Initialized = true; //初始化标志置为true，下次绘制图形之前调用InitializeComponents函数，初始化绘制需要用到的对象
+            Redraw();       //重绘标志置为true，下次刷新图像时重绘该元素
         }
 
-        private void Displayer_BeforeRebindTarget() => UnbindEvents(Panel);
+        /// <summary>
+        /// Displayer更换显示控件之前每个Displayer.Elements中的元素会收到通知，主要处理解绑p中的事件
+        /// </summary>
+        /// <param name="p">更换显示控件之前的原始显示控件</param>
+        private void Displayer_BeforeRebindTarget(Control p) => UnbindEvents(p);
+
+        /// <summary>
+        /// GraphElement子类可以通过该函数订阅关注的Control事件
+        /// </summary>
+        /// <param name="p">用于显示Displayer的控件</param>
         protected virtual void BindEvents(Control p) { }
+
+        /// <summary>
+        /// GraphElement析构或Display更换显示控件时会调用该函数解绑Control事件
+        /// </summary>
+        /// <param name="p">用于显示Displayer的控件</param>
         protected virtual void UnbindEvents(Control p) { }
 
+        /// <summary>
+        /// 绘制元素
+        /// </summary>
+        /// <param name="rt">绘制元素的渲染目标</param>
         public void Draw(RenderTarget rt)
         {
             if (Initialized)
@@ -98,10 +125,14 @@ namespace Utilities.RadarWorks
             Changed = false;
         }
 
+        /// <summary>
+        /// Mapper状态发生变化时触发
+        /// </summary>
+        /// <param name="obj">Mapper引用</param>
         private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj)
         {
-            RefreshObjects();
-            UpdateView();       //mapper状态改变后需重绘视图
+            RefreshObjects();   //重新生成图形元素
+            Redraw();       //mapper状态改变后需重绘视图
         }
 
         public virtual void Dispose()
@@ -110,7 +141,7 @@ namespace Utilities.RadarWorks
             Mapper.MapperStateChanged -= Mapper_MapperStateChanged;
             displayer.BeforeRebindTarget -= Displayer_BeforeRebindTarget;
             displayer.AfterRebindTarget -= Displayer_AfterRebindTarget;
-            UnbindEvents(Panel);
+            UnbindEvents(displayer.Panel);
         }
 
         protected bool IsPointNearAnyObject(Point mouseDownPoint)

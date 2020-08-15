@@ -47,14 +47,14 @@ namespace Utilities.RadarWorks
             SelectionFinish?.Invoke(corner1, corner2);
             corner2 = new PointF();
             corner1 = new PointF();
-            UpdateView();
+            Redraw();
         }
 
         private void DragDetector_MouseDrag(Point arg1, Point arg2)
         {
             corner1 = arg1;
             corner2 = arg2;
-            UpdateView();
+            Redraw();
         }
 
         protected override void UnbindEvents(Control p)

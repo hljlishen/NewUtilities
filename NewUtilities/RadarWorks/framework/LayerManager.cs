@@ -32,7 +32,7 @@ namespace Utilities.RadarWorks
                     layers[layerId] = layer;
                 }
                 layers[layerId].Add(e);
-                UpdateView();
+                Redraw();
             }
         }
         internal Layer GetLayer(int layerId) => layers[layerId];

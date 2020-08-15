@@ -35,7 +35,7 @@ namespace Utilities.RadarWorks
         {
             isDragging = false;
             lastAngle = (Mapper as PolarRotateDecorator).RotateAngle;
-            UpdateView();
+            Redraw();
         }
 
         private void DragDetector_MouseDrag(Point arg1, Point arg2)
@@ -45,7 +45,7 @@ namespace Utilities.RadarWorks
             var angle2 = Functions.AngleToNorth(ReferenceSystem.ScreenOriginalPoint, arg2);
             var diff = (angle2 - angle1);
             (Mapper as PolarRotateDecorator).RotateAngle = lastAngle + diff;
-            UpdateView();
+            Redraw();
         }
 
         protected override void UnbindEvents(Control p)

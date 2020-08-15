@@ -32,7 +32,7 @@ namespace Utilities.RadarWorks.Elements.Signal
             if (!plotterMap.ContainsKey(serieName))
                 throw new ArgumentException($"{serieName}不存在");
             plotterMap[serieName].Update(points.ToList());
-            UpdateView();
+            Redraw();
         }
 
         public void AddSerie(SeriesProperties properties)
@@ -96,7 +96,7 @@ namespace Utilities.RadarWorks.Elements.Signal
                 foreach (var s in plotterMap.Keys)
                 {
                     var plotter = plotterMap[s];
-                    plotter.UpdateView();
+                    plotter.Redraw();
                     var btn = buttonMap[s];
                     var properties = btn.Model;
                     properties.Location = buttonLayout.NextLocation();

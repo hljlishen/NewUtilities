@@ -25,7 +25,7 @@ namespace Utilities.RadarWorks
             base.SetDisplayer(d);
         }
 
-        private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj) => UpdateView();
+        private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj) => Redraw();
 
         public override IScreenToCoordinateMapper Mapper => rotateDecorator;
 

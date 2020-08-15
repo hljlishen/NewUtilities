@@ -15,8 +15,14 @@ namespace Utilities.RadarWorks
 
         public bool SetClip { get; set; } = true;
         public Control Panel { get; private set; }
-        public event Action BeforeRebindTarget;
-        public event Action AfterRebindTarget;
+        /// <summary>
+        /// DIsplay更换显示控件之前触发，Control对象为更换之前的控件
+        /// </summary>
+        public event Action<Control> BeforeRebindTarget;
+        /// <summary>
+        /// DIsplay更换显示控件之后触发，Control对象为更换之后的控件
+        /// </summary>
+        public event Action<Control> AfterRebindTarget;
 
         public IScreenToCoordinateMapper Mapper { get; }
         private RenderTarget rt;
@@ -138,11 +144,11 @@ namespace Utilities.RadarWorks
         private void ChangePanel(Control p)
         {
             Panel.SizeChanged -= Pb_SizeChanged; //接触消息绑定
-            BeforeRebindTarget?.Invoke();
+            BeforeRebindTarget?.Invoke(Panel);
             Panel = p;
             Panel.SizeChanged += Pb_SizeChanged;//消息重新绑定
             Mapper.SetScreenArea(0, p.Size.Width, 0, p.Size.Height);
-            AfterRebindTarget?.Invoke();
+            AfterRebindTarget?.Invoke(p);
         }
 
         private void DisposeRenderTarget()

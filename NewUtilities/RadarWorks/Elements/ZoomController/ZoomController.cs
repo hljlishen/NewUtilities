@@ -57,7 +57,7 @@ namespace Utilities.RadarWorks
         {
             if (!SelectStrategy.IsRectBigEnough(selectedRect, Mapper))
             {
-                UpdateView();
+                Redraw();
             }
             else
             {
@@ -76,7 +76,7 @@ namespace Utilities.RadarWorks
         private void DragDetector_MouseDrag(Point arg1, Point arg2)
         {
             selectedRect = SelectStrategy.CalRect(arg1, arg2);
-            UpdateView();
+            Redraw();
         }
 
         private void SetMapperRange(double left, double right, double top, double bottom)

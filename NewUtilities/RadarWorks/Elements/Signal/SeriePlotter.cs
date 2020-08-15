@@ -102,7 +102,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         {
             IsOn = true;
             ShowMarkers();
-            UpdateView();
+            Redraw();
         }
 
         public void ShowMarkers()
@@ -131,7 +131,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         {
             IsOn = false;
             HideMarkers();
-            UpdateView();
+            Redraw();
         }
 
         public void AddMarker(float x = 0, bool locked = false)

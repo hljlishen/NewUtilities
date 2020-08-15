@@ -44,20 +44,20 @@ namespace Utilities.RadarWorks
         protected override void BindEvents(Control p)
         {
             base.BindEvents(p);
-            Panel.MouseMove += Panel_MouseMove;
+            p.MouseMove += Panel_MouseMove;
         }
 
         protected override void UnbindEvents(Control p)
         {
             base.UnbindEvents(p);
-            Panel.MouseMove -= Panel_MouseMove;
+            p.MouseMove -= Panel_MouseMove;
         }
 
         private void Panel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
         {
             currentScreenLcation = e.Location;
             currentCoordinateLocation = Mapper.GetCoordinateLocation(e.X, e.Y);
-            UpdateView();
+            Redraw();
         }
 
         protected override void DrawDynamicElement(RenderTarget rt)

@@ -98,7 +98,7 @@ namespace Utilities.RadarWorks
 
             e.LayerId = LayerId;
             e.SetDisplayer(displayer);
-            UpdateView();
+            Redraw();
         }
 
         public void AddRange(IEnumerable<GraphicElement> es)
@@ -112,7 +112,7 @@ namespace Utilities.RadarWorks
                     e.SetDisplayer(displayer);
                 }
             }
-            UpdateView();   //2020-8-11将updateView移出Lock块
+            Redraw();   //2020-8-11将updateView移出Lock块
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Utilities.RadarWorks
                     e.SetDisplayer(displayer);
                 }
             }
-            UpdateView();//2020-8-11将updateView移出Lock块
+            Redraw();//2020-8-11将updateView移出Lock块
         }
 
         public void RemoveElement(GraphicElement e)
@@ -148,7 +148,7 @@ namespace Utilities.RadarWorks
                 if (elements.Contains(e))
                 {
                     elements.Remove(e);
-                    UpdateView();
+                    Redraw();
                 }
             }
         }

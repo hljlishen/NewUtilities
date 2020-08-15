@@ -30,7 +30,7 @@ namespace Utilities.RadarWorks
             {
                 angleMax = value;
                 //RefreshObjects();
-                UpdateView();
+                Redraw();
             }
         }
 
@@ -172,7 +172,7 @@ namespace Utilities.RadarWorks
                 var m = marker.Model;
                 m.ObjectNumber = currentMarkerCount;
                 marker.UpdateMarkerModel(m);
-                marker.UpdateView();
+                marker.Redraw();
             } while (currentMarkerCount != targetMarkerCount);
         }
     }

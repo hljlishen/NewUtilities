@@ -25,20 +25,20 @@ namespace Utilities.RadarWorks.Elements.Signal
         {
             marker1.Off();
             marker2.Off();
-            UpdateView();
+            Redraw();
         }
 
         public void On()
         {
             marker1.On();
             marker2.On();
-            UpdateView();
+            Redraw();
         }
 
         protected override void DrawElement(RenderTarget rt)
         {
-            marker1.UpdateView();
-            marker2.UpdateView();
+            marker1.Redraw();
+            marker2.Redraw();
         }
     }
 }

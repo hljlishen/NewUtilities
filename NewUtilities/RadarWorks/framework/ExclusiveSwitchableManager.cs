@@ -36,7 +36,7 @@ namespace Utilities.RadarWorks
                 btn.Update(properties);
                 btn.Clicked += Btn_Clicked;
                 buttonMap.Add(btn, s);
-                UpdateView();
+                Redraw();
                 displayer.Elements.Add(LayerId, btn);
                 displayer.Elements.Add(LayerId, s as GraphicElement);
             }

@@ -56,7 +56,7 @@ namespace Utilities.RadarWorks
             {
                 Img = desBitmap;
                 imgChanged = true;
-                UpdateView();
+                Redraw();
             }
         }
     }

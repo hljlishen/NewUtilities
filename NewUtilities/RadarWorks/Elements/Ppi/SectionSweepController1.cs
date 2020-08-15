@@ -43,13 +43,13 @@ namespace Utilities.RadarWorks
         public void HideSection()
         {
             isStopped = true;
-            UpdateView();
+            Redraw();
         }
 
         public void ShowSection()
         {
             isStopped = false;
-            UpdateView();
+            Redraw();
         }
 
         public override void Dispose()
@@ -90,7 +90,7 @@ namespace Utilities.RadarWorks
                 isStopped = false;
 
                 Model = GetSection(arg1, arg2);
-                UpdateView();
+                Redraw();
 
             }
         }

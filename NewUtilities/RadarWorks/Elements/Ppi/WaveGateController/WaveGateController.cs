@@ -81,7 +81,7 @@ namespace Utilities.RadarWorks
                         Objects.Remove(sr);
                     }
                 }
-                UpdateView();
+                Redraw();
             }
         }
 
@@ -116,7 +116,7 @@ namespace Utilities.RadarWorks
 
                 waveGateMap.Add(ring, wgc);
 
-                UpdateView();
+                Redraw();
             }
         }
 
