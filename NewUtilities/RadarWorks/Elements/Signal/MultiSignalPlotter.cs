@@ -9,7 +9,7 @@ using Utilities.RadarWorks.Elements.Button;
 
 namespace Utilities.RadarWorks.Elements.Signal
 {
-    public class Plotter : GraphicElement
+    public class MultiSignalPlotter : GraphicElement
     {
         Dictionary<string, SeriePlotter> plotterMap = new Dictionary<string, SeriePlotter>();
         Dictionary<string, ButtonElement> buttonMap = new Dictionary<string, ButtonElement>();
@@ -20,7 +20,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         public void Lock() => isLocked = true;
         public void Unlock() => isLocked = false;
 
-        public Plotter(IButtonLayout buttonLayout)
+        public MultiSignalPlotter(IButtonLayout buttonLayout)
         {
             this.buttonLayout = buttonLayout;
         }
@@ -50,7 +50,7 @@ namespace Utilities.RadarWorks.Elements.Signal
 
             displayer.Elements.Add(++currentLayerId, plotter);
             displayer.Elements.Add(1000, button);
-            plotter.AddMarker();
+            //plotter.AddMarker();
         }
 
         private ButtenProperties MakeButtonStyle(SeriesProperties properties)
