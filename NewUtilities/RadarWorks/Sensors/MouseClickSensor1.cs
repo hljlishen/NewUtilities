@@ -4,7 +4,7 @@ namespace Utilities.RadarWorks
 {
     public class MouseClickSensor1 : Sensor
     {
-        private void Panel_MouseClick(object sender, MouseEventArgs e)
+        private void Panel_MouseClick(object sender, MouseEventArgs e)111
         {
             bool stateChanged = false;
             lock (locker)

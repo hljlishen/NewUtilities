@@ -14,9 +14,7 @@ namespace Utilities.RadarWorks
         public void InvokeObjectStateChanged() => ObjectStateChanged?.Invoke(this);
 
         protected object locker = null;
-
         public void SetLocker(object locker) => this.locker = locker ?? throw new NullReferenceException("locker为空");
-
         public virtual void SetDisplayer(Displayer d)
         {
             Displayer = d;
@@ -24,16 +22,11 @@ namespace Utilities.RadarWorks
             Displayer.AfterRebindTarget += Displayer_AfterRebindTarget;
             BindEvents(Panel);
         }
-
         private void Displayer_AfterRebindTarget(Control panel) => BindEvents(panel);
-
         protected abstract void BindEvents(Control panel);
-
         private void Displayer_BeforeRebindTarget(Control panel) => UnbindEvents(panel);
-
         protected abstract void UnbindEvents(Control panel);
         public void SetObjects(List<LiveObject> objects) => this.objects = objects;
-
         public virtual void Dispose() => UnbindEvents(Panel);
     }
 }
