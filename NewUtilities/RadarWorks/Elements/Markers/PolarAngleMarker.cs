@@ -20,7 +20,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         public string TextFont { get; set; } = "Consolas";
         public Color Color { get; set; } = Color.Green;
         public Color SelectColor { get; set; } = Color.Orange;
-        public Color TextColor { get; set; } = Color.Black;
+        public Color TextColor { get; set; } = Color.Orange;
         public float Opacity { get; set; } = 0.5f;
         protected Brush textBrush;
         protected Brush normalBrush;
@@ -50,9 +50,18 @@ namespace NewUtilities.RadarWorks.Elements.Markers
 
         protected override void DrawDynamicElement(RenderTarget rt)
         {
-            if(Selected)
+            if (Selected)
             {
                 Objects[0].DrawFrame(rt, selectBrush, 4, strokeStyle);
+                if (Sensor == null)
+                    return;
+                using (var factory = DWriteFactory.CreateFactory())
+                using (var f = factory.CreateTextFormat(TextFont, TextSize))
+                using (var l = f.FitLayout(Model.ToString("0.0")))
+                {
+                    var location = Sensor.MouseLocation;
+                    rt.DrawTextLayout(location.OffSet(-l.MaxWidth, -l.MaxHeight).ToPoint2F(), l, textBrush);
+                }
             }
             else
                 Objects[0].DrawFrame(rt, normalBrush, 2, strokeStyle);

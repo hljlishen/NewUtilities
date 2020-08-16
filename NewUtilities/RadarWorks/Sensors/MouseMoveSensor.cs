@@ -6,32 +6,22 @@ namespace Utilities.RadarWorks
     {
         private void Panel_MouseMove(object sender, MouseEventArgs e)
         {
-            lock(locker)
+            if (AnyThingSelected(e.Location))
             {
-                if (objects == null || objects.Count == 0)
-                    return;
-
-                foreach (var o in objects)
+                if (!ParentElement.Selected)
                 {
-                    if (o.IsPointNear(e.Location))
-                    {
-                        o.MouseLocation = e.Location;
-                        if (!ParentElement.Selected)
-                        {
-                            ParentElement.Selected = true;
-                            InvokeObjectStateChanged();
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if (ParentElement.Selected)
-                        {
-                            ParentElement.Selected = false;
-                            InvokeObjectStateChanged();
-                            break;
-                        }
-                    }
+                    ParentElement.Selected = true;
+                    InvokeObjectStateChanged();
+                    return;
+                }
+            }
+            else
+            {
+                if (ParentElement.Selected)
+                {
+                    ParentElement.Selected = false;
+                    InvokeObjectStateChanged();
+                    return;
                 }
             }
         }

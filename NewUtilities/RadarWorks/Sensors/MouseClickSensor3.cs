@@ -2,6 +2,9 @@
 
 namespace Utilities.RadarWorks.Sensors
 {
+    /// <summary>
+    /// 鼠标按下选中，鼠标抬起取消选中
+    /// </summary>
     public class MouseClickSensor3 : Sensor
     {
         protected override void BindEvents(Control panel)
@@ -21,18 +24,10 @@ namespace Utilities.RadarWorks.Sensors
 
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
-            lock (locker)
+            if(AnyThingSelected(e.Location))
             {
-                foreach (var o in objects)
-                {
-                    if (o.IsPointNear(e.Location))
-                    {
-                        o.MouseLocation = e.Location;
-                        ParentElement.Selected = true;
-                        InvokeObjectStateChanged();
-                        break;
-                    }
-                }
+                ParentElement.Selected = true;
+                InvokeObjectStateChanged();
             }
         }
 

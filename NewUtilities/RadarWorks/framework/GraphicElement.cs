@@ -52,23 +52,23 @@ namespace Utilities.RadarWorks
         /// </summary>
         /// <returns>LiveObject相应鼠标操作的区域</returns>
         protected virtual IEnumerable<LiveObject> GetObjects() => null;
-        public virtual Sensor Sensor
+        public Sensor Sensor
         {
             get => sensor;
             set
             {
+
                 sensor?.Dispose();
                 sensor = Guards.Guard.NullCheckAssignment(value);
-                if (ParentDispalyer != null)     //如果元素对象还没有加入Displayer，则先不调用SetParentElement
+                if (ParentDispalyer != null)     //如果元素对象还没有加入Displayer，则先不调用
                     sensor.SetParentElement(this);
                 sensor.ObjectStateChanged += Sensor_ObjectStateChanged;
             }
         }
 
-        protected virtual void Sensor_ObjectStateChanged(Sensor obj)
-        {
-            Redraw();
-        }
+        public object Tag { get; set; }
+
+        protected virtual void Sensor_ObjectStateChanged(Sensor obj) => Redraw();
 
         /// <summary>
         /// 重新生成LiveObject对象集合
@@ -97,10 +97,6 @@ namespace Utilities.RadarWorks
         /// <param name="d">显示器</param>
         public virtual void SetDisplayer(Displayer d)
         {
-            if (this.GetType() == typeof(PushDownButton))
-            {
-
-            }
             ParentDispalyer = d;
             Sensor?.SetParentElement(this);
             RefreshObjects();

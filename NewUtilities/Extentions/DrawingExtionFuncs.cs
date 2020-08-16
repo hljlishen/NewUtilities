@@ -8,6 +8,8 @@ namespace System.Drawing
     {
         public static Point2F ToPoint2F(this PointF p) => new Point2F(p.X, p.Y);
 
+        public static PointF OffSet(this PointF p, double x, double y) => new PointF(p.X + (float)x, p.Y + (float)y);
+
         public static RectF ToRectF(this Rectangle r) => new RectF(r.Left, r.Top, r.Right, r.Bottom);
 
         public static RectF ToRectF(this RectangleF r) => new RectF(r.Left, r.Top, r.Right, r.Bottom);
@@ -45,14 +47,35 @@ namespace System.Drawing
 namespace System
 {
     public static class StringExt
-    { 
+    {
         public static TextFormat MakeFormat(this string fontName, float size)
         {
-            using(var dw = DWriteFactory.CreateFactory())
+            using (var dw = DWriteFactory.CreateFactory())
             {
                 return dw.CreateTextFormat(fontName, size);
             }
         }
     }
+}
+
+namespace Microsoft.WindowsAPICodePack.DirectX.DirectWrite
+{
+    public static class Extentions
+    {
+        public static TextLayout FitLayout(this TextFormat f, string text)
+        {
+            using (var factory = DWriteFactory.CreateFactory())
+            using (var layout = factory.CreateTextLayout(text, f, 1000, 1000))
+            {
+                var metrics = layout.Metrics;
+                var size = new SizeF(metrics.Width, metrics.Height);
+                return factory.CreateTextLayout(text, f, size.Width, size.Height);
+            }
+        }
+    }
+}
+
+namespace Microsoft.WindowsAPICodePack.DirectX.Direct2D1
+{
 }
 

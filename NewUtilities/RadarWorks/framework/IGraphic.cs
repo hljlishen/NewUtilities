@@ -18,7 +18,7 @@ namespace Utilities.RadarWorks
         Rectangle ScreenRect { get; }
         bool Selected { get; set; }
         Sensor Sensor { get; set; }
-
+        object Tag { get; set; }
         void Dispose();
         void Draw(RenderTarget rt);
         bool HasChanged();

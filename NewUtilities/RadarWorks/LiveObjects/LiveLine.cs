@@ -20,6 +20,10 @@ namespace Utilities.RadarWorks
             {
                 return Math.Abs(p.X - P1.X);
             }
+            if(P1.Y == P2.Y)
+            {
+                return Math.Abs(p.Y - P1.Y);
+            }
             double lineK = (P2.Y - P1.Y) / (P2.X - P1.X);
             double lineC = (P2.X * P1.Y - P1.X * P2.Y) / (P2.X - P1.X);
             return Math.Abs(lineK * p.X - p.Y + lineC) / (Math.Sqrt(lineK * lineK + 1));
@@ -27,12 +31,19 @@ namespace Utilities.RadarWorks
 
         public override bool IsPointNear(PointF p)
         {
-            if (VerticalDistancToPointF(p) <= 8)
+            var dis = VerticalDistancToPointF(p);
+            //Console.WriteLine($"p1:{P1.X}, {P1.Y}");
+            //Console.WriteLine($"p2:{P2.X}, {P2.Y}");
+            if (dis <= 8)
             {
                 var foot = GetFootOfPerpendicular(p);
                 if (foot.X >= Math.Min(P1.X, P2.X) && foot.X <= Math.Max(P1.X, P2.X) && foot.Y >= Math.Min(P1.Y, P2.Y) && foot.Y <= Math.Max(P1.Y, P2.Y))
+                {
+                    //Console.WriteLine($"Line:True");
                     return true;
+                }
             }
+            //Console.WriteLine("Line:False");
             return false;
         }
 

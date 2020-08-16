@@ -32,13 +32,14 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         {
             if (!Selected)
             {
-                Objects[1].DrawFrame(rt, normalBrush, 1, strokeStyle);
-                Objects[0].DrawFrame(rt, normalBrush, 1);
+                Objects[1].DrawFrame(rt, normalBrush, 2, strokeStyle);
+                Objects[0].DrawFrame(rt, normalBrush, 2);
             }
             else
             {
-                Objects[1].DrawFrame(rt, selectBrush, 2, strokeStyle);
-                Objects[0].DrawFrame(rt, selectBrush, 2);
+                Objects[1].DrawFrame(rt, selectBrush, 4, strokeStyle);
+                Objects[0].DrawFrame(rt, selectBrush, 4);
+                DrawSelectText(rt);
             }
             Objects[0].Fill(rt, rectFillBrush);
             rt.DrawTextLayout((Objects[0] as LiveRect).Rectangle.Location.ToPoint2F(), textLayout, textBrush);
@@ -53,14 +54,11 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             using (var f = DWriteFactory.CreateFactory())
             using (var format = f.CreateTextFormat(TextFont, TextSize))
             {
-                textLayout = f.CreateTextLayout(Model.ToString("0.00"), format, 100, 100);
-                textLayout.TextAlignment = TextAlignment.Center;
-                var metics = textLayout.Metrics;
-                var rect = new RectangleF((float)xRight - metics.Width, (float)y - metics.Height / 2, metics.Width, metics.Height);
-                textLayout.Dispose();
-                textLayout = f.CreateTextLayout(Model.ToString("0.00"), format, metics.Width, metics.Height);
+                textLayout?.Dispose();
+                textLayout = format.FitLayout(Model.ToString("0.00"));
+                var rect = new RectangleF((float)xRight - textLayout.MaxWidth, (float)y - textLayout.MaxHeight / 2, textLayout.MaxWidth, textLayout.MaxHeight);
                 yield return new LiveRect(rect);
-                yield return new LiveLine(new PointF((float)xLeft, (float)y), new PointF((float)xRight - metics.Width, (float)y));
+                yield return new LiveLine(new PointF((float)xLeft, (float)y), new PointF((float)xRight - textLayout.MaxWidth, (float)y));
             }
         }
     }

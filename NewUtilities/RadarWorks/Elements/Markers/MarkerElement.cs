@@ -10,7 +10,6 @@ namespace NewUtilities.RadarWorks.Elements.Markers
     {
         public abstract double MinValue { get; }
         public abstract double MaxValue { get; }
-        public int TextHeight { get; set; } = 20;
         public float TextSize { get; set; } = 12;
         public string TextFont { get; set; } = "Consolas";
         public Color Color { get; set; } = Color.Green;
@@ -41,6 +40,17 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             selectBrush?.Dispose();
             strokeStyle?.Dispose();
             textLayout?.Dispose();
+        }
+
+        protected void DrawSelectText(RenderTarget rt)
+        {
+            using (var factory = DWriteFactory.CreateFactory())
+            using (var f = factory.CreateTextFormat(TextFont, TextSize))
+            using (var l = f.FitLayout(Model.ToString("0.0")))
+            {
+                var location = sensor.MouseLocation;
+                rt.DrawTextLayout(location.OffSet(-l.MaxWidth, -l.MaxHeight).ToPoint2F(), l, selectBrush);
+            }
         }
     }
 }

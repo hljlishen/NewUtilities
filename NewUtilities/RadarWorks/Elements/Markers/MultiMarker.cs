@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
 using Utilities.RadarWorks;
+using Utilities.RadarWorks.Sensors;
 
 namespace NewUtilities.RadarWorks.Elements.Markers
 {
@@ -8,14 +9,20 @@ namespace NewUtilities.RadarWorks.Elements.Markers
     {
         private int markerCount;
         private List<T> markers = new List<T>();
+
+        public float TextSize { get; private set; }
+        public string TextFont { get; private set; }
+
         public MarkerIteratorType IteratorType { get; set; } = MarkerIteratorType.NoLeftOrRight;
 
-        public MultiMarker(int markerCount)
+        public MultiMarker(int markerCount, float textSize = 12, string textFont = "Consolas")
         {
             this.markerCount = markerCount;
+            TextSize = textSize;
+            TextFont = textFont;
             for (int i = 0; i < markerCount; i++)
             {
-                markers.Add(new T() { Sensor = new MouseMoveSensor() });
+                markers.Add(new T() { Sensor = new MouseClickSensor3(), TextFont = TextFont, TextSize = TextSize });
             }
         }
 

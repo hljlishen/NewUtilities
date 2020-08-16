@@ -2,24 +2,17 @@
 
 namespace Utilities.RadarWorks
 {
+    /// <summary>
+    /// 鼠标第一次点击目标选中，第二次点击目标取消选中
+    /// </summary>
     public class MouseClickSensor1 : Sensor
     {
         private void Panel_MouseClick(object sender, MouseEventArgs e)
         {
-            lock (locker)
+            if (AnyThingSelected(e.Location))
             {
-                if (objects == null || objects.Count == 0)
-                    return;
-
-                foreach (var o in objects)
-                {
-                    if (o.IsPointNear(e.Location))
-                    {
-                        o.MouseLocation = e.Location;
-                        ParentElement.Selected = !ParentElement.Selected;
-                        InvokeObjectStateChanged();
-                    }
-                }
+                ParentElement.Selected = !ParentElement.Selected;
+                InvokeObjectStateChanged();
             }
         }
 

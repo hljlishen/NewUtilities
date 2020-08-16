@@ -178,11 +178,10 @@ namespace Utilities.RadarWorks
                 bitmapRt?.Dispose();
                 bitmapRt = rt.CreateCompatibleRenderTarget(new CompatibleRenderTargetOptions(), rt.Size);
             }
-            //bitmapRt.Transform = rt.Transform;
             DrawLayerOnBitmap();
             DrawLayerToTarget(rt);
             return;
         }
-        protected override IEnumerable<LiveObject> GetObjects() => null;
+        //protected override IEnumerable<LiveObject> GetObjects() => null;
     }
 }

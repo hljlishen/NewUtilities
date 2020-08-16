@@ -21,6 +21,9 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             else
             {
                 Objects[0].DrawFrame(rt, selectBrush, 4);
+                if (sensor == null)
+                    return;
+                DrawSelectText(rt);
             }
         }
 

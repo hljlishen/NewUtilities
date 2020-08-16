@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Utilities.RadarWorks;
@@ -30,15 +31,17 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         }
         protected override void DrawDynamicElement(RenderTarget rt)
         {
+            //Console.WriteLine(Selected);
             if (!Selected)
             {
-                Objects[1].DrawFrame(rt, normalBrush, 1, strokeStyle);
-                Objects[0].DrawFrame(rt, normalBrush, 1);
+                Objects[1].DrawFrame(rt, normalBrush, 2, strokeStyle);
+                Objects[0].DrawFrame(rt, normalBrush, 2);
             }
             else
             {
-                Objects[1].DrawFrame(rt, selectBrush, 2, strokeStyle);
-                Objects[0].DrawFrame(rt, selectBrush, 2);
+                Objects[1].DrawFrame(rt, selectBrush, 4, strokeStyle);
+                Objects[0].DrawFrame(rt, selectBrush, 4);
+                DrawSelectText(rt);
             }
             Objects[0].Fill(rt, rectFillBrush);
             rt.DrawTextLayout((Objects[0] as LiveRect).Rectangle.Location.ToPoint2F(), textLayout, textBrush);
@@ -53,12 +56,9 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             using (var f = DWriteFactory.CreateFactory())
             using (var format = f.CreateTextFormat(TextFont, TextSize))
             {
-                textLayout = f.CreateTextLayout(Model.ToString("0.00"), format, 100, 100);
-                textLayout.TextAlignment = TextAlignment.Center;
-                var metics = textLayout.Metrics;
-                var rect = new RectangleF((float)x - metics.Width / 2, (float)yBottom - metics.Height, metics.Width, metics.Height);
-                textLayout.Dispose();
-                textLayout = f.CreateTextLayout(Model.ToString("0.00"), format, metics.Width, metics.Height);
+                textLayout?.Dispose();
+                textLayout = format.FitLayout(Model.ToString("0.00"));
+                var rect = new RectangleF((float)x - textLayout.MaxWidth / 2, (float)yBottom - textLayout.MaxHeight, textLayout.MaxWidth, textLayout.MaxHeight);
                 yield return new LiveRect(rect);
                 yield return new LiveLine(new PointF((float)x, (float)yBottom - rect.Height), new PointF((float)x, (float)yTop));
             }

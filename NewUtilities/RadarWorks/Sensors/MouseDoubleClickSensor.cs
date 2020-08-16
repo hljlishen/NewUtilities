@@ -20,7 +20,7 @@ namespace Utilities.RadarWorks
                 {
                     if (o.IsPointNear(e.Location))
                     {
-                        o.MouseLocation = e.Location;
+                        MouseLocation = e.Location;
                         if (!ParentElement.Selected)
                         {
                             ParentElement.Selected = true;

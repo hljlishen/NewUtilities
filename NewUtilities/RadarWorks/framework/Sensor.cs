@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Utilities.RadarWorks
@@ -35,5 +36,24 @@ namespace Utilities.RadarWorks
         private void Displayer_BeforeRebindTarget(Control panel) => UnbindEvents(panel);
         protected abstract void UnbindEvents(Control panel);
         public virtual void Dispose() => UnbindEvents(Panel);
+        public PointF MouseLocation { get; protected set; }
+
+        protected bool AnyThingSelected(Point mouseLocation)
+        {
+            lock(locker)
+            {
+                if (objects == null || objects.Count == 0)
+                    return false;
+                foreach (var o in objects)
+                {
+                    if (o.IsPointNear(mouseLocation))
+                    {
+                        MouseLocation = mouseLocation;
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
 }

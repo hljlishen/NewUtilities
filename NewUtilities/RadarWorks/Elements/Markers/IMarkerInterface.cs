@@ -12,9 +12,6 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         Color SelectColor { get; set; }
         Color TextColor { get; set; }
         string TextFont { get; set; }
-        int TextHeight { get; set; }
         float TextSize { get; set; }
-
-        void Dispose();
     }
 }
