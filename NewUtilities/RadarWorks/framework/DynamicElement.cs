@@ -2,9 +2,9 @@
 
 namespace Utilities.RadarWorks
 {
-    public abstract class DynamicElement<T> : GraphicElement
+    public abstract class DynamicElement<T> : GraphicElement, IDynamicElement<T>
     {
-        public T Model = default;
+        public T Model { get; set; } = default;
         protected override void DrawElement(RenderTarget rt)
         {
             lock (Locker)

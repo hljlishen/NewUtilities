@@ -26,7 +26,9 @@ namespace Utilities.RadarWorks
         }
         public PpiOriginalVideoDot(PolarCoordinate location, double am = 0)
         {
-            Model.Location = location;
+            var m = Model;
+            m.Location = location;
+            Model = m;
         }
 
         public override void SetDisplayer(Displayer d)

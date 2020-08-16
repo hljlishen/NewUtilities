@@ -4,12 +4,13 @@ using Utilities.RadarWorks;
 
 namespace NewUtilities.RadarWorks.Elements.Markers
 {
-    public class MultiVerticalMarker<T> : GraphicElement where T : MarkerElement, new()
+    public class MultiMarker<T> : GraphicElement where T : IMarkerInterface, new()
     {
         private int markerCount;
         private List<T> markers = new List<T>();
+        public MarkerIteratorType IteratorType { get; set; } = MarkerIteratorType.NoLeftOrRight;
 
-        public MultiVerticalMarker(int markerCount)
+        public MultiMarker(int markerCount)
         {
             this.markerCount = markerCount;
             for (int i = 0; i < markerCount; i++)
@@ -29,16 +30,11 @@ namespace NewUtilities.RadarWorks.Elements.Markers
 
         protected override void DrawElement(RenderTarget rt)
         {
-            if (markerCount == 0)
-                return;
-            var min = markers[0].MinValue;
-            var max = markers[0].MaxValue;
-            var step = (max - min) / (markerCount + 1);    //此处markerCount+1，表示不显示信号视图范围最左边和最右边的两条线
+            var iterator = MarkerModelIterator.GetIterator(IteratorType, markers[0].MinValue, markers[0].MaxValue, markerCount);
 
-            for (int i = 1; i < markerCount +1; i++)
+            foreach (var m in markers)
             {
-                double value = min + step * i;
-                markers[i - 1].Update(value);
+                m.Update(iterator.Next());
             }
         }
 

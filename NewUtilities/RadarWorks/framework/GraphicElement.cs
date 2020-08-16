@@ -9,7 +9,7 @@ using Utilities.RadarWorks.Elements.Button;
 
 namespace Utilities.RadarWorks
 {
-    public abstract class GraphicElement : IDisposable
+    public abstract class GraphicElement : IDisposable, IGraphic
     {
         /// <summary>
         /// 目标所属的图层的Id
@@ -59,7 +59,7 @@ namespace Utilities.RadarWorks
             {
                 sensor?.Dispose();
                 sensor = Guards.Guard.NullCheckAssignment(value);
-                if(ParentDispalyer != null)     //如果元素对象还没有加入Displayer，则先不调用SetParentElement
+                if (ParentDispalyer != null)     //如果元素对象还没有加入Displayer，则先不调用SetParentElement
                     sensor.SetParentElement(this);
                 sensor.ObjectStateChanged += Sensor_ObjectStateChanged;
             }
@@ -81,7 +81,7 @@ namespace Utilities.RadarWorks
         {
             lock (Locker)
             {
-                if(Objects != null)
+                if (Objects != null)
                 {
                     foreach (var ob in Objects)
                         ob?.Dispose();
@@ -97,7 +97,7 @@ namespace Utilities.RadarWorks
         /// <param name="d">显示器</param>
         public virtual void SetDisplayer(Displayer d)
         {
-            if(this.GetType() == typeof(PushDownButton))
+            if (this.GetType() == typeof(PushDownButton))
             {
 
             }

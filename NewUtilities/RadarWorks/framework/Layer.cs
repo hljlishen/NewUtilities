@@ -5,7 +5,7 @@ namespace Utilities.RadarWorks
 {
     public class Layer : GraphicElement
     {
-        public List<GraphicElement> elements = new List<GraphicElement>();
+        public List<IGraphic> elements = new List<IGraphic>();
         protected BitmapRenderTarget bitmapRt;
         private bool isLocked = false;
         private object owner = null;
@@ -87,7 +87,7 @@ namespace Utilities.RadarWorks
             return false;
         }
 
-        public void Add(GraphicElement e)
+        public void Add(IGraphic e)
         {
             lock (Locker)
             {
@@ -101,7 +101,7 @@ namespace Utilities.RadarWorks
             Redraw();
         }
 
-        public void AddRange(IEnumerable<GraphicElement> es)
+        public void AddRange(IEnumerable<IGraphic> es)
         {
             lock (Locker)
             {
@@ -119,7 +119,7 @@ namespace Utilities.RadarWorks
         /// 将图层中的所有元素替换为参数中的新元素
         /// </summary>
         /// <param name="es">要显示在图层中的元素</param>
-        public void RefreshLayerElements(IEnumerable<GraphicElement> es)
+        public void RefreshLayerElements(IEnumerable<IGraphic> es)
         {
             lock (Locker)
             {
@@ -141,7 +141,7 @@ namespace Utilities.RadarWorks
             Redraw();//2020-8-11将updateView移出Lock块
         }
 
-        public void RemoveElement(GraphicElement e)
+        public void RemoveElement(IGraphic e)
         {
             lock (Locker)
             {

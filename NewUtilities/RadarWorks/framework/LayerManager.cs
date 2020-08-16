@@ -21,7 +21,7 @@ namespace Utilities.RadarWorks
             }
         }
 
-        public void Add(int layerId, GraphicElement e)
+        public void Add(int layerId, IGraphic e)
         {
             lock(Locker)
             {
@@ -75,6 +75,6 @@ namespace Utilities.RadarWorks
 
         protected override IEnumerable<LiveObject> GetObjects() => null;
 
-        public void Remove(int layerId, GraphicElement e) => layers[layerId].RemoveElement(e);
+        public void Remove(int layerId, IGraphic e) => layers[layerId].RemoveElement(e);
     }
 }

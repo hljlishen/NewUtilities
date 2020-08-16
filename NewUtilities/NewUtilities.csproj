@@ -113,11 +113,15 @@
     <Compile Include="RadarWorks\Elements\MapElement.cs" />
     <Compile Include="RadarWorks\Elements\MapperFrame.cs" />
     <Compile Include="RadarWorks\Elements\Markers\HorizontalValueMaker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\IMarkerInterface.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\IMarkerModelIterator.cs" />
     <Compile Include="RadarWorks\Elements\Markers\MarkerElement.cs" />
     <Compile Include="RadarWorks\Elements\Markers\MovabaleMarkerManager.cs" />
     <Compile Include="RadarWorks\Elements\Markers\MovableXAxisMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\MovableYAxisMarker.cs" />
-    <Compile Include="RadarWorks\Elements\Markers\MultiVerticalMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\MultiMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\PolarAngleMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\PolarDistanceMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\VerticalValueMarker.cs" />
     <Compile Include="RadarWorks\Elements\MouseDragger.cs" />
     <Compile Include="RadarWorks\Elements\MouseDragger1.cs" />
@@ -126,8 +130,6 @@
     <Compile Include="RadarWorks\Elements\PpiRotationController.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\DistanceMarkerAnimation.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\MarkerModel.cs" />
-    <Compile Include="RadarWorks\Elements\Ppi\PolarAngleMarker.cs" />
-    <Compile Include="RadarWorks\Elements\Ppi\PolarDistanceMarker.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\PpiAntenna.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\PpiTarget.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController.cs" />
@@ -170,6 +172,8 @@
     <Compile Include="RadarWorks\framework\DynamicElement.cs" />
     <Compile Include="RadarWorks\framework\ExclusiveSwitchableManager.cs" />
     <Compile Include="RadarWorks\framework\GraphicElement.cs" />
+    <Compile Include="RadarWorks\framework\IDynamicElement.cs" />
+    <Compile Include="RadarWorks\framework\IGraphic.cs" />
     <Compile Include="RadarWorks\framework\Layer.cs" />
     <Compile Include="RadarWorks\framework\LayerManager.cs" />
     <Compile Include="RadarWorks\framework\LiveObject.cs" />
