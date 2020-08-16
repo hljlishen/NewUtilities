@@ -4,22 +4,22 @@ using System.Windows.Forms;
 
 namespace Utilities.RadarWorks
 {
+    /// <summary>
+    /// Sensor对象负责改变ParentElement的Selected属性
+    /// </summary>
     public abstract class Sensor : IDisposable
     {
         public Displayer Displayer => ParentElement?.ParentDispalyer;
-        public List<LiveObject> objects => ParentElement.Objects;
+        protected List<LiveObject> objects => ParentElement.Objects;
         public Control Panel => Displayer.Panel;
 
         public event Action<Sensor> ObjectStateChanged;
         public GraphicElement ParentElement { get; set; } = null;
         public void InvokeObjectStateChanged() => ObjectStateChanged?.Invoke(this);
 
-        //protected object locker = null;
-        //public void SetLocker(object locker) => this.locker = locker ?? throw new NullReferenceException("locker为空");
         protected object locker => ParentElement.Locker;
         private void SetDisplayer(Displayer d)
         {
-            //Displayer = d;
             d.BeforeRebindTarget += Displayer_BeforeRebindTarget;
             d.AfterRebindTarget += Displayer_AfterRebindTarget;
             BindEvents(d.Panel);
@@ -34,7 +34,6 @@ namespace Utilities.RadarWorks
         protected abstract void BindEvents(Control panel);
         private void Displayer_BeforeRebindTarget(Control panel) => UnbindEvents(panel);
         protected abstract void UnbindEvents(Control panel);
-        //public void SetObjects(List<LiveObject> objects) => this.objects = objects;
         public virtual void Dispose() => UnbindEvents(Panel);
     }
 }

@@ -50,7 +50,7 @@ namespace Utilities.RadarWorks.Elements.Signal
 
             ParentDispalyer.Elements.Add(++currentLayerId, plotter);
             ParentDispalyer.Elements.Add(1000, button);
-            //plotter.AddMarker();
+            plotter.AddMarker();
         }
 
         private ButtenProperties MakeButtonStyle(SeriesProperties properties)

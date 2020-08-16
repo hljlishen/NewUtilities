@@ -15,5 +15,10 @@ namespace Utilities.RadarWorks
         {
             return rt.Factory.CreateRoundedRectangleGeometry(RoundedRect);
         }
+
+        public override void DrawFrame(RenderTarget rt, Brush frameBrush, float strokeWidth)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

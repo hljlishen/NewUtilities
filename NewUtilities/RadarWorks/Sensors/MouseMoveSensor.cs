@@ -16,18 +16,20 @@ namespace Utilities.RadarWorks
                     if (o.IsPointNear(e.Location))
                     {
                         o.MouseLocation = e.Location;
-                        if (!o.Selected)
+                        if (!ParentElement.Selected)
                         {
-                            o.Selected = true;
+                            ParentElement.Selected = true;
                             InvokeObjectStateChanged();
+                            break;
                         }
                     }
                     else
                     {
-                        if (o.Selected)
+                        if (ParentElement.Selected)
                         {
-                            o.Selected = false;
+                            ParentElement.Selected = false;
                             InvokeObjectStateChanged();
+                            break;
                         }
                     }
                 }

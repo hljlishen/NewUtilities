@@ -12,7 +12,6 @@ namespace Utilities.RadarWorks
         {
             P1 = p1;
             P2 = p2;
-            Selected = false;
         }
 
         public double VerticalDistancToPointF(PointF p)
@@ -76,6 +75,11 @@ namespace Utilities.RadarWorks
         public override void Fill(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush fillBrush)
         {
             rt.DrawLine(P1.ToPoint2F(), P2.ToPoint2F(), fillBrush, 1);
+        }
+
+        public override void DrawFrame(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush frameBrush, float strokeWidth)
+        {
+            rt.DrawLine(P1.ToPoint2F(), P2.ToPoint2F(), frameBrush, strokeWidth);
         }
     }
 }

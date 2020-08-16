@@ -6,7 +6,6 @@ namespace Utilities.RadarWorks
     {
         private void Panel_MouseClick(object sender, MouseEventArgs e)
         {
-            bool stateChanged = false;
             lock (locker)
             {
                 if (objects == null || objects.Count == 0)
@@ -17,13 +16,11 @@ namespace Utilities.RadarWorks
                     if (o.IsPointNear(e.Location))
                     {
                         o.MouseLocation = e.Location;
-                        o.Selected = !o.Selected;
-                        stateChanged = true;
+                        ParentElement.Selected = !ParentElement.Selected;
+                        InvokeObjectStateChanged();
                     }
                 }
             }
-            if (stateChanged)
-                InvokeObjectStateChanged();
         }
 
         protected override void BindEvents(Control panel) => panel.MouseClick += Panel_MouseClick;

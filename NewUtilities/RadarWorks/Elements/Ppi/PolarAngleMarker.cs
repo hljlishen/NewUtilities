@@ -106,7 +106,7 @@ namespace Utilities.RadarWorks
             foreach (var o in Objects)
             {
                 var l = o as LiveLine;
-                if (l.Selected)
+                if (Selected)
                     DrawObjectSelected(rt, l);
                 else
                     DrawObjectUnselected(rt, l);

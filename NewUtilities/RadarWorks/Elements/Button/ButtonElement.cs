@@ -17,16 +17,10 @@ namespace Utilities.RadarWorks
         protected Brush ForeTextBrush;
         protected TextFormat SelectedTextFormat;
         protected Brush SelectedTextBrush;
-        private bool IsSelected;
         private PointF center;
         private TextLayout layout;
         private Point2F textLocation;
 
-        public bool Selected
-        {
-            get => Objects[0].Selected;
-            set => Objects[0].Selected = value;
-        }
 
         public ButtonElement(ButtenProperties buttenProperties, Sensor sensor)
         {
@@ -81,7 +75,6 @@ namespace Utilities.RadarWorks
             rt.DrawRectangle(o.Rectangle.ToRectF(), SelectedFrameBrush, Model.FrameWidth);
             rt.FillRectangle(o.Rectangle.ToRectF(), SelectedFillBrush);
             rt.DrawTextLayout(textLocation, layout, SelectedTextBrush);
-            IsSelected = true;
         }
 
         protected void DrawObjectUnselected(RenderTarget rt, LiveRect o)
@@ -90,20 +83,17 @@ namespace Utilities.RadarWorks
             rt.DrawRectangle(o.Rectangle.ToRectF(), ForeFrameBrush, Model.FrameWidth);
             rt.FillRectangle(o.Rectangle.ToRectF(), ForeFillBrush);
             rt.DrawTextLayout(textLocation, layout, ForeTextBrush);
-            IsSelected = false;
         }
 
         protected override IEnumerable<LiveObject> GetObjects()
         {
             LiveRect r = new LiveRect(new Rectangle(Model.Location, Model.ForeSize));
 
-            r.Selected = IsSelected;
             yield return r;
         }
         protected override void Sensor_ObjectStateChanged(Sensor obj)
         {
             ProcessObjectStateChanged(obj);
-            //Clicked?.Invoke(this);
             base.Sensor_ObjectStateChanged(obj);
         }
         protected void InvokeClicked() => Clicked?.Invoke(this);
@@ -115,7 +105,7 @@ namespace Utilities.RadarWorks
             foreach (var o in Objects)
             {
                 var l = o as LiveRect;
-                if (l.Selected)
+                if (Selected)
                     DrawObjectSelected(rt, l);
                 else
                     DrawObjectUnselected(rt, l);

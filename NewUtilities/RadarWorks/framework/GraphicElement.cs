@@ -65,7 +65,10 @@ namespace Utilities.RadarWorks
             }
         }
 
-        protected virtual void Sensor_ObjectStateChanged(Sensor obj) => Redraw();
+        protected virtual void Sensor_ObjectStateChanged(Sensor obj)
+        {
+            Redraw();
+        }
 
         /// <summary>
         /// 重新生成LiveObject对象集合
@@ -157,7 +160,7 @@ namespace Utilities.RadarWorks
         private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj)
         {
             RefreshObjects();   //重新生成图形元素
-            Redraw();       //mapper状态改变后需重绘视图
+            Redraw();           //mapper状态改变后需重绘视图
         }
 
         public virtual void Dispose()

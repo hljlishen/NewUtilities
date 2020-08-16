@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System;
 using System.Drawing;
 using Utilities.Tools;
 
@@ -9,6 +10,22 @@ namespace Utilities.RadarWorks
         public PointF ScrP1 { get; set; }
         public PointF ScrP2 { get; set; }
         public PointF Center { get; set; }
+
+        public override void DrawFrame(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush frameBrush, float strokeWidth, StrokeStyle style)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void DrawFrame(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush frameBrush, float strokeWidth)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void Fill(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush fillBrush)
+        {
+            throw new NotImplementedException();
+        }
+
         public override bool IsPointNear(PointF m)
         {
             var p1Dis = Functions.DistanceBetween(ScrP1.ToPoint2F(), Center.ToPoint2F());

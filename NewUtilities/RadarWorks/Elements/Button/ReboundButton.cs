@@ -10,7 +10,7 @@ namespace Utilities.RadarWorks.Elements.Button
 
         protected override void ProcessObjectStateChanged(Sensor obj)
         {
-            if (Selected)
+            if (!Selected)
                 InvokeClicked();
         }
     }

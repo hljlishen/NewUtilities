@@ -20,6 +20,13 @@ namespace Utilities.RadarWorks
             rt.DrawGeometry(Geometry, frameBrush, strokeWidth, style);
         }
 
+        public override void DrawFrame(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush frameBrush, float strokeWidth)
+        {
+            if (Geometry == null)
+                Geometry = GetGeometry(rt);
+            rt.DrawGeometry(Geometry, frameBrush, strokeWidth);
+        }
+
         public override void Fill(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush fillBrush)
         {
             if (Geometry == null)

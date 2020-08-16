@@ -1,6 +1,7 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Utilities.RadarWorks.Elements.Button;
 
 namespace Utilities.RadarWorks.framework
@@ -27,7 +28,7 @@ namespace Utilities.RadarWorks.framework
 
         public ButtenProperties MakeButtenProperties(string text)
         {
-            var p = new ButtenProperties(layout.NextLocation(), layout.ButtonSize, text);
+            var p = new ButtenProperties(layout.NextLocation(), layout.ButtonSize, text) { SelectedColor = Color.Gray, ForeColor = Color.Silver, ForeFrameColor = Color.Black, SelectedFrameColor = Color.Black };
             return p;
         }
 

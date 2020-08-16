@@ -35,15 +35,6 @@ namespace Utilities.RadarWorks
 
         protected override void DrawDynamicElement(RenderTarget rt)
         {
-            foreach (var ob in Objects)
-            {
-                if (ob.Selected)
-                {
-                    foreach (var o in Objects)
-                        o.Selected = true;
-                    break;
-                }
-            }
             using (Brush tagBrush = Color.Chocolate.SolidBrush(rt))
             using (Brush tailBrush = Color.White.SolidBrush(rt))
             using (Brush tailSelected = Color.Orange.SolidBrush(rt))
@@ -52,22 +43,22 @@ namespace Utilities.RadarWorks
             using (Brush tagSelected = Color.Orange.SolidBrush(rt))
             {
                 //tagBrush.Opacity = 0.8f;
-                if (!Objects[0].Selected)
+                if (!Selected)
                     Objects[0].Fill(rt, targetBrush);   //circle
                 else
                     Objects[0].Fill(rt, targetSelected);   //circle
-                if (!Objects[1].Selected)
+                if (!Selected)
                     Objects[1].Fill(rt, tagBrush);      //triangle
                 else
                     Objects[1].Fill(rt, tagSelected);      //triangle
-                if (!Objects[2].Selected)
+                if (!Selected)
                     Objects[2].Fill(rt, tagBrush);      //roundedRectangle
                 else
                     Objects[2].Fill(rt, tagSelected);      //roundedRectangle
 
                 for (int i = 3; i < Objects.Count; i++)
                 {
-                    if (!Objects[i].Selected)
+                    if (!Selected)
                         Objects[i].Fill(rt, tailBrush);
                     else
                         Objects[i].Fill(rt, tailSelected);

@@ -12,38 +12,28 @@ namespace Utilities.RadarWorks.Sensors
 
         private void Panel_MouseUp(object sender, MouseEventArgs e)
         {
-            bool shouldInvoke = false;
-            lock (locker)
+            if(ParentElement.Selected)
             {
-                foreach (var o in objects)
-                {
-                    if (o.Selected)
-                    {
-                        o.Selected = false;
-                        shouldInvoke = true;
-                    }
-                }
-            }
-            if (shouldInvoke)
+                ParentElement.Selected = false;
                 InvokeObjectStateChanged();
+            }
         }
 
         private void Panel_MouseDown(object sender, MouseEventArgs e)
         {
-            bool shouldInvoke = false;
             lock (locker)
             {
                 foreach (var o in objects)
                 {
                     if (o.IsPointNear(e.Location))
                     {
-                        o.Selected = true;
-                        shouldInvoke = true;
+                        o.MouseLocation = e.Location;
+                        ParentElement.Selected = true;
+                        InvokeObjectStateChanged();
+                        break;
                     }
                 }
             }
-            if (shouldInvoke)
-                InvokeObjectStateChanged();
         }
 
         protected override void UnbindEvents(Control panel)

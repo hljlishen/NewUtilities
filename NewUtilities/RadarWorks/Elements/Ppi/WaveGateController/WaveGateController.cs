@@ -73,7 +73,7 @@ namespace Utilities.RadarWorks
                 for (int i = Objects.Count - 1; i >= 0; i--)
                 {
                     var sr = Objects[i];
-                    if (sr.Selected)
+                    if (Selected)
                     {
                         uint id = waveGateMap[sr].Id;
                         waveGateMap.Remove(sr);
@@ -161,7 +161,7 @@ namespace Utilities.RadarWorks
             foreach (var o in Objects)
             {
                 var l = o as LiveSectorRing;
-                if (l.Selected)
+                if (Selected)
                     DrawObjectSelected(rt, l);
                 else
                     DrawObjectUnselected(rt, l);

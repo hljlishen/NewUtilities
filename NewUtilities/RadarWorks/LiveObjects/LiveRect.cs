@@ -22,5 +22,10 @@ namespace Utilities.RadarWorks
         {
             rt.DrawRectangle(Rectangle.ToRectF(), frameBrush, strokeWidth, style);
         }
+
+        public override void DrawFrame(RenderTarget rt, Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush frameBrush, float strokeWidth)
+        {
+            rt.DrawRectangle(Rectangle.ToRectF(), frameBrush, strokeWidth);
+        }
     }
 }
