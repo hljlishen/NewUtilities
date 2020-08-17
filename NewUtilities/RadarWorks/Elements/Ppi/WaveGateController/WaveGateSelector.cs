@@ -17,7 +17,10 @@ namespace Utilities.RadarWorks
 
         public string Name { get; set; } = "波门选择";
 
+        private PathGeometry geo;
+
         public event Action<PointF, PointF> SelectionFinish;
+        //public event Action<PathGeometry> SelectionFinish;
 
         public override void Dispose()
         {
@@ -65,7 +68,7 @@ namespace Utilities.RadarWorks
         }
         protected override void DrawElement(RenderTarget rt)
         {
-            var geo = GetPathGeometry(rt, ReferenceSystem.ScreenOriginalPoint, corner1, corner2);
+            geo = GetPathGeometry(rt, ReferenceSystem.ScreenOriginalPoint, corner1, corner2);
             rt.FillGeometry(geo, fillBrush);
         }
 

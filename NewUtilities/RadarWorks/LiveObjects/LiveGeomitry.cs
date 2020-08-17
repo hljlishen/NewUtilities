@@ -5,6 +5,11 @@ namespace Utilities.RadarWorks
 {
     public abstract class LiveGeometry : LiveObject
     {
+        //public LiveGeometry(Geometry geometry)
+        //{
+        //    Geometry = Guards.Guard.NullCheckAssignment(geometry);
+        //}
+
         public Geometry Geometry { get; protected set; } = null;
         public override bool IsPointNear(PointF mouseLocation)
         {

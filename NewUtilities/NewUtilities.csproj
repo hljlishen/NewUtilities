@@ -82,6 +82,7 @@
     <Compile Include="Coordinates\PolarCoordinate.cs" />
     <Compile Include="Coordinates\RectangularCoordinate.cs" />
     <Compile Include="Extentions\DrawingExtionFuncs.cs" />
+    <Compile Include="Extentions\ListExt.cs" />
     <Compile Include="Extentions\RandomExtionFuncs.cs" />
     <Compile Include="Functions\Functions.cs" />
     <Compile Include="Guard\Guard.cs" />
@@ -134,7 +135,9 @@
     <Compile Include="RadarWorks\Elements\Ppi\PpiTarget.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController1.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateElement.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateController.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateManager.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector2.cs" />
     <Compile Include="RadarWorks\Elements\RotationController.cs" />

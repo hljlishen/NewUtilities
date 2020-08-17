@@ -111,7 +111,7 @@ namespace Utilities.RadarWorks
                 WaveGate w = new WaveGate() { BeginAngle = begin, EndAngle = end, BeginDistance = Math.Min(p1.Dis, p2.Dis), EndDistance = Math.Max(p1.Dis, p2.Dis), Id = currentWaveGateId };
 
                 WaveGateSelected?.Invoke(this, w);
-                LiveSectorRing ring = new LiveSectorRing() { Center = ReferenceSystem.ScreenOriginalPoint, ScrP1 = arg1, ScrP2 = arg2 };
+                LiveSectorRing ring = new LiveSectorRing(arg1, arg2, ReferenceSystem.ScreenOriginalPoint);
                 Objects.Add(ring);
 
                 waveGateMap.Add(ring, wgc);
@@ -146,7 +146,7 @@ namespace Utilities.RadarWorks
             {
                 var scrP1 = Mapper.GetScreenLocation(w.P1.X, w.P1.Y);
                 var scrP2 = Mapper.GetScreenLocation(w.P2.X, w.P2.Y);
-                LiveSectorRing liveSectorRing = new LiveSectorRing() { ScrP1 = scrP1, Center = oPoint, ScrP2 = scrP2 };
+                LiveSectorRing liveSectorRing = new LiveSectorRing(scrP1, scrP2, ReferenceSystem.ScreenOriginalPoint);
                 waveGateMap.Add(liveSectorRing, w);
                 yield return liveSectorRing;
             }
