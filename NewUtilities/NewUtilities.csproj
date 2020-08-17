@@ -136,10 +136,8 @@
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController1.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateElement.cs" />
-    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateController.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateManager.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector.cs" />
-    <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector2.cs" />
     <Compile Include="RadarWorks\Elements\RotationController.cs" />
     <Compile Include="RadarWorks\Elements\RotationController1.cs" />
     <Compile Include="RadarWorks\Elements\Signal\AnalogSignalPlotter.cs" />

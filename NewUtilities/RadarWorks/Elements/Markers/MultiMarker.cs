@@ -1,7 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
 using Utilities.RadarWorks;
-using Utilities.RadarWorks.Sensors;
 
 namespace NewUtilities.RadarWorks.Elements.Markers
 {
@@ -22,7 +21,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             TextFont = textFont;
             for (int i = 0; i < markerCount; i++)
             {
-                markers.Add(new T() { Sensor = new MouseClickSensor3(), TextFont = TextFont, TextSize = TextSize });
+                markers.Add(new T() { Sensor = new MouseMoveSensor(), TextFont = TextFont, TextSize = TextSize });
             }
         }
 

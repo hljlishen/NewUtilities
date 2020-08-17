@@ -7,7 +7,7 @@ namespace Utilities.Collections
 {
     public class Slide<T> : IEnumerable<T>
     {
-        private List<T> items = new List<T>();
+        private readonly List<T> items = new List<T>();
         public bool IsFull => items.Count >= Size;
 
         public Slide(uint size)
