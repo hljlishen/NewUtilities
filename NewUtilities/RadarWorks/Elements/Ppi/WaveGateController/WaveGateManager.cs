@@ -38,7 +38,7 @@ namespace NewUtilities.RadarWorks.Elements.Ppi.WaveGateController
 
         private void RemoveWaveGateElement(WaveGateElement w)
         {
-            ParentDispalyer.Elements.Remove(LayerId, w);
+            ParentDisplayer.Elements.Remove(LayerId, w);
             WaveGateDeleted?.Invoke(w.Model);
             w.Dispose();
         }
@@ -47,7 +47,7 @@ namespace NewUtilities.RadarWorks.Elements.Ppi.WaveGateController
         {
             WaveGateElement wg = new WaveGateElement() { Sensor = new MouseClickSensor1() };
             waveGates.Add(wg);
-            ParentDispalyer.Elements.Add(LayerId, wg);
+            ParentDisplayer.Elements.Add(LayerId, wg);
             wg.Update(arg1, arg2);
         }
     }

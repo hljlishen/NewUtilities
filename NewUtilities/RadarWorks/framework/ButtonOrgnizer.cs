@@ -16,7 +16,7 @@ namespace Utilities.RadarWorks.framework
             var btn = new ReboundButton(MakeButtenProperties(text));
             btn.Clicked += clickAction;
 
-            ParentDispalyer.Elements.Add(LayerId, btn);
+            ParentDisplayer.Elements.Add(LayerId, btn);
             buttons.Add(btn);
         }
 

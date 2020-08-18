@@ -15,7 +15,7 @@ namespace Utilities.RadarWorks.Elements.Markers
         public void AddXMarker()
         {
             var xMarker = new MovableXAxisMarker() { Color = DrawingExtionFuncs.RandomColor(), Model = GetRandomXCoordinate(), HandlePosition = XAxisMarkerHandleStyle };
-            ParentDispalyer.Elements.Add(LayerId, xMarker);
+            ParentDisplayer.Elements.Add(LayerId, xMarker);
             xAxisMarkers.Add(xMarker);
             xMarker.On();
         }
@@ -26,7 +26,7 @@ namespace Utilities.RadarWorks.Elements.Markers
                 return;
             var xMarker = xAxisMarkers[0];
             xAxisMarkers.RemoveAt(0);
-            ParentDispalyer.Elements.Remove(LayerId, xMarker);
+            ParentDisplayer.Elements.Remove(LayerId, xMarker);
         }
 
         public void RemoveAllXMarkers()
@@ -39,7 +39,7 @@ namespace Utilities.RadarWorks.Elements.Markers
         public void AddYMarker()
         {
             var yMarker = new MovableYAxisMarker() { Color = DrawingExtionFuncs.RandomColor(), Model = GetRandomYCoordinate(), HandlePosition = YAxisMarkerHandleStyle };
-            ParentDispalyer.Elements.Add(LayerId, yMarker);
+            ParentDisplayer.Elements.Add(LayerId, yMarker);
             yAxisMarkers.Add(yMarker);
             yMarker.On();
         }
@@ -50,7 +50,7 @@ namespace Utilities.RadarWorks.Elements.Markers
                 return;
             var yMarker = yAxisMarkers[0];
             yAxisMarkers.RemoveAt(0);
-            ParentDispalyer.Elements.Remove(LayerId, yMarker);
+            ParentDisplayer.Elements.Remove(LayerId, yMarker);
         }
 
         public void RemoveAllYMarkers()
