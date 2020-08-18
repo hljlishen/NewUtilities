@@ -33,7 +33,7 @@ namespace Utilities.RadarWorks
 
         public override void SetDisplayer(Displayer d)
         {
-            ParentDispalyer = d;
+            ParentDisplayer = d;
         }
 
         public PpiOriginalVideoDot(OriginVideoDotProperty p) : this(p.Location, p.Am) { }

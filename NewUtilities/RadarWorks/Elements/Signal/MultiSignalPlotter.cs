@@ -38,7 +38,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         public void AddSerie(SeriesProperties properties)
         {
             string serieName = properties.Name;
-            if (ParentDispalyer == null)
+            if (ParentDisplayer == null)
                 throw new InvalidOperationException($"必须先将Plotter添加到Displayer中才能调用此方法");
             if (plotterMap.ContainsKey(serieName))
                 throw new ArgumentException($"{serieName}已经存在");
@@ -48,8 +48,8 @@ namespace Utilities.RadarWorks.Elements.Signal
             buttonMap.Add(serieName, button);
             button.Clicked += Button_Clicked;
 
-            ParentDispalyer.Elements.Add(++currentLayerId, plotter);
-            ParentDispalyer.Elements.Add(1000, button);
+            ParentDisplayer.Elements.Add(++currentLayerId, plotter);
+            ParentDisplayer.Elements.Add(1000, button);
         }
 
         private ButtenProperties MakeButtonStyle(SeriesProperties properties)

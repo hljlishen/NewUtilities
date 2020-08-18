@@ -1,15 +1,14 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using NewUtilities.RadarWorks.framework;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Utilities.Mapper;
-using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
-using System.Collections.Generic;
-using System.Linq;
-using System.Drawing;
-using Utilities.RadarWorks.Elements.Button;
 
 namespace Utilities.RadarWorks
 {
-    public abstract class GraphicElement : IDisposable, IGraphic
+    public abstract class GraphicElement : IGraphic
     {
         /// <summary>
         /// 目标所属的图层的Id
@@ -29,18 +28,17 @@ namespace Utilities.RadarWorks
         /// <summary>
         /// 该GraphicElement对象所属的Displayer对象
         /// </summary>
-        public Displayer ParentDispalyer { get; protected set; }
+        public Displayer ParentDisplayer { get; protected set; }
 
         /// <summary>
         /// 多线程方位该对象时的锁对象
         /// </summary>
         public object Locker { get; private set; } = new object();
         protected Sensor sensor;
-        public Control Panel => ParentDispalyer.Panel;
+        public Control Panel => ParentDisplayer.Panel;
         public Rectangle ScreenRect => new Rectangle((int)Mapper.ScreenLeft, (int)Mapper.ScreenTop, (int)Mapper.ScreenWidth, (int)Mapper.ScreenHeight);
-        public virtual IScreenToCoordinateMapper Mapper => ParentDispalyer.Mapper;
-        public ReferenceSystem ReferenceSystem => ParentDispalyer.ReferenceSystem;
-        protected abstract void DrawElement(RenderTarget rt);
+        public virtual IScreenToCoordinateMapper Mapper => ParentDisplayer.Mapper;
+        public ReferenceSystem ReferenceSystem => ParentDisplayer.ReferenceSystem;
         protected virtual void InitializeComponents(RenderTarget rt) { }
         public virtual bool HasChanged() => Changed;
         public virtual void Redraw() => Changed = true;
@@ -57,10 +55,9 @@ namespace Utilities.RadarWorks
             get => sensor;
             set
             {
-
                 sensor?.Dispose();
                 sensor = Guards.Guard.NullCheckAssignment(value);
-                if (ParentDispalyer != null)     //如果元素对象还没有加入Displayer，则先不调用
+                if (ParentDisplayer != null)     //如果元素对象还没有加入Displayer，则先不调用
                     sensor.SetParentElement(this);
                 sensor.ObjectStateChanged += Sensor_ObjectStateChanged;
             }
@@ -97,12 +94,12 @@ namespace Utilities.RadarWorks
         /// <param name="d">显示器</param>
         public virtual void SetDisplayer(Displayer d)
         {
-            ParentDispalyer = d;
+            ParentDisplayer = d;
             Sensor?.SetParentElement(this);
             RefreshObjects();
             Mapper.MapperStateChanged += Mapper_MapperStateChanged;
-            ParentDispalyer.BeforeRebindTarget += Displayer_BeforeRebindTarget;
-            ParentDispalyer.AfterRebindTarget += Displayer_AfterRebindTarget;
+            ParentDisplayer.BeforeRebindTarget += Displayer_BeforeRebindTarget;
+            ParentDisplayer.AfterRebindTarget += Displayer_AfterRebindTarget;
             BindEvents(d.Panel);
         }
 
@@ -149,6 +146,26 @@ namespace Utilities.RadarWorks
             Changed = false;
         }
 
+        protected virtual void DrawObjects(RenderTarget rt, DrawToolSet toolSet)
+        {
+            lock(Locker)
+            {
+                foreach (var o in Objects)
+                {
+                    if (toolSet.FrameWidth > 0)
+                    {
+                        if (toolSet.FrameStrokeStyle != null)
+                            o.DrawFrame(rt, toolSet.FrameBrush, toolSet.FrameWidth, toolSet.FrameStrokeStyle);
+                        else
+                            o.DrawFrame(rt, toolSet.FrameBrush, toolSet.FrameWidth);
+                    }
+                    if (toolSet.FillBrush != null)
+                        o.Fill(rt, toolSet.FillBrush);
+                }
+            }
+        }
+        protected abstract void DrawElement(RenderTarget rt);
+
         /// <summary>
         /// Mapper状态发生变化时触发
         /// </summary>
@@ -163,9 +180,9 @@ namespace Utilities.RadarWorks
         {
             Sensor?.Dispose();
             Mapper.MapperStateChanged -= Mapper_MapperStateChanged;
-            ParentDispalyer.BeforeRebindTarget -= Displayer_BeforeRebindTarget;
-            ParentDispalyer.AfterRebindTarget -= Displayer_AfterRebindTarget;
-            UnbindEvents(ParentDispalyer.Panel);
+            ParentDisplayer.BeforeRebindTarget -= Displayer_BeforeRebindTarget;
+            ParentDisplayer.AfterRebindTarget -= Displayer_AfterRebindTarget;
+            UnbindEvents(ParentDisplayer.Panel);
         }
 
         protected bool IsPointNearAnyObject(Point mouseDownPoint)
@@ -179,6 +196,11 @@ namespace Utilities.RadarWorks
                 }
                 return false;
             }
+        }
+
+        public Dictionary<string, DrawToolSet> GetToolSets()
+        {
+            return new Dictionary<string, DrawToolSet>();
         }
     }
 }

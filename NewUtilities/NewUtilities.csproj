@@ -169,6 +169,7 @@
     <Compile Include="RadarWorks\framework\ButtonOrgnizer.cs" />
     <Compile Include="RadarWorks\framework\Displayer.cs" />
     <Compile Include="RadarWorks\framework\DisplayerGroupManager.cs" />
+    <Compile Include="RadarWorks\framework\DrawElementToolSet.cs" />
     <Compile Include="RadarWorks\framework\DynamicElement.cs" />
     <Compile Include="RadarWorks\framework\ExclusiveSwitchableManager.cs" />
     <Compile Include="RadarWorks\framework\GraphicElement.cs" />

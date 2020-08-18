@@ -37,8 +37,8 @@ namespace Utilities.RadarWorks
                 btn.Clicked += Btn_Clicked;
                 buttonMap.Add(btn, s);
                 Redraw();
-                ParentDispalyer.Elements.Add(LayerId, btn);
-                ParentDispalyer.Elements.Add(LayerId, s as GraphicElement);
+                ParentDisplayer.Elements.Add(LayerId, btn);
+                ParentDisplayer.Elements.Add(LayerId, s as GraphicElement);
             }
         }
 

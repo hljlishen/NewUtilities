@@ -10,7 +10,7 @@ namespace Utilities.RadarWorks
     /// </summary>
     public abstract class Sensor : IDisposable
     {
-        public Displayer Displayer => ParentElement?.ParentDispalyer;
+        public Displayer Displayer => ParentElement?.ParentDisplayer;
         protected List<LiveObject> objects => ParentElement.Objects;
         public Control Panel => Displayer.Panel;
 
@@ -29,7 +29,7 @@ namespace Utilities.RadarWorks
         public virtual void SetParentElement(GraphicElement e)
         {
             ParentElement = e;
-            SetDisplayer(e.ParentDispalyer);
+            SetDisplayer(e.ParentDisplayer);
         }
         private void Displayer_AfterRebindTarget(Control panel) => BindEvents(panel);
         protected abstract void BindEvents(Control panel);

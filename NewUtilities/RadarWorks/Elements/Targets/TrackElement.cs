@@ -20,6 +20,7 @@ namespace Utilities.RadarWorks.Elements
             tagBrush = Color.Chocolate.SolidBrush(rt);
             tailBrush = Color.White.SolidBrush(rt);
             targetBrush = Color.AliceBlue.SolidBrush(rt);
+            Model = new List<ITrack>();
         }
         protected override void DrawDynamicElement(RenderTarget rt)
         {

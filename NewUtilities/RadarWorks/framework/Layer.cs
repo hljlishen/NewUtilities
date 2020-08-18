@@ -97,7 +97,7 @@ namespace Utilities.RadarWorks
             }
 
             e.LayerId = LayerId;
-            e.SetDisplayer(ParentDispalyer);
+            e.SetDisplayer(ParentDisplayer);
             Redraw();
         }
 
@@ -109,7 +109,7 @@ namespace Utilities.RadarWorks
                 {
                     elements.Add(e);
                     e.LayerId = LayerId;
-                    e.SetDisplayer(ParentDispalyer);
+                    e.SetDisplayer(ParentDisplayer);
                 }
             }
             Redraw();   //2020-8-11将updateView移出Lock块
@@ -135,7 +135,7 @@ namespace Utilities.RadarWorks
                 {
                     elements.Add(e);
                     e.LayerId = LayerId;
-                    e.SetDisplayer(ParentDispalyer);
+                    e.SetDisplayer(ParentDisplayer);
                 }
             }
             Redraw();//2020-8-11将updateView移出Lock块
