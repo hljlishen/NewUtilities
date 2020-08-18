@@ -134,7 +134,6 @@
     <Compile Include="RadarWorks\Elements\Ppi\PpiAntenna.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\PpiTarget.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController.cs" />
-    <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController1.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateElement.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateManager.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector.cs" />
