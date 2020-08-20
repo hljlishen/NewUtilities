@@ -9,7 +9,7 @@ using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace NewUtilities.RadarWorks.Elements.Signal
 {
-    public class SignalMarker : DynamicElement<PointF>, ISwtichable
+    class SignalMarker : DynamicElement<PointF>, ISwtichable
     {
         private ConditionalMouseDragDetector DragDetector;
 

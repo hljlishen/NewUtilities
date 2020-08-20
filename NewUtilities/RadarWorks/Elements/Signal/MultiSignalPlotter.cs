@@ -1,5 +1,4 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
-using NewUtilities.RadarWorks.Elements.Signal;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -144,9 +143,8 @@ namespace Utilities.RadarWorks.Elements.Signal
             }
         }
 
-        public SeriePlotter GetSerie(string Name)
-        {
-            return plotterMap[Name];
-        }
+        public void AddMarker(string serieName, float x = 0, bool locked = false) => plotterMap[serieName].AddMarker(x, locked);
+
+        public void ClearMarker(string serieName) => plotterMap[serieName].ClearMarker();
     }
 }

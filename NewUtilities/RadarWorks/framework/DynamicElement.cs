@@ -9,8 +9,6 @@ namespace Utilities.RadarWorks
         {
             lock (Locker)
             {
-                //if (Model == null)
-                //    return;
                 DrawDynamicElement(rt);
             }
         }

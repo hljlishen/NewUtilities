@@ -8,7 +8,7 @@ using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks.Elements.Signal
 {
-    public class SeriePlotter : DynamicElement<List<PointF>>, ISwtichable
+    class SeriePlotter : DynamicElement<List<PointF>>, ISwtichable
     {
         public SeriesProperties SeriesProperties { get; private set; }
 

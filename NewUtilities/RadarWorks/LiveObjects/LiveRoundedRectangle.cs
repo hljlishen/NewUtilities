@@ -18,7 +18,7 @@ namespace Utilities.RadarWorks
 
         public override void DrawFrame(RenderTarget rt, Brush frameBrush, float strokeWidth)
         {
-            throw new System.NotImplementedException();
+            rt.DrawRoundedRectangle(RoundedRect, frameBrush, strokeWidth);
         }
     }
 }
