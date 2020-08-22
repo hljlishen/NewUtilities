@@ -37,6 +37,15 @@ namespace Utilities.ValueIntervals
             }
             return NumericDistance(Min, value);
         }
+
+        public static void ExtendInterval(ref double min, ref double max, double ratio)
+        {
+            var middle = (max + min) / 2;
+            var minDis = (middle - min) * ratio;
+            var maxDis = (max - middle) * ratio;
+            min = middle - minDis;
+            max = middle + maxDis;
+        }
         public abstract bool IsInRange(double value);
         public static ValueInterval OpenOpen(double min = 0, double max = 1, bool allowOutRangeMap = true) => new OpenOpenInterval() { Max = max, Min = min, Type = RangeType.OpenOpen, AllowOutRangeMap = allowOutRangeMap };
         public static ValueInterval OpenClose(double min = 0, double max = 1, bool allowOutRangeMap = true) => new OpenCloseInterval() { Max = max, Min = min, Type = RangeType.OpenClose, AllowOutRangeMap = allowOutRangeMap };

@@ -21,13 +21,13 @@ namespace Utilities.RadarWorks
         public double Right { get; protected set; }
         public double Top { get; protected set; }
         public double Bottom { get; protected set; }
-        public PointF ScreenOriginalPoint { get; private set; }/* => Mapper.GetScreenLocation(0, 0);*/
-        public double ScreenLeft { get; private set; } /*=> Mapper.GetScreenX(Left);*/
-        public double ScreenRight { get; private set; } /*=> Mapper.GetScreenX(Right);*/
-        public double ScreenTop { get; private set; } /*=> Mapper.GetScreenY(Top);*/
-        public double ScreenBottom { get; private set; } /*=> Mapper.GetScreenY(Bottom);*/
-        public double ScreenWidth { get; private set; } /*=> ScreenRight - ScreenLeft;*/
-        public double ScreenHeight { get; private set; } /*=> ScreenBottom - ScreenTop;*/
+        public PointF ScreenOriginalPoint { get; private set; }
+        public double ScreenLeft { get; private set; }
+        public double ScreenRight { get; private set; }
+        public double ScreenTop { get; private set; }
+        public double ScreenBottom { get; private set; }
+        public double ScreenWidth { get; private set; }
+        public double ScreenHeight { get; private set; }
         public double XDistance => Math.Abs(Right - Left);
         public double YDistance => Math.Abs(Top - Bottom);
         public IScreenToCoordinateMapper Mapper { get; private set; }
@@ -81,7 +81,7 @@ namespace Utilities.RadarWorks
     class ChangeRangeAnimator
     {
         private readonly ReferenceSystem referenceSystem;
-        //private Area targetArea;
+
         private readonly AreaAnimator iterator;
         public int AnimationInterval { get; set; } = 30;
         public int AnimationTime { get; set; } = 500;

@@ -125,7 +125,6 @@
     <Compile Include="RadarWorks\Elements\Markers\PolarDistanceMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\VerticalValueMarker.cs" />
     <Compile Include="RadarWorks\Elements\MouseDragger.cs" />
-    <Compile Include="RadarWorks\Elements\MouseDragger1.cs" />
     <Compile Include="RadarWorks\Elements\NorthLine.cs" />
     <Compile Include="RadarWorks\Elements\PpiOriginalVideoDot.cs" />
     <Compile Include="RadarWorks\Elements\PpiRotationController.cs" />
@@ -137,6 +136,7 @@
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateElement.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateManager.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector.cs" />
+    <Compile Include="RadarWorks\Elements\AxisScaler.cs" />
     <Compile Include="RadarWorks\Elements\RotationController.cs" />
     <Compile Include="RadarWorks\Elements\RotationController1.cs" />
     <Compile Include="RadarWorks\Elements\Signal\AnalogSignalPlotter.cs" />
@@ -159,7 +159,6 @@
     <Compile Include="RadarWorks\Elements\ZoomController\YAxisSelection.cs" />
     <Compile Include="RadarWorks\Elements\ZoomController\ZoomAnimator.cs" />
     <Compile Include="RadarWorks\Elements\ZoomController\ZoomController.cs" />
-    <Compile Include="RadarWorks\Elements\ZoomController\ZoomController1.cs" />
     <Compile Include="RadarWorks\framework\BitmapConverter.cs" />
     <Compile Include="RadarWorks\framework\ButtonLayout\IButtonLayout.cs" />
     <Compile Include="RadarWorks\framework\ButtonLayout\LeftBottomButtonLayout.cs" />

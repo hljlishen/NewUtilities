@@ -65,7 +65,7 @@ namespace Utilities.RadarWorks
                 var right = Mapper.GetCoordinateX(selectedRect.Right);
                 var top = Mapper.GetCoordinateY(selectedRect.Top);
                 var bottom = Mapper.GetCoordinateY(selectedRect.Bottom);
-                SetMapperRange(left, right, top, bottom);
+                SetMapperCoordinateArea(left, right, top, bottom);
             }
 
             //此处必须清零coverRect，原因是：当鼠标只做点击不拖动时，coverRect会保留上次放缩时计算的CoverRect值，因此会通过IsRectBigEnough的校验
@@ -79,7 +79,7 @@ namespace Utilities.RadarWorks
             Redraw();
         }
 
-        private void SetMapperRange(double left, double right, double top, double bottom)
+        private void SetMapperCoordinateArea(double left, double right, double top, double bottom)
         {
             if (!Animation)
                 Mapper.SetCoordinateArea(left, right, top, bottom);
@@ -91,7 +91,7 @@ namespace Utilities.RadarWorks
             }
         }
 
-        public void Reset() => SetMapperRange(ReferenceSystem.Left, ReferenceSystem.Right, ReferenceSystem.Top, ReferenceSystem.Bottom);
+        public void Reset() => SetMapperCoordinateArea(ReferenceSystem.Left, ReferenceSystem.Right, ReferenceSystem.Top, ReferenceSystem.Bottom);
 
         protected override void DrawElement(RenderTarget rt)
         {

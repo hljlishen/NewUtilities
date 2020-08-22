@@ -15,7 +15,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         public IButtonLayout buttonLayout { get; private set; }
         private int currentLayerId = -1;
         private bool isLocked = false;
-        public bool AdaptToSignal { get; set; } = true;
+        public bool AdaptToSignal { get; set; } = false;
         public void Lock() => isLocked = true;
         public void Unlock() => isLocked = false;
 
