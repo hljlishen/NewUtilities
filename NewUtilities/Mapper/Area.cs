@@ -24,5 +24,10 @@ namespace Utilities.Mapper
 
         public double VerticalCover => Math.Abs(Top - Bottom);
         public double HorizontalCover => Math.Abs(Right - Left);
+
+        public override string ToString()
+        {
+            return $"[left:{Left}, right:{Right}, top:{Top}, bottom:{Bottom}]";
+        }
     }
 }

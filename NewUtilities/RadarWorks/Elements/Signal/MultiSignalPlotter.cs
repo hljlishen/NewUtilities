@@ -31,7 +31,50 @@ namespace Utilities.RadarWorks.Elements.Signal
             if (!plotterMap.ContainsKey(serieName))
                 throw new ArgumentException($"{serieName}不存在");
             plotterMap[serieName].Update(points.ToList());
+
+            if (AdaptToSignal)//此处可能有性能损耗，每次更新信号数据时都需要计算一次数据范围，应该是所有信号数据更新完毕同一更新一次
+            {
+                var modelArea = FindUnionArea(plotterMap.Values);
+
+                if (ShouldSetArea(modelArea))
+                {
+                    Area area = MakeProperArea(modelArea);
+                    ReferenceSystem.SetArea(area);
+                }
+            }
             Redraw();
+        }
+
+        /// <summary>
+        /// 信号显示器视图适应指定的信号
+        /// </summary>
+        /// <param name="signalName">自适应信号的名称，如果使用默认值则取所有信号区域的并集作为显示器的区域</param>
+        public void AdaptViewToSignal(string signalName = "")
+        {
+            Area area;
+            if (signalName == "")
+                area = FindUnionArea(plotterMap.Values);
+            else
+                area = plotterMap[signalName].ModelArea;
+
+            ReferenceSystem.SetArea(MakeProperArea(area));
+        }
+
+        private Area FindUnionArea(IEnumerable<SeriePlotter> series)    
+        {
+            Area modelArea = null;
+            foreach (var plotter in series)
+            {
+                if (modelArea == null)
+                    modelArea = plotter.ModelArea;
+                else
+                {
+                    if (plotter.ModelArea == null)
+                        continue;
+                    modelArea.Set(Math.Min(modelArea.Left, plotter.ModelArea.Left), Math.Max(modelArea.Right, plotter.ModelArea.Right), Math.Max(modelArea.Top, plotter.ModelArea.Top), Math.Min(modelArea.Bottom, plotter.ModelArea.Bottom));
+                }
+            }
+            return modelArea;
         }
 
         public void AddSerie(SeriesProperties properties)
@@ -42,10 +85,13 @@ namespace Utilities.RadarWorks.Elements.Signal
             if (plotterMap.ContainsKey(serieName))
                 throw new ArgumentException($"{serieName}已经存在");
             var plotter = new SeriePlotter(properties);
-            plotterMap.Add(serieName, plotter);
             var button = new PushDownButton(MakeButtonStyle(properties));
-            buttonMap.Add(serieName, button);
             button.Clicked += Button_Clicked;
+            lock (Locker)
+            {
+                plotterMap.Add(serieName, plotter);
+                buttonMap.Add(serieName, button);
+            }
 
             ParentDisplayer.Elements.Add(++currentLayerId, plotter);
             ParentDisplayer.Elements.Add(1000, button);
@@ -87,10 +133,9 @@ namespace Utilities.RadarWorks.Elements.Signal
 
         protected override void DrawElement(RenderTarget rt)
         {
-            lock(Locker)
+            lock (Locker)
             {
                 buttonLayout.Reset();
-                Area modelArea = null;
                 foreach (var s in plotterMap.Keys)
                 {
                     var plotter = plotterMap[s];
@@ -99,48 +144,32 @@ namespace Utilities.RadarWorks.Elements.Signal
                     var properties = btn.Model;
                     properties.Location = buttonLayout.NextLocation();
                     btn.Update(properties);
-
-                    if(AdaptToSignal)
-                    {
-                        if (modelArea == null)
-                            modelArea = plotter.ModelArea;
-                        else
-                        {
-                            modelArea.Set(Math.Min(modelArea.Left, plotter.ModelArea.Left), Math.Max(modelArea.Right, plotter.ModelArea.Right), Math.Max(modelArea.Top, plotter.ModelArea.Top), Math.Min(modelArea.Bottom, plotter.ModelArea.Bottom));
-                        }
-                        if (modelArea == null)
-                            continue;
-                        if (ShouldSetArea(modelArea))
-                        {
-                            ReferenceSystem.SetArea(MakeNewArea(modelArea));
-                        }
-                    }
                 }
             }
+        }
 
-            Area MakeNewArea(Area modelArea)
-            {
-                var ret = new Area(modelArea.Left, modelArea.Right, modelArea.Top + modelArea.VerticalCover * 0.25, modelArea.Bottom - modelArea.VerticalCover * 0.25);
-                return ret;
-            }
+        Area MakeProperArea(Area modelArea)
+        {
+            var ret = new Area(modelArea.Left, modelArea.Right, modelArea.Top + modelArea.VerticalCover * 0.25, modelArea.Bottom - modelArea.VerticalCover * 0.25);
+            return ret;
+        }
 
-            bool ShouldSetArea(Area modelArea)
-            {
-                if (modelArea.Right > ReferenceSystem.Right)
-                    return true;
-                if (modelArea.Left < ReferenceSystem.Left)
-                    return true;
-                if (modelArea.Top > ReferenceSystem.Top)
-                    return true;
-                if (modelArea.Bottom < ReferenceSystem.Bottom)
-                    return true;
-                var rsArea = new Area(ReferenceSystem.Left, ReferenceSystem.Right, ReferenceSystem.Top, ReferenceSystem.Bottom);
-                if (modelArea.VerticalCover < rsArea.VerticalCover * 0.5)
-                    return true;
-                if (modelArea.HorizontalCover < rsArea.HorizontalCover * 0.9)
-                    return true;
-                return false;
-            }
+        bool ShouldSetArea(Area modelArea)
+        {
+            if (modelArea.Right > ReferenceSystem.Right)
+                return true;
+            if (modelArea.Left < ReferenceSystem.Left)
+                return true;
+            if (modelArea.Top > ReferenceSystem.Top)
+                return true;
+            if (modelArea.Bottom < ReferenceSystem.Bottom)
+                return true;
+            var rsArea = new Area(ReferenceSystem.Left, ReferenceSystem.Right, ReferenceSystem.Top, ReferenceSystem.Bottom);
+            if (modelArea.VerticalCover < rsArea.VerticalCover * 0.5)
+                return true;
+            if (modelArea.HorizontalCover < rsArea.HorizontalCover * 0.9)
+                return true;
+            return false;
         }
 
         public void AddMarker(string serieName, float x = 0, bool locked = false) => plotterMap[serieName].AddMarker(x, locked);
