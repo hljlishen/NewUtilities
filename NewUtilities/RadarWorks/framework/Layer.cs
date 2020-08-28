@@ -40,12 +40,28 @@ namespace Utilities.RadarWorks
         {
             LayerId = id;
         }
-
-        private void DrawLayerToTarget(RenderTarget rt)
+        /// <summary>
+        /// 重绘本图层所有元素
+        /// </summary>
+        /// <param name="rt"></param>
+        protected override void DrawElement(RenderTarget rt)
         {
-            rt.DrawBitmap(bitmapRt.Bitmap, 1, BitmapInterpolationMode.Linear, new RectF(0, 0, Panel.Width, Panel.Height));
+            lock (Locker)
+            {
+                if (bitmapRt == null || bitmapRt.Size != rt.Size)
+                {
+                    bitmapRt?.Dispose();
+                    bitmapRt = rt.CreateCompatibleRenderTarget(new CompatibleRenderTargetOptions(), rt.Size);
+                }
+                DrawLayerOnBitmap();
+                DrawLayerToTarget(rt);
+            }
+            return;
         }
 
+        /// <summary>
+        /// 将本图层的所有元素绘制在位图上
+        /// </summary>
         private void DrawLayerOnBitmap()
         {
             bitmapRt.BeginDraw();
@@ -60,7 +76,10 @@ namespace Utilities.RadarWorks
             }
             bitmapRt.EndDraw();
         }
-
+        private void DrawLayerToTarget(RenderTarget rt)
+        {
+            rt.DrawBitmap(bitmapRt.Bitmap, 1, BitmapInterpolationMode.Linear, new RectF(0, 0, Panel.Width, Panel.Height));
+        }
         public void DrawIfChanged(RenderTarget rt)
         {
             if (HasChanged())
@@ -89,10 +108,10 @@ namespace Utilities.RadarWorks
 
         public void Add(IGraphic e)
         {
+            if (isLocked)
+                throw new System.Exception($"图层{LayerId}已经被锁定，不能添加新元素");
             lock (Locker)
             {
-                if (isLocked)
-                    throw new System.Exception($"图层{LayerId}已经被锁定，不能添加新元素");
                 elements.Add(e);
             }
 
@@ -170,18 +189,5 @@ namespace Utilities.RadarWorks
             elements.Clear();
             bitmapRt?.Dispose();
         }
-
-        protected override void DrawElement(RenderTarget rt)
-        {
-            if (bitmapRt == null || bitmapRt.Size != rt.Size)
-            {
-                bitmapRt?.Dispose();
-                bitmapRt = rt.CreateCompatibleRenderTarget(new CompatibleRenderTargetOptions(), rt.Size);
-            }
-            DrawLayerOnBitmap();
-            DrawLayerToTarget(rt);
-            return;
-        }
-        //protected override IEnumerable<LiveObject> GetObjects() => null;
     }
 }

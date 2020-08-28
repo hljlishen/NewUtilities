@@ -81,7 +81,7 @@ namespace Utilities.RadarWorks
             rtps.RenderTargetType = RenderTargetType.Hardware;
             var hrtp = new HwndRenderTargetProperties(Panel.Handle, new SizeU((uint)Panel.Width, (uint)Panel.Height), PresentOptions.Immediately);
 
-            Factory = D2DFactory.CreateFactory(D2DFactoryType.Multithreaded);   //创建工厂
+            Factory = D2DFactory.CreateFactory(D2DFactoryType.SingleThreaded);   //创建工厂
             rt = Factory.CreateHwndRenderTarget(rtps, hrtp);
             //rt.Dpi = new DpiF(Panel.DeviceDpi, Panel.DeviceDpi);
             rt.AntiAliasMode = AntiAliasMode.Aliased;

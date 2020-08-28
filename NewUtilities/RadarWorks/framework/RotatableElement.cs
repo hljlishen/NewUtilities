@@ -20,12 +20,8 @@ namespace Utilities.RadarWorks
             {
                 rotateDecorator = PolarRotateDecorator.GetInstance(d.GetHashCode().ToString() + RotateDecoratorName, d.Mapper);
             }
-
-            Mapper.MapperStateChanged += Mapper_MapperStateChanged;
             base.SetDisplayer(d);
         }
-
-        private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj) => Redraw();
 
         public override IScreenToCoordinateMapper Mapper => rotateDecorator;
 

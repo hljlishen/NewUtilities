@@ -96,8 +96,6 @@ namespace Utilities.RadarWorks
         {
             ParentDisplayer = d;
             Sensor?.SetParentElement(this);
-            RefreshObjects();
-            Mapper.MapperStateChanged += Mapper_MapperStateChanged;
             ParentDisplayer.BeforeRebindTarget += Displayer_BeforeRebindTarget;
             ParentDisplayer.AfterRebindTarget += Displayer_AfterRebindTarget;
             BindEvents(d.Panel);
@@ -142,6 +140,7 @@ namespace Utilities.RadarWorks
                 InitializeComponents(rt);
                 Initialized = false;
             }
+            RefreshObjects();   //重新生成图形元素
             DrawElement(rt);
             Changed = false;
         }
@@ -166,20 +165,9 @@ namespace Utilities.RadarWorks
         }
         protected abstract void DrawElement(RenderTarget rt);
 
-        /// <summary>
-        /// Mapper状态发生变化时触发
-        /// </summary>
-        /// <param name="obj">Mapper引用</param>
-        private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj)
-        {
-            RefreshObjects();   //重新生成图形元素
-            Redraw();           //mapper状态改变后需重绘视图
-        }
-
         public virtual void Dispose()
         {
             Sensor?.Dispose();
-            Mapper.MapperStateChanged -= Mapper_MapperStateChanged;
             ParentDisplayer.BeforeRebindTarget -= Displayer_BeforeRebindTarget;
             ParentDisplayer.AfterRebindTarget -= Displayer_AfterRebindTarget;
             UnbindEvents(ParentDisplayer.Panel);

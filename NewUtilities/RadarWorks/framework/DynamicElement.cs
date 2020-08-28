@@ -20,7 +20,6 @@ namespace Utilities.RadarWorks
             lock (Locker)
             {
                 DoUpdate(t);
-                RefreshObjects();
                 Redraw();
             }
         }

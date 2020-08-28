@@ -138,7 +138,6 @@
     <Compile Include="RadarWorks\Elements\Ppi\WaveGateController\WaveGateSelector.cs" />
     <Compile Include="RadarWorks\Elements\AxisScaler.cs" />
     <Compile Include="RadarWorks\Elements\RotationController.cs" />
-    <Compile Include="RadarWorks\Elements\RotationController1.cs" />
     <Compile Include="RadarWorks\Elements\Signal\AnalogSignalPlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\DiscreteSignalPlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\MultiSignalPlotter.cs" />

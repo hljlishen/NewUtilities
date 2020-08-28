@@ -172,7 +172,7 @@ namespace Utilities.RadarWorks.Elements.Signal
             return false;
         }
 
-        public void AddMarker(string serieName, float x = 0, bool locked = false) => plotterMap[serieName].AddMarker(x, locked);
+        public void AddMarker(string serieName, Color c, float x = 0, bool locked = false) => plotterMap[serieName].AddMarker(c, x, locked);
 
         public void ClearMarker(string serieName) => plotterMap[serieName].ClearMarker();
     }

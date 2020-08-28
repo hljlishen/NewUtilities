@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 using NewUtilities.RadarWorks.Elements.Signal;
 using System;
 using System.Collections.Generic;
@@ -45,8 +46,10 @@ namespace Utilities.RadarWorks.Elements.Signal
 
             if (SeriesProperties.PlotStyle == PlotStyle.Analog)
                 DrawAnalog(rt);
-            else
+            else if (SeriesProperties.PlotStyle == PlotStyle.Discrete)
                 DrawDiscrete(rt);
+            else
+                DrawDots(rt);
         }
 
         private void DrawAnalog(RenderTarget rt)
@@ -68,6 +71,23 @@ namespace Utilities.RadarWorks.Elements.Signal
             {
                 var p = Mapper.GetScreenLocation(Model[i].X, Model[i].Y);
                 rt.DrawLine(new Point2F(p.X, p.Y), new Point2F(p.X, (float)yBottom), signalBrush, 1);
+            }
+        }
+
+        private void DrawDots(RenderTarget rt)
+        {
+            for (int i = 0; i < Model.Count; i++)
+            {
+                var str = $"{Model[i].X}";
+                var font = "微软雅黑";
+                using (TextFormat format = font.MakeFormat(12))
+                using (var layout = format.FitLayout(str))
+                using (var brush = Color.Black.SolidBrush(rt))
+                {
+                    var p1 = Mapper.GetScreenLocation(Model[i].X, Model[i].Y);
+                    rt.FillEllipse(new Ellipse(p1.ToPoint2F(), 6, 6), signalBrush);
+                    rt.DrawTextLayout(new Point2F(p1.X - layout.MaxWidth / 2, p1.Y - 20), layout, brush);
+                }
             }
         }
 
@@ -109,9 +129,9 @@ namespace Utilities.RadarWorks.Elements.Signal
             Redraw();
         }
 
-        public void AddMarker(float x = 0, bool locked = false)
+        public void AddMarker(Color c, float x = 0, bool locked = false)
         {
-            var marker = new SignalMarker(DrawingExtionFuncs.RandomColor(), this) { Model = new PointF(x, 0) };
+            var marker = new SignalMarker(c, this) { Model = new PointF(x, 0) };
             marker.On();
             marker.Locked = locked;
 
@@ -126,6 +146,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         {
             if (Markers.Count <= 0)
                 return;
+
             ParentDisplayer.Elements.Remove(LayerId, Markers[0]);
             lock (markerLocker)
             {

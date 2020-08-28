@@ -5,7 +5,8 @@ namespace Utilities.RadarWorks.Elements.Signal
     public enum PlotStyle
     {
         Discrete,
-        Analog
+        Analog,
+        Dot
     }
     public class SeriesProperties
     {
