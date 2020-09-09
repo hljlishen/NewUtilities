@@ -55,7 +55,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             using (var format = f.CreateTextFormat(TextFont, TextSize))
             {
                 textLayout?.Dispose();
-                textLayout = format.FitLayout(Model.ToString("0.00"));
+                textLayout = format.FitLayout(Model.ToString(ValueFormat));
                 var rect = new RectangleF((float)xRight - textLayout.MaxWidth, (float)y - textLayout.MaxHeight / 2, textLayout.MaxWidth, textLayout.MaxHeight);
                 yield return new LiveRect(rect);
                 yield return new LiveLine(new PointF((float)xLeft, (float)y), new PointF((float)xRight - textLayout.MaxWidth, (float)y));

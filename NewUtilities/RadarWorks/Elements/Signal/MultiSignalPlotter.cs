@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using NewUtilities.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -24,7 +25,7 @@ namespace Utilities.RadarWorks.Elements.Signal
             this.buttonLayout = buttonLayout;
         }
 
-        public void UpdateSerie(string serieName, IEnumerable<PointF> points)
+        public void UpdateSerie(string serieName, IEnumerable<PointD> points)
         {
             if (isLocked)   //锁定状态不更新数据
                 return;
@@ -156,19 +157,16 @@ namespace Utilities.RadarWorks.Elements.Signal
 
         bool ShouldSetArea(Area modelArea)
         {
-            if (modelArea.Right > ReferenceSystem.Right)
+            if (modelArea.Left > ReferenceSystem.Right)
                 return true;
-            if (modelArea.Left < ReferenceSystem.Left)
-                return true;
-            if (modelArea.Top > ReferenceSystem.Top)
-                return true;
-            if (modelArea.Bottom < ReferenceSystem.Bottom)
+            if (modelArea.Right < ReferenceSystem.Left)
                 return true;
             var rsArea = new Area(ReferenceSystem.Left, ReferenceSystem.Right, ReferenceSystem.Top, ReferenceSystem.Bottom);
-            if (modelArea.VerticalCover < rsArea.VerticalCover * 0.5)
+            if (modelArea.VerticalCover < rsArea.VerticalCover * 0.5 || rsArea.VerticalCover < modelArea.VerticalCover * 0.5)
                 return true;
-            if (modelArea.HorizontalCover < rsArea.HorizontalCover * 0.9)
+            if (modelArea.HorizontalCover < rsArea.HorizontalCover * 0.5 || rsArea.HorizontalCover < modelArea.HorizontalCover * 0.5)
                 return true;
+
             return false;
         }
 

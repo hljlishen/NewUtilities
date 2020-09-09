@@ -39,6 +39,8 @@ namespace Utilities.RadarWorks
 
         public ColorF BackgroundColor { get; set; }
 
+        private Task updateTask;
+
         public Displayer(Control p, IScreenToCoordinateMapper mapper, ReferenceSystem referenceSystem) : this(p, mapper, referenceSystem, Color.Black)
         {
 
@@ -68,7 +70,7 @@ namespace Utilities.RadarWorks
             tokenSource = new CancellationTokenSource();
             token = tokenSource.Token;
             Redraw = true;
-            Task.Run(Draw);
+            updateTask = Task.Run(Draw);
         }
 
         private void InitializeDisplayerState()
@@ -153,10 +155,10 @@ namespace Utilities.RadarWorks
 
         private void DisposeRenderTarget()
         {
+            Stop();
+            Task.WaitAll(updateTask);
             Factory.Dispose();
-            Factory = null;
             rt.Dispose();
-            rt = null;
         }
 
         private void Mapper_MapperStateChanged(IScreenToCoordinateMapper obj) => Redraw = true;
@@ -176,7 +178,8 @@ namespace Utilities.RadarWorks
 
         public void Dispose()
         {
-            rt.Dispose();
+            DisposeRenderTarget();
+            Elements.Dispose();
             Disposed = true;
         }
     }

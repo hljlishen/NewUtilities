@@ -13,6 +13,19 @@ namespace Utilities.RadarWorks.Elements
         private Brush tailBrush;
         private Brush targetBrush;
 
+        private Func<ITrack, double> TrackX = (t) => t.Location.X;
+        private Func<ITrack, double> TrackY = (t) => t.Location.Y;
+
+        public TrackElement(Func<ITrack, double> trackX, Func<ITrack, double> trackY)
+        {
+            TrackX = trackX;
+            TrackY = trackY;
+        }
+
+        public TrackElement()
+        {
+        }
+
         protected override void InitializeComponents(RenderTarget rt)
         {
             base.InitializeComponents(rt);
@@ -39,8 +52,9 @@ namespace Utilities.RadarWorks.Elements
             float tagHeight = 20;
             float tagRoundRadius = 3;
 
-            var cooLoc = t.Location.Rectangular;    //对Model进行NUll检测
-            var scrLoc = Mapper.GetScreenLocation(cooLoc.X, cooLoc.Y);
+            //var cooLoc = t.Location.Rectangular;    //对Model进行NUll检测
+            //var scrLoc = Mapper.GetScreenLocation(cooLoc.X, cooLoc.Y);
+            var scrLoc = Mapper.GetScreenLocation(TrackX(t), TrackY(t));
 
             var ellipse = new Ellipse(scrLoc.ToPoint2F(), circleRadius, circleRadius);
             rt.FillEllipse(ellipse, targetBrush);
@@ -59,6 +73,7 @@ namespace Utilities.RadarWorks.Elements
             var layout = dw.CreateTextLayout(t.Id.ToString(), font.MakeFormat(12), tagWidth, tagHeight);
             layout.TextAlignment = TextAlignment.Center;
             rt.DrawTextLayout(new Point2F(r.Left, r.Top), layout, tailBrush);
+            dw.Dispose();
             layout.Dispose();
         }
     }

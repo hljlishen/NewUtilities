@@ -15,6 +15,8 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         public Color Color { get; set; } = Color.Green;
         public Color SelectColor { get; set; } = Color.Orange;
         public Color TextColor { get; set; } = Color.Black;
+        public string ValueFormat { get; set; } = "0.0";
+        public string Unit { get; set; } = "";
         public float Opacity { get; set; } = 0.5f;
         protected Brush textBrush;
         protected Brush normalBrush;
@@ -46,7 +48,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         {
             using (var factory = DWriteFactory.CreateFactory())
             using (var f = factory.CreateTextFormat(TextFont, TextSize))
-            using (var l = f.FitLayout(Model.ToString("0.0")))
+            using (var l = f.FitLayout(Model.ToString(ValueFormat)))
             {
                 var location = sensor.MouseLocation;
                 rt.DrawTextLayout(location.OffSet(-l.MaxWidth, -l.MaxHeight).ToPoint2F(), l, selectBrush);

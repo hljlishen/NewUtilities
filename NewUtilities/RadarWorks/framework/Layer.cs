@@ -182,9 +182,12 @@ namespace Utilities.RadarWorks
 
         public override void Dispose()
         {
-            foreach (var e in elements)
+            lock(Locker)
             {
-                e.Dispose();
+                foreach (var e in elements)
+                {
+                    e.Dispose();
+                }
             }
             elements.Clear();
             bitmapRt?.Dispose();

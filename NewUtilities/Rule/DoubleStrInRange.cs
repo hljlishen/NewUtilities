@@ -9,10 +9,6 @@ namespace Utilities.Rules
         {
             this.interval = interval;
         }
-        public DoubleStrInRange(double min, double max) : this(ValueInterval.CloseClose(min, max))
-        {
-
-        }
 
         public override bool Pass(string input)
         {
@@ -22,6 +18,6 @@ namespace Utilities.Rules
             return interval.IsInRange(value);
         }
 
-        public override string Hint { get => $"请输入{interval.ToString()}范围内的浮点";}
+        public override string Hint { get => $"请输入{interval}范围内的浮点";}
     }
 }

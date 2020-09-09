@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using NewUtilities.Models;
 using NewUtilities.RadarWorks.Elements.Signal;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks.Elements.Signal
 {
-    class SeriePlotter : DynamicElement<List<PointF>>, ISwtichable
+    class SeriePlotter : DynamicElement<List<PointD>>, ISwtichable
     {
         public SeriesProperties SeriesProperties { get; private set; }
 
@@ -131,7 +132,7 @@ namespace Utilities.RadarWorks.Elements.Signal
 
         public void AddMarker(Color c, float x = 0, bool locked = false)
         {
-            var marker = new SignalMarker(c, this) { Model = new PointF(x, 0) };
+            var marker = new SignalMarker(c, this) { Model = new PointD(x, 0) };
             marker.On();
             marker.Locked = locked;
 
@@ -164,7 +165,7 @@ namespace Utilities.RadarWorks.Elements.Signal
             }
         }
 
-        protected override void DoUpdate(List<PointF> t)
+        protected override void DoUpdate(List<PointD> t)
         {
             base.DoUpdate(t);
             RefreshMarkers();

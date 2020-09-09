@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using NewUtilities.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -9,7 +10,7 @@ using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace NewUtilities.RadarWorks.Elements.Signal
 {
-    class SignalMarker : DynamicElement<PointF>, ISwtichable
+    class SignalMarker : DynamicElement<PointD>, ISwtichable
     {
         private ConditionalMouseDragDetector DragDetector;
 
@@ -57,10 +58,10 @@ namespace NewUtilities.RadarWorks.Elements.Signal
             if (Locked)
                 return;
 
-            base.Update(base.Mapper.GetCoordinateLocation(arg2.X, arg2.Y));
+            base.Update(base.Mapper.GetCoordinateLocation(arg2.X, arg2.Y).ToPointD());
         }
 
-        protected override void DoUpdate(PointF t)
+        protected override void DoUpdate(PointD t)
         {
             if (SeriePlotter == null)
                 base.DoUpdate(t);
@@ -70,11 +71,11 @@ namespace NewUtilities.RadarWorks.Elements.Signal
             }
         }
 
-        public static PointF FindNearestPoint(List<PointF> data, double x)
+        public static PointD FindNearestPoint(List<PointD> data, double x)
         {
             if (data == null || data.Count == 0)
-                return new PointF();
-            PointF lastPoint = data[0];
+                return new PointD();
+            PointD lastPoint = data[0];
             foreach (var p in data)
             {
                 if (p.X - x < 0)

@@ -19,7 +19,6 @@ namespace NewUtilities.RadarWorks.Elements
             ValueInterval.ExtendInterval(ref min, ref max, ratio);
             Mapper.SetCoordinateArea(min, max, Mapper.CoordinateTop, Mapper.CoordinateBottom);
         }
-
         private void ExtendY(float ratio)
         {
             var min = Mapper.CoordinateBottom;
@@ -27,7 +26,6 @@ namespace NewUtilities.RadarWorks.Elements
             ValueInterval.ExtendInterval(ref min, ref max, ratio);
             Mapper.SetCoordinateArea(Mapper.CoordinateLeft, Mapper.CoordinateRight, max, min);
         }
-
         public void XUp(ButtonElement e) => ExtendX(1 - XRatio);
         public void XDown(ButtonElement e) => ExtendX(1 + XRatio);
         public void YUp(ButtonElement e) => ExtendY(1 - YRatio);

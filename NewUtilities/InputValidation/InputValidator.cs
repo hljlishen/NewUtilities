@@ -19,6 +19,12 @@ namespace Utilities.InputValidation
 
             c.TextChanged += Tb_TextChanged;
             ruleMap.Add(c, rule);
+
+            if(!rule.Pass(c.Text))
+            {
+                errorProvider.SetError(c, rule.Hint);
+                UnvalidatedInput?.Invoke(c, rule);
+            }
         }
 
         public void RemoveValidation(Control c)
@@ -56,8 +62,10 @@ namespace Utilities.InputValidation
 
         public void Cue()
         {
-            var timer = new Timer();
-            timer.Interval = 3000;
+            var timer = new Timer
+            {
+                Interval = 3000
+            };
             timer.Tick += Timer_Tick;
             timer.Start();
             errorProvider.BlinkStyle = ErrorBlinkStyle.AlwaysBlink;

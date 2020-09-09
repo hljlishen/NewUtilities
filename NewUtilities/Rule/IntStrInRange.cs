@@ -10,11 +10,6 @@ namespace Utilities.Rules
             this.interval = interval;
         }
 
-        public IntStrInRange(int min, int max) : this(ValueInterval.CloseClose(min, max))
-        {
-
-        }
-
         public override bool Pass(string input)
         {
             if (!base.Pass(input))
@@ -23,6 +18,6 @@ namespace Utilities.Rules
             return interval.IsInRange(value);
         }
 
-        public override string Hint { get => $"请输入{interval.ToString()}范围内的整数";}
+        public override string Hint { get => $"请输入{interval}范围内的整数";}
     }
 }

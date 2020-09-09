@@ -1,5 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
+using NewUtilities.Models;
 using Utilities.Coordinates;
 
 namespace System.Drawing
@@ -9,6 +10,8 @@ namespace System.Drawing
         public static Point2F ToPoint2F(this PointF p) => new Point2F(p.X, p.Y);
 
         public static PointF OffSet(this PointF p, double x, double y) => new PointF(p.X + (float)x, p.Y + (float)y);
+
+        public static PointD ToPointD(this PointF p) => new PointD(p.X, p.Y);
 
         public static RectF ToRectF(this Rectangle r) => new RectF(r.Left, r.Top, r.Right, r.Bottom);
 

@@ -84,11 +84,24 @@
     <Compile Include="Extentions\DrawingExtionFuncs.cs" />
     <Compile Include="Extentions\ListExt.cs" />
     <Compile Include="Extentions\RandomExtionFuncs.cs" />
+    <Compile Include="Forms\Slash.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Slash.Designer.cs">
+      <DependentUpon>Slash.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\TaskForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TaskForm.Designer.cs">
+      <DependentUpon>TaskForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Functions\Functions.cs" />
     <Compile Include="Guard\Guard.cs" />
     <Compile Include="InputValidation\InputValidator.cs" />
     <Compile Include="InputValidation\TextBoxValueDoesntMatchRuleException.cs" />
     <Compile Include="Mapper\Area.cs" />
+    <Compile Include="Mapper\FixedMarginDecorator.cs" />
     <Compile Include="Mapper\IMapperDecorator.cs" />
     <Compile Include="Mapper\IScreenToCoordinateMapper.cs" />
     <Compile Include="Mapper\PolarRotateDecorator.cs" />
@@ -96,6 +109,7 @@
     <Compile Include="Mapper\SquaredScreenRectDecorator.cs" />
     <Compile Include="Mapper\ValueMapper.cs" />
     <Compile Include="Mapper\ZoomRectDecorator.cs" />
+    <Compile Include="Models\PointD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadarWorks\ConditionalMouseDragDetector.cs" />
     <Compile Include="RadarWorks\Elements\AxisX.cs" />
@@ -130,6 +144,7 @@
     <Compile Include="RadarWorks\Elements\PpiRotationController.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\DistanceMarkerAnimation.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\MarkerModel.cs" />
+    <Compile Include="RadarWorks\Elements\Ppi\PpiAngleRuler.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\PpiAntenna.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\PpiTarget.cs" />
     <Compile Include="RadarWorks\Elements\Ppi\SectionSweepController.cs" />
@@ -222,28 +237,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\NewUtilities.csprojAssemblyReference.cache" />
-    <None Include="obj\x64\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\x64\Debug\NewUtilities.csproj.CopyComplete" />
-    <None Include="obj\x64\Debug\NewUtilities.csproj.CoreCompileInputs.cache" />
-    <None Include="obj\x64\Debug\NewUtilities.csprojAssemblyReference.cache" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Content Include="bin\x64\Debug\Microsoft.WindowsAPICodePack.DirectX.dll" />
-    <Content Include="bin\x64\Debug\NewUtilities.dll" />
-    <Content Include="bin\x64\Debug\NewUtilities.pdb" />
-    <Content Include="obj\x64\Debug\NewUtilities.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\x64\Debug\NewUtilities.dll" />
-    <Content Include="obj\x64\Debug\NewUtilities.pdb" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="bin\Debug\" />
-    <Folder Include="bin\Release\" />
-    <Folder Include="bin\x86\Debug\" />
-    <Folder Include="obj\Debug\TempPE\" />
-    <Folder Include="obj\x64\Debug\TempPE\" />
+    <EmbeddedResource Include="Forms\Slash.resx">
+      <DependentUpon>Slash.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TaskForm.resx">
+      <DependentUpon>TaskForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets" Condition="Exists('..\packages\WindowsAPICodePack-DirectX.1.1.2\build\WindowsAPICodePack-DirectX.targets')" />
