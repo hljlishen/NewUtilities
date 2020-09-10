@@ -53,6 +53,10 @@ namespace Utilities.RadarWorks
                     bitmapRt?.Dispose();
                     bitmapRt = rt.CreateCompatibleRenderTarget(new CompatibleRenderTargetOptions(), rt.Size);
                 }
+                if(LayerId == 500)
+                {
+
+                }
                 DrawLayerOnBitmap();
                 DrawLayerToTarget(rt);
             }

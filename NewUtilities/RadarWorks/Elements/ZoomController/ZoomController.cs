@@ -23,7 +23,6 @@ namespace Utilities.RadarWorks
             fillBrush?.Dispose();
             frameBrush?.Dispose();
         }
-
         protected override void UnbindEvents(Control p)
         {
             dragDetector.MouseDrag -= DragDetector_MouseDrag;
