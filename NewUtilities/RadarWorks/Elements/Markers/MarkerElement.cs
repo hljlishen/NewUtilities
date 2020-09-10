@@ -48,7 +48,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         {
             using (var factory = DWriteFactory.CreateFactory())
             using (var f = factory.CreateTextFormat(TextFont, TextSize))
-            using (var l = f.FitLayout(Model.ToString(ValueFormat)))
+            using (var l = f.FitLayout(Model.ToString(ValueFormat) + Unit))
             {
                 var location = sensor.MouseLocation;
                 rt.DrawTextLayout(location.OffSet(-l.MaxWidth, -l.MaxHeight).ToPoint2F(), l, selectBrush);

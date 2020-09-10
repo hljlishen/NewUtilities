@@ -79,7 +79,7 @@ namespace Utilities.RadarWorks.Elements.Signal
         {
             for (int i = 0; i < Model.Count; i++)
             {
-                var str = $"{Model[i].X}";
+                var str = $"{Model[i].X:0.00}";
                 var font = "微软雅黑";
                 using (TextFormat format = font.MakeFormat(12))
                 using (var layout = format.FitLayout(str))

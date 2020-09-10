@@ -13,5 +13,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         Color TextColor { get; set; }
         string TextFont { get; set; }
         float TextSize { get; set; }
+        string Unit { get; set; }
+        string ValueFormat { get; set; }
     }
 }

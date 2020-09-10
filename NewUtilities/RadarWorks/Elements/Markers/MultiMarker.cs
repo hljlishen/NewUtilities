@@ -12,6 +12,48 @@ namespace NewUtilities.RadarWorks.Elements.Markers
         public float TextSize { get; private set; }
         public string TextFont { get; private set; }
 
+        public string Unit
+        {
+            get
+            {
+                if (markers == null || markers.Count == 0)
+                    return "";
+                else
+                    return markers[0].Unit;
+            }
+            set
+            {
+                lock (Locker)
+                {
+                    foreach (var m in markers)  //向Displayer添加MarkerElement
+                    {
+                        m.Unit = value;
+                    }
+                }
+            }
+        }
+
+        public string ValueFormat
+        {
+            get
+            {
+                if (markers == null || markers.Count == 0)
+                    return "";
+                else
+                    return markers[0].ValueFormat;
+            }
+            set
+            {
+                lock (Locker)
+                {
+                    foreach (var m in markers)  //向Displayer添加MarkerElement
+                    {
+                        m.ValueFormat = value;
+                    }
+                }
+            }
+        }
+
         public MarkerIteratorType IteratorType { get; set; } = MarkerIteratorType.NoLeftOrRight;
 
         public MultiMarker(int markerCount, float textSize = 12, string textFont = "Consolas")

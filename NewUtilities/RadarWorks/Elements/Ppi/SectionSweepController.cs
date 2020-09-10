@@ -91,10 +91,10 @@ namespace Utilities.RadarWorks
         {
             lock (Locker)
             {
-                isStopped = false;
                 var sweepSection = GetSection(arg1, arg2);
                 if (sweepSection.CoverAreaBiggerThan(2)) //鼠标拖动的角度差大于2度才开始绘制扇扫区域
                 {
+                    isStopped = false;
                     Model = sweepSection;
                     isCurrentSectionValid = true;
                     Redraw();
