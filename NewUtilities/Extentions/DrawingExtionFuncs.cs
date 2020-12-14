@@ -1,6 +1,6 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
-using NewUtilities.Models;
+using Utilities.Models;
 using Utilities.Coordinates;
 
 namespace System.Drawing

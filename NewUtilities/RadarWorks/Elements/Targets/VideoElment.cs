@@ -5,12 +5,15 @@ using System.Drawing;
 
 namespace Utilities.RadarWorks
 {
-    public class VideoElment : RotatableElement<List<IVideo>>
+    public class VideoElment : RotatableElement<IEnumerable<IVideo>>
     {
         public float echoRadius { get; set; } = 2;
 
         private Func<IVideo, double> VideoX = (v) => v.Location.X;
         private Func<IVideo, double> VideoY = (v) => v.Location.Y;
+
+        public bool FixedColor { get; set; } = true;
+        public Color Color { get; set; } = Color.Red;
 
         public VideoElment(Func<IVideo, double> videoX, Func<IVideo, double> videoY)
         {
@@ -26,18 +29,36 @@ namespace Utilities.RadarWorks
         {
             if (Model == null)
                 return;
-            foreach (var t in Model)       //绘制原始视频
+
+            if(!FixedColor)
             {
-                var red = t.Am * 2.97;
-                var blue = 255 - red;
-                ColorF c = new ColorF((float)red / 255, 0, (float)blue / 255);
-                using (var brush = rt.CreateSolidColorBrush(c))
+                foreach (var t in Model)       //绘制原始视频
                 {
-                    //var loc = t.Location.Rectangular;
-                    //var scrLoc = Mapper.GetScreenLocation(loc.X, loc.Y);
-                    var scrLoc = Mapper.GetScreenLocation(VideoX(t), VideoY(t));
-                    Ellipse e = new Ellipse(scrLoc.ToPoint2F(), echoRadius, echoRadius);
-                    rt.FillEllipse(e, brush);
+                    var red = t.Am * 2.97;
+                    var blue = 255 - red;
+                    ColorF c = new ColorF((float)red / 255, 0, (float)blue / 255);
+                    using (var brush = rt.CreateSolidColorBrush(c))
+                    {
+                        var x = VideoX(t);
+                        var y = VideoY(t);
+                        var scrLoc = Mapper.GetScreenLocation(x, y);
+                        Ellipse e = new Ellipse(scrLoc.ToPoint2F(), echoRadius, echoRadius);
+                        rt.FillEllipse(e, brush);
+                    }
+                }
+            }
+            else
+            {
+                using (var brush = Color.SolidBrush(rt))
+                {
+                    foreach(var t in Model)
+                    {
+                        var x = VideoX(t);
+                        var y = VideoY(t);
+                        var scrLoc = Mapper.GetScreenLocation(x, y);
+                        Ellipse e = new Ellipse(scrLoc.ToPoint2F(), echoRadius, echoRadius);
+                        rt.FillEllipse(e, brush);
+                    }
                 }
             }
         }

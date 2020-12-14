@@ -1,8 +1,8 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
-using Utilities.Mapper;
 
 namespace Utilities.RadarWorks
 {
@@ -16,6 +16,12 @@ namespace Utilities.RadarWorks
     {
         private Dictionary<int, List<OriginalVideoData>> layerMap = new Dictionary<int, List<OriginalVideoData>>();
         private Dictionary<ValueIntervals.ValueInterval, int> intervalMap = new Dictionary<ValueIntervals.ValueInterval, int>();
+
+        public Func<OriginVideoDotProperty, double> VideoX = (v) => v.Location.X;
+        public Func<OriginVideoDotProperty, double> VideoY = (v) => v.Location.Y;
+
+        public float Radius { get; set; } = 2;
+        public Color Color { get; set; } = Color.Red;
 
         /// <summary>
         /// 此控件要占用多个图层，此参数表示要占用图层的个数。占用的图层是此控件所在图层后面consumedLayerCount个。使用Diplayer时不要向这些图层手动添加元素，否则元素会被删除无法显示
@@ -73,19 +79,6 @@ namespace Utilities.RadarWorks
             throw new Exception("找不到OriginVideoDotProperty所在的图层");
         }
 
-        private IEnumerable<PpiOriginalVideoDot> GetLayerDots(int layerId)
-        {
-            var OriginalVideoDataCollection = layerMap[layerId];
-            foreach (var item in OriginalVideoDataCollection)
-            {
-                foreach (var dotData in item.Dots)
-                {
-                    var rotatedDotProperty = new OriginVideoDotProperty() { Location = new Coordinates.PolarCoordinate(dotData.Location.Az + RotateAngle, dotData.Location.El, dotData.Location.Dis), Am = dotData.Am };
-                    yield return new PpiOriginalVideoDot(rotatedDotProperty);
-                }
-            }
-        }
-
         public uint ConsumedLayerCount { get; private set; }
         private int currentLayerId;
         private bool firstTime = true;
@@ -117,6 +110,19 @@ namespace Utilities.RadarWorks
         {
             var layer = ParentDisplayer.Elements.GetLayer(id);
             layer.RefreshLayerElements(GetLayerDots(id).ToList());
+        }
+
+        private IEnumerable<VideoDot> GetLayerDots(int layerId)
+        {
+            var OriginalVideoDataCollection = layerMap[layerId];
+            foreach (var item in OriginalVideoDataCollection)
+            {
+                foreach (var dotData in item.Dots)
+                {
+                    var rotatedDotProperty = new OriginVideoDotProperty() { Location = new Coordinates.PolarCoordinate(dotData.Location.Az + RotateAngle, dotData.Location.El, dotData.Location.Dis), Am = dotData.Am };
+                    yield return new VideoDot(rotatedDotProperty) { X = VideoX, Y = VideoY, Radius = Radius, Color = Color };
+                }
+            }
         }
     }
 }

@@ -77,13 +77,28 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Async\TaskAsyncHelper.cs" />
+    <Compile Include="BinarySerialize\BinaryFomartor.cs" />
     <Compile Include="Circlation\RangedInt.cs" />
+    <Compile Include="Collections\OneOnOneMap.cs" />
     <Compile Include="Collections\Slide.cs" />
     <Compile Include="Coordinates\PolarCoordinate.cs" />
     <Compile Include="Coordinates\RectangularCoordinate.cs" />
     <Compile Include="Extentions\DrawingExtionFuncs.cs" />
     <Compile Include="Extentions\ListExt.cs" />
     <Compile Include="Extentions\RandomExtionFuncs.cs" />
+    <Compile Include="Forms\ExclusiveMenuItemManager.cs" />
+    <Compile Include="Forms\GuideForm\GuideFrame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GuideForm\GuideFrame.Designer.cs">
+      <DependentUpon>GuideFrame.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GuideForm\GuidePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GuideForm\GuidePage.Designer.cs">
+      <DependentUpon>GuidePage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Slash.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +113,9 @@
     </Compile>
     <Compile Include="Functions\Functions.cs" />
     <Compile Include="Guard\Guard.cs" />
+    <Compile Include="Ini\IniFileOperator.cs" />
+    <Compile Include="Ini\IniSynconizer.cs" />
+    <Compile Include="Ini\ObjectIsNotCreatedByThisSynconizer.cs" />
     <Compile Include="InputValidation\InputValidator.cs" />
     <Compile Include="InputValidation\TextBoxValueDoesntMatchRuleException.cs" />
     <Compile Include="Mapper\Area.cs" />
@@ -112,6 +130,8 @@
     <Compile Include="Models\PointD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RadarWorks\ConditionalMouseDragDetector.cs" />
+    <Compile Include="RadarWorks\DisplayerBuilders\OscillometerBuilder.cs" />
+    <Compile Include="RadarWorks\DisplayerBuilders\PpiBuilder.cs" />
     <Compile Include="RadarWorks\Elements\AxisX.cs" />
     <Compile Include="RadarWorks\Elements\AxisY.cs" />
     <Compile Include="RadarWorks\Elements\BitmapDrawer.cs" />
@@ -124,9 +144,11 @@
     <Compile Include="RadarWorks\Elements\LocationDisplayer\CoordinateLocation.cs" />
     <Compile Include="RadarWorks\Elements\LocationDisplayer\CoordinateType.cs" />
     <Compile Include="RadarWorks\Elements\LocationDisplayer\LocationDisplay.cs" />
-    <Compile Include="RadarWorks\Elements\LocationDisplayer\LocationDisplayModel.cs" />
+    <Compile Include="RadarWorks\Elements\LocationDisplayer\PositionInfo.cs" />
     <Compile Include="RadarWorks\Elements\MapElement.cs" />
     <Compile Include="RadarWorks\Elements\MapperFrame.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\DynamicHorizontalValueMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\DynamicVertivalValueMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\HorizontalValueMaker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\IMarkerInterface.cs" />
     <Compile Include="RadarWorks\Elements\Markers\IMarkerModelIterator.cs" />
@@ -137,6 +159,8 @@
     <Compile Include="RadarWorks\Elements\Markers\MultiMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\PolarAngleMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\PolarDistanceMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\StaticHorizontalValuemarker.cs" />
+    <Compile Include="RadarWorks\Elements\Markers\StaticVerticalValueMarker.cs" />
     <Compile Include="RadarWorks\Elements\Markers\VerticalValueMarker.cs" />
     <Compile Include="RadarWorks\Elements\MouseDragger.cs" />
     <Compile Include="RadarWorks\Elements\NorthLine.cs" />
@@ -155,16 +179,19 @@
     <Compile Include="RadarWorks\Elements\RotationController.cs" />
     <Compile Include="RadarWorks\Elements\Signal\AnalogSignalPlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\DiscreteSignalPlotter.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\MaxiumMaintainSgnal.cs" />
     <Compile Include="RadarWorks\Elements\Signal\MultiSignalPlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\SeriePlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\SeriesProperties.cs" />
     <Compile Include="RadarWorks\Elements\Signal\SignalMarker.cs" />
+    <Compile Include="RadarWorks\Elements\Signal\WaterFall\WaterFallPlotter.cs" />
     <Compile Include="RadarWorks\Elements\Signal\XAxisMeasure.cs" />
     <Compile Include="RadarWorks\Elements\Target.cs" />
     <Compile Include="RadarWorks\Elements\Targets\ILocatable.cs" />
     <Compile Include="RadarWorks\Elements\Targets\ITrack.cs" />
     <Compile Include="RadarWorks\Elements\Targets\IVideo.cs" />
-    <Compile Include="RadarWorks\Elements\Targets\TrackElement.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\TrackBase.cs" />
+    <Compile Include="RadarWorks\Elements\Targets\StaticTrackManager.cs" />
     <Compile Include="RadarWorks\Elements\Targets\VideoElment.cs" />
     <Compile Include="RadarWorks\Elements\ZoomController\RectangleSelection.cs" />
     <Compile Include="RadarWorks\Elements\ZoomController\SelectStrategy.cs" />
@@ -213,6 +240,7 @@
     <Compile Include="RadarWorks\Sensors\MouseDoubleClickSensor.cs" />
     <Compile Include="RadarWorks\Sensors\MouseMoveSensor.cs" />
     <Compile Include="RadarWorks\TernaryRasterOperations.cs" />
+    <Compile Include="RadarWorks\DisplayerBuilders\DisplayerBuilder.cs" />
     <Compile Include="Rule\AndRule.cs" />
     <Compile Include="Rule\CompositeRule.cs" />
     <Compile Include="Rule\DoubleStrInRange.cs" />
@@ -241,6 +269,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <EmbeddedResource Include="Forms\GuideForm\GuideFrame.resx">
+      <DependentUpon>GuideFrame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GuideForm\GuidePage.resx">
+      <DependentUpon>GuidePage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\Slash.resx">
       <DependentUpon>Slash.cs</DependentUpon>
     </EmbeddedResource>

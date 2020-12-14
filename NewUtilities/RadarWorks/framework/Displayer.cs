@@ -37,7 +37,7 @@ namespace Utilities.RadarWorks
         private CancellationToken token;
         private bool Disposed = false;
 
-        public ColorF BackgroundColor { get; set; }
+        public ColorF BackgroundColor { get; private set; }
 
         private Task updateTask;
 

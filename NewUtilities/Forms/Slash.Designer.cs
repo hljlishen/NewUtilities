@@ -38,23 +38,21 @@
             this.info_lab.BackColor = System.Drawing.Color.Transparent;
             this.info_lab.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.info_lab.ForeColor = System.Drawing.Color.White;
-            this.info_lab.Location = new System.Drawing.Point(18, 476);
-            this.info_lab.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.info_lab.Location = new System.Drawing.Point(12, 290);
             this.info_lab.Name = "info_lab";
-            this.info_lab.Size = new System.Drawing.Size(216, 31);
+            this.info_lab.Size = new System.Drawing.Size(145, 22);
             this.info_lab.TabIndex = 0;
             this.info_lab.Text = "正在检测UKey......";
             // 
             // SlashForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(1082, 522);
+            this.ClientSize = new System.Drawing.Size(721, 348);
             this.Controls.Add(this.info_lab);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "SlashForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.SlashForm_Load);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Utilities.Models;
 
 namespace Utilities.Mapper
 {
@@ -47,8 +48,8 @@ namespace Utilities.Mapper
         public double GetScreenY(double coordinateY) => YAxisMapper.MapToValue1(coordinateY);
         public double GetCoordinateX(double screenX) => XAxisMapper.MapToValue2(screenX);
         public double GetCoordinateY(double screenY) => YAxisMapper.MapToValue2(screenY);
-        public PointF GetScreenLocation(double coordinateX, double coordinateY) => new PointF((float)GetScreenX(coordinateX), (float)GetScreenY(coordinateY));
-        public PointF GetCoordinateLocation(double screenX, double screenY) => new PointF((float)GetCoordinateX(screenX), (float)GetCoordinateY(screenY));
+        public PointD GetScreenLocation(double coordinateX, double coordinateY) => new PointD(GetScreenX(coordinateX), GetScreenY(coordinateY));
+        public PointD GetCoordinateLocation(double screenX, double screenY) => new PointD(GetCoordinateX(screenX), GetCoordinateY(screenY));
 
         public void SetScreenArea(double left, double right, double top, double bottom)
         {

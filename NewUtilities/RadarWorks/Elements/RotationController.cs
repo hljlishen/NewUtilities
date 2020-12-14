@@ -41,8 +41,8 @@ namespace Utilities.RadarWorks
         private void DragDetector_MouseDrag(Point arg1, Point arg2)
         {
             isDragging = true;
-            var angle1 = Functions.AngleToNorth(ReferenceSystem.ScreenOriginalPoint, arg1);
-            var angle2 = Functions.AngleToNorth(ReferenceSystem.ScreenOriginalPoint, arg2);
+            var angle1 = Functions.AngleToNorth(ReferenceSystem.ScreenOriginalPoint.ToPoinF(), arg1);
+            var angle2 = Functions.AngleToNorth(ReferenceSystem.ScreenOriginalPoint.ToPoinF(), arg2);
             var diff = (angle2 - angle1);
             (Mapper as PolarRotateDecorator).RotateAngle = lastAngle + diff;
             Redraw();

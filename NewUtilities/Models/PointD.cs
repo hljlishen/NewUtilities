@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System.Drawing;
+using Utilities.Coordinates;
 
-namespace NewUtilities.Models
+namespace Utilities.Models
 {
     public struct PointD
     {
@@ -14,5 +16,10 @@ namespace NewUtilities.Models
         public double Y { get; set; }
 
         public PointF ToPoinF() => new PointF((float)X, (float)Y);
+        public Point2F ToPoint2F() => new Point2F((float)X, (float)Y);
+
+        public PointD Move(double x, double y) => new PointD(x + x, y + y);
+
+        public RectangularCoordinate ToRectangularCoordinate() => new RectangularCoordinate(X, Y, 0);
     }
 }

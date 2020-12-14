@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Utilities.Coordinates;
+using Utilities.Models;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks
@@ -79,30 +80,33 @@ namespace Utilities.RadarWorks
             var scrLoc = Mapper.GetScreenLocation(cooLoc.X, cooLoc.Y);
 
             yield return new LiveCircle(new Ellipse(scrLoc.ToPoint2F(), circleRadius, circleRadius));
-            var p1 = new Point2F(scrLoc.X, scrLoc.Y - triangleVerticalOffset);
-            var p2 = new Point2F(scrLoc.X - triangleHorizentalOffset, scrLoc.Y - triangleVerticalOffset - triangleHeight);
-            var p3 = new Point2F(scrLoc.X + triangleHorizentalOffset, scrLoc.Y - triangleVerticalOffset - triangleHeight);
+            //var p1 = new Point2F(scrLoc.X, scrLoc.Y - triangleVerticalOffset);
+            //var p2 = new Point2F(scrLoc.X - triangleHorizentalOffset, scrLoc.Y - triangleVerticalOffset - triangleHeight);
+            //var p3 = new Point2F(scrLoc.X + triangleHorizentalOffset, scrLoc.Y - triangleVerticalOffset - triangleHeight);
+            var p1 = scrLoc.Move(0, -triangleVerticalOffset).ToPoint2F();
+            var p2 = scrLoc.Move(-triangleHorizentalOffset, -(triangleVerticalOffset + triangleHeight)).ToPoint2F();
+            var p3 = scrLoc.Move(triangleHorizentalOffset, -(triangleVerticalOffset + triangleHeight)).ToPoint2F();
             yield return new LiveLineGeometry(p1, p2, p3);
 
             RectF rect = new RectF
             {
-                Left = scrLoc.X - tagWidth / 2,
-                Top = scrLoc.Y - triangleVerticalOffset - triangleHeight - tagHeight,
+                Left = (float)scrLoc.X - tagWidth / 2,
+                Top = (float)scrLoc.Y - triangleVerticalOffset - triangleHeight - tagHeight,
                 Width = tagWidth,
                 Height = tagHeight
             };
             yield return new LiveRoundedRectangle(rect, tagRoundRadius, tagRoundRadius);
 
-            PointF pStart, pEnd = scrLoc;
+            PointD pStart, pEnd = scrLoc;
             for (int i = 0; i < tail.Count - 1; i++)
             {
                 pStart = base.Mapper.GetScreenLocation(tail[i].X, tail[i].Y);
                 pEnd = base.Mapper.GetScreenLocation(tail[i + 1].X, tail[i + 1].Y);
-                yield return new LiveLine(pStart, pEnd);
+                yield return new LiveLine(pStart.ToPoinF(), pEnd.ToPoinF());
                 yield return new LiveCircle(new Ellipse(pStart.ToPoint2F(), 2, 2));
             }
 
-            yield return new LiveLine(scrLoc, pEnd);
+            yield return new LiveLine(scrLoc.ToPoinF(), pEnd.ToPoinF());
         }
         protected override void DoUpdate(TargetModel t)
         {

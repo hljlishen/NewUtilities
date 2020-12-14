@@ -3,28 +3,40 @@ using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
-using Utilities.Coordinates;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks
 {
-    public class LocationDisplay : DynamicElement<LocationDisplayModel>
+    public class LocationDisplay : DynamicElement<Point>
     {
-        private PointF currentCoordinateLocation;
-        private PointF currentScreenLcation;
         private Brush textBrush;
-        public TextFormat textFormat;
+        private TextFormat textFormat;
+        public string FontName { get; set; }
+        public float FontSize { get; set; }
+        public Color FontColor { get; set; }
 
-        public LocationDisplay(LocationDisplayModel displayModel)
+        public CoordinateType CoordinateType { get; set; } = CoordinateType.Rectangular;
+
+        public bool Visible { get; set; } = true;
+
+        public string XValueStringFormat { get; set; } = "0.0000";
+        public string YValueStringFormat { get; set; } = "0.0000";
+
+        public Action<string> LocationInfoChanged;
+
+        public LocationDisplay(PositionInfo displayModel, string fontName, float fontSize, Color fontColor)
         {
             DisplayModel = displayModel;
+            FontName = fontName;
+            FontSize = fontSize;
+            FontColor = fontColor;
         }
 
-        public LocationDisplay() : this(new LocationDisplayModel() { coordinateType = CoordinateType.Rectangular, FixLocation = new PointF(), FontColor = Color.White, FontName = "Berlin Sans FB Demi", FontSize = 25, LocationType = CoordinateLocation.FixedPosition})
+        public LocationDisplay() : this(new PositionInfo() { FixLocation = new PointF(), LocationType = CoordinateLocation.FixedPosition}, "Berlin Sans FB Demi", 25, Color.White)
         {
         }
 
-        public LocationDisplayModel DisplayModel { get; private set; }
+        public PositionInfo DisplayModel { get; private set; }
 
         public override void Dispose()
         {
@@ -35,9 +47,9 @@ namespace Utilities.RadarWorks
         protected override void InitializeComponents(RenderTarget rt)
         {
             base.InitializeComponents(rt);
-            textBrush = DisplayModel.FontColor.SolidBrush(rt);
+            textBrush = FontColor.SolidBrush(rt);
             DWriteFactory dw = DWriteFactory.CreateFactory();
-            textFormat = dw.CreateTextFormat(DisplayModel.FontName, DisplayModel.FontSize);
+            textFormat = dw.CreateTextFormat(FontName, FontSize);
             dw.Dispose();
         }
 
@@ -53,37 +65,34 @@ namespace Utilities.RadarWorks
             p.MouseMove -= Panel_MouseMove;
         }
 
-        private void Panel_MouseMove(object sender, System.Windows.Forms.MouseEventArgs e)
+        private void Panel_MouseMove(object sender, MouseEventArgs e)
         {
-            currentScreenLcation = e.Location;
-            currentCoordinateLocation = Mapper.GetCoordinateLocation(e.X, e.Y);
-            Redraw();
+            Update(e.Location);
         }
 
         protected override void DrawDynamicElement(RenderTarget rt)
         {
-            if (HasChanged())
-            {
-                textBrush?.Dispose();
-                textFormat?.Dispose();
-                InitializeComponents(rt);
-            }
-            RectF r = GetDisplayRect(rt);
             string content = GetDisplayContent();
+            LocationInfoChanged?.Invoke(content);
+
+            if (!Visible)
+                return;
+            RectF r = GetDisplayRect(rt);
             rt.DrawText(content, textFormat, r, textBrush);
         }
 
         private string GetDisplayContent()
         {
-            switch (DisplayModel.coordinateType)
+            switch (CoordinateType)
             {
                 case CoordinateType.Polar:
-                    var p = new RectangularCoordinate(currentCoordinateLocation.X, currentCoordinateLocation.Y, 0).Polar;
-                    return $"Az:{p.Az:0.0} ,Dis:{p.Dis:0.0}";
+                    var polarCoodinate = Mapper.GetCoordinateLocation(Model.X, Model.Y).ToRectangularCoordinate().Polar;
+                    return $"Az:{polarCoodinate.Az.ToString(XValueStringFormat)} ,Dis:{polarCoodinate.Dis.ToString(YValueStringFormat)}";
                 case CoordinateType.Rectangular:
-                    return $"X:{currentCoordinateLocation.X} ,Y:{currentCoordinateLocation.Y}";
+                    var rectangularCoodinate = Mapper.GetCoordinateLocation(Model.X, Model.Y).ToRectangularCoordinate();
+                    return $"X:{rectangularCoodinate.X.ToString(XValueStringFormat)} ,Y:{rectangularCoodinate.Y.ToString(YValueStringFormat)}";
                 case CoordinateType.Screen:
-                    return $"X:{currentScreenLcation.X} ,Y:{currentScreenLcation.Y}";
+                    return $"X:{Model.X} ,Y:{Model.Y}";
                 default:
                     throw new Exception("CoordinateType变量的值无效");
             }
@@ -93,14 +102,12 @@ namespace Utilities.RadarWorks
         {
             if (DisplayModel.LocationType == CoordinateLocation.FollowMouse)
             {
-                return new RectF(currentScreenLcation.X + 30, currentScreenLcation.Y, currentScreenLcation.X + 1000, currentScreenLcation.Y + 1000);
+                return new RectF(Model.X + 30, Model.Y, Model.X + 1000, Model.Y + 1000);
             }
             else
             {
                 return new RectangleF(DisplayModel.FixLocation.X, DisplayModel.FixLocation.Y, 1000, 1000).ToRectF();
             }
         }
-
-        protected override void DoUpdate(LocationDisplayModel t) => DisplayModel = t;
     }
 }

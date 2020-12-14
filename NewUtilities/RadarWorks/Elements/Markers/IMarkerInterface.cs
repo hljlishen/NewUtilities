@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
     public interface IMarkerInterface : IDynamicElement<double>
     {

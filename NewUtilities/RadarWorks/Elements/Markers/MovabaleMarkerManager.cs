@@ -10,8 +10,8 @@ namespace Utilities.RadarWorks.Elements.Markers
         private List<MovableXAxisMarker> xAxisMarkers = new List<MovableXAxisMarker>();
         private List<MovableYAxisMarker> yAxisMarkers = new List<MovableYAxisMarker>();
 
-        public XAxisMarkerHandleStyle XAxisMarkerHandleStyle { get; set; } = XAxisMarkerHandleStyle.Bottom;
-        public YAxisMarkerHandleStyle YAxisMarkerHandleStyle { get; set; } = YAxisMarkerHandleStyle.Right;
+        public XAxisMarkerHandleStyle XAxisMarkerHandleStyle { get; set; } = XAxisMarkerHandleStyle.Top;
+        public YAxisMarkerHandleStyle YAxisMarkerHandleStyle { get; set; } = YAxisMarkerHandleStyle.Left;
         public void AddXMarker()
         {
             var xMarker = new MovableXAxisMarker() { Color = DrawingExtionFuncs.RandomColor(), Model = GetRandomXCoordinate(), HandlePosition = XAxisMarkerHandleStyle };
@@ -65,7 +65,8 @@ namespace Utilities.RadarWorks.Elements.Markers
             var r = new Random(DateTime.Now.Millisecond);
             var random = r.NextDouble(0.2, 0.8);
             var max = Math.Max(Mapper.CoordinateLeft, Mapper.CoordinateRight);
-            return max * random;
+            var distance = Math.Abs(Mapper.CoordinateLeft - Mapper.CoordinateRight);
+            return distance * random + Mapper.CoordinateLeft;
         }
 
         public double GetRandomYCoordinate()

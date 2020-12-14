@@ -1,6 +1,6 @@
 ﻿using Utilities.Mapper;
 
-namespace NewUtilities.Mapper
+namespace Utilities.Mapper
 {
     public class FixedMarginDecorator : MapperDecorator
     {

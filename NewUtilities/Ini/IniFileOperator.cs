@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace Utilities.IniBind
+namespace Utilities.IniSynconizer
 {
-    public class IniFileOperator
+    class IniFileOperator
     {
         [DllImport("kernel32")]//返回0表示失败，非0为成功
         private static extern long WritePrivateProfileString(string section, string key, string val, string filePath);

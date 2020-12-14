@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Utilities.Models;
 
 namespace Utilities.Mapper
 {
@@ -23,10 +24,10 @@ namespace Utilities.Mapper
         public virtual PointF ScreenCenter => Mapper.ScreenCenter;
         public virtual double ScreenWidth => Mapper.ScreenWidth;
         public virtual double ScreenHeight => Mapper.ScreenHeight;
-        public virtual PointF GetCoordinateLocation(double screenX, double screenY) => Mapper.GetCoordinateLocation(screenX, screenY);
+        public virtual PointD GetCoordinateLocation(double screenX, double screenY) => Mapper.GetCoordinateLocation(screenX, screenY);
         public virtual double GetCoordinateX(double screenX) => Mapper.GetCoordinateX(screenX);
         public virtual double GetCoordinateY(double screenY) => Mapper.GetCoordinateY(screenY);
-        public virtual PointF GetScreenLocation(double coordinateX, double coordinateY) => Mapper.GetScreenLocation(coordinateX, coordinateY);
+        public virtual PointD GetScreenLocation(double coordinateX, double coordinateY) => Mapper.GetScreenLocation(coordinateX, coordinateY);
         public virtual double GetScreenX(double coordinateX) => Mapper.GetScreenX(coordinateX);
         public virtual double GetScreenY(double coordinateY) => Mapper.GetScreenY(coordinateY);
         public virtual void SetScreenArea(double left, double right, double top, double bottom)

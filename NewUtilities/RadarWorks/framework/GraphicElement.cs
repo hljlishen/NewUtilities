@@ -1,5 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
-using NewUtilities.RadarWorks.framework;
+using Utilities.RadarWorks.framework;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;

@@ -35,7 +35,7 @@ namespace Utilities.RadarWorks
                 //var yTop = (float)Mapper.GetScreenY(data[i]);
                 //rt.DrawLine(new Point2F(x, yTop), new Point2F(x, yBottom), signalBrush, 1);
                 var p = Mapper.GetScreenLocation(i, data[i]);
-                rt.DrawLine(new Point2F(p.X, p.Y), new Point2F(p.X, yBottom), signalBrush, 1);
+                rt.DrawLine(p.ToPoint2F(), new Point2F((float)p.X, (float)yBottom), signalBrush, 1);
             }
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.Elements.Ppi
+namespace Utilities.RadarWorks.Elements.Ppi
 {
     class PpiAngleRuler : GraphicElement
     {

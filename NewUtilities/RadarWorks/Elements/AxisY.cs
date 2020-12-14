@@ -25,7 +25,7 @@ namespace Utilities.RadarWorks
             var screenTop = Mapper.GetScreenY(ReferenceSystem.Top);
             var screenBottom = Mapper.GetScreenY(ReferenceSystem.Bottom);
 
-            rt.DrawLine(new Point2F(originalPoint.X, (float)screenTop), new Point2F(originalPoint.X, (float)screenBottom), axisBrush, 2);
+            rt.DrawLine(new Point2F((float)originalPoint.X, (float)screenTop), new Point2F((float)originalPoint.X, (float)screenBottom), axisBrush, 2);
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Utilities.RadarWorks.framework.ButtonLayout
 {
@@ -34,8 +29,8 @@ namespace Utilities.RadarWorks.framework.ButtonLayout
 
     public class ViewLeftBottom : LeftBottomButtonLayout
     {
-        protected override int Left => (int)Displayer.Panel.Left;
+        protected override int Left => 0;
 
-        protected override int Bottom => (int)Displayer.Panel.Bottom;
+        protected override int Bottom => (int)Displayer.Panel.Height;
     }
 }

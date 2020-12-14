@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Utilities.Models;
 
 namespace Utilities.Mapper
 {
@@ -17,10 +18,10 @@ namespace Utilities.Mapper
         double CoordinateRight { get; }
         double CoordinateTop { get; }
         double CoordinateBottom { get; }
-        PointF GetCoordinateLocation(double screenX, double screenY);
+        PointD GetCoordinateLocation(double screenX, double screenY);
         double GetCoordinateX(double screenX);
         double GetCoordinateY(double screenY);
-        PointF GetScreenLocation(double coordinateX, double coordinateY);
+        PointD GetScreenLocation(double coordinateX, double coordinateY);
         double GetScreenX(double coordinateX);
         double GetScreenY(double coordinateY);
         void SetCoordinateArea(double left, double right, double top, double bottom);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
+using System;
 using System.Drawing;
 using Utilities.Coordinates;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
@@ -10,9 +11,14 @@ namespace Utilities.RadarWorks
         public PolarCoordinate Location;
         public int Am;
     }
-    public class PpiOriginalVideoDot : DynamicElement<OriginVideoDotProperty>
+    public class VideoDot : DynamicElement<OriginVideoDotProperty>
     {
         private Brush fillBrush;
+
+        public bool FixedColor { get; set; } = true;
+        public Color Color { get; set; } = Color.Red;
+
+        public float Radius { get; set; } = 3;
 
         public override void Dispose()
         {
@@ -22,9 +28,10 @@ namespace Utilities.RadarWorks
         protected override void InitializeComponents(RenderTarget rt)
         {
             base.InitializeComponents(rt);
-            fillBrush = Color.Red.SolidBrush(rt);   //需要动态计算画刷的颜色
+            if(FixedColor)
+                fillBrush = Color.SolidBrush(rt);   //需要动态计算画刷的颜色
         }
-        public PpiOriginalVideoDot(PolarCoordinate location, double am = 0)
+        public VideoDot(PolarCoordinate location, double am = 0)
         {
             var m = Model;
             m.Location = location;
@@ -36,15 +43,19 @@ namespace Utilities.RadarWorks
             ParentDisplayer = d;
         }
 
-        public PpiOriginalVideoDot(OriginVideoDotProperty p) : this(p.Location, p.Am) { }
+        public VideoDot(OriginVideoDotProperty p) : this(p.Location, p.Am) { }
         protected override void DrawDynamicElement(RenderTarget rt)
         {
-            if (Model.Location.Dis > ReferenceSystem.Top)
+            if (Model.Location.Dis > ReferenceSystem.Right)
                 return;
-            var rotatedPoint = new PolarCoordinate(Model.Location.Az , Model.Location.El, Model.Location.Dis).Rectangular;
-            var scrPoint = Mapper.GetScreenLocation(rotatedPoint.X, rotatedPoint.Y);
-            Ellipse e = new Ellipse(scrPoint.ToPoint2F(), 3, 3);
+            //var rotatedPoint = new PolarCoordinate(Model.Location.Az , Model.Location.El, Model.Location.Dis).Rectangular;
+            //var scrPoint = Mapper.GetScreenLocation(rotatedPoint.X, rotatedPoint.Y);
+            var scrPoint = Mapper.GetScreenLocation(X(Model), Y(Model));
+            Ellipse e = new Ellipse(scrPoint.ToPoint2F(), Radius, Radius);
             rt.FillEllipse(e, fillBrush);
         }
+
+        public Func<OriginVideoDotProperty, double> X = (p) => p.Location.X;
+        public Func<OriginVideoDotProperty, double> Y = (p) => p.Location.Y;
     }
 }

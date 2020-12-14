@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.framework
+namespace Utilities.RadarWorks.framework
 {
     public class DrawToolSet
     {

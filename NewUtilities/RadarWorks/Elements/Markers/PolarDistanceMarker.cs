@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
     public class PolarDistanceMarker : MarkerElement
     {

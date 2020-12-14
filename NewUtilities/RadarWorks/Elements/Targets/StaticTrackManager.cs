@@ -3,26 +3,64 @@ using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks.Elements
 {
-    public class TrackElement : RotatableElement<IEnumerable<ITrack>>
+    public class StaticTrackManager : RotatableElement<IEnumerable<ITrack>>
     {
         private Brush tagBrush;
         private Brush tailBrush;
         private Brush targetBrush;
 
-        private Func<ITrack, double> TrackX = (t) => t.Location.X;
-        private Func<ITrack, double> TrackY = (t) => t.Location.Y;
+        private Func<ITrack, double> TrackX;
+        private Func<ITrack, double> TrackY;
 
-        public TrackElement(Func<ITrack, double> trackX, Func<ITrack, double> trackY)
+        public void RemoveTrack(int id)
+        {
+            lock(Locker)
+            {
+                Model = Model.SkipWhile((t) => t.Id == id);
+            }
+        }
+
+        protected override void DoUpdate(IEnumerable<ITrack> tracks)
+        {
+            if (tracks == null)
+                return;
+
+            //var excepts = Model.Except(tracks, new ITrackEqualComparer());
+            //取与tracks的Id交集
+            Model = Model.Intersect(tracks, new ITrackEqualComparer()).ToList();
+            foreach (var newTrack in tracks)
+            {
+                bool isNewTrack = true;
+                foreach(var oldTrack in Model)
+                {
+                    if(newTrack.Id == oldTrack.Id)  //当前Track的id已经存在
+                    {
+                        isNewTrack = false;
+                        oldTrack.UpdateTrack(newTrack);
+                    }
+                }
+
+                if(isNewTrack)  //原来的Model中不存在当前Track的id
+                {
+                    Model = Model.Append(newTrack);
+                }
+            }
+
+            Redraw();
+        }
+
+        public StaticTrackManager(Func<ITrack, double> trackX, Func<ITrack, double> trackY)
         {
             TrackX = trackX;
             TrackY = trackY;
         }
 
-        public TrackElement()
+        public StaticTrackManager() : this((t) => t.Location.X, (t) => t.Location.Y)
         {
         }
 
@@ -52,8 +90,6 @@ namespace Utilities.RadarWorks.Elements
             float tagHeight = 20;
             float tagRoundRadius = 3;
 
-            //var cooLoc = t.Location.Rectangular;    //对Model进行NUll检测
-            //var scrLoc = Mapper.GetScreenLocation(cooLoc.X, cooLoc.Y);
             var scrLoc = Mapper.GetScreenLocation(TrackX(t), TrackY(t));
 
             var ellipse = new Ellipse(scrLoc.ToPoint2F(), circleRadius, circleRadius);
@@ -61,8 +97,8 @@ namespace Utilities.RadarWorks.Elements
 
             RectF r = new RectF
             {
-                Left = scrLoc.X - tagWidth / 2,
-                Top = scrLoc.Y - triangleVerticalOffset - triangleHeight - tagHeight,
+                Left = (float)(scrLoc.X - tagWidth / 2),
+                Top = (float)(scrLoc.Y - triangleVerticalOffset - triangleHeight - tagHeight),
                 Width = tagWidth,
                 Height = tagHeight
             };
@@ -76,5 +112,12 @@ namespace Utilities.RadarWorks.Elements
             dw.Dispose();
             layout.Dispose();
         }
+    }
+
+    class ITrackEqualComparer : IEqualityComparer<ITrack>
+    {
+        public bool Equals(ITrack x, ITrack y) => x.Id == y.Id;
+
+        public int GetHashCode(ITrack obj) => obj.GetHashCode();
     }
 }

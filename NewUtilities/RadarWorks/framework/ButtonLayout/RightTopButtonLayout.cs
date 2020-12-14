@@ -22,7 +22,7 @@ namespace Utilities.RadarWorks
 
     public class ViewRightTop : RightTopButtonLayout
     {
-        protected override int Right => Displayer.Panel.Right;
+        protected override int Right => Displayer.Panel.Width;
 
         protected override int Top => Displayer.Panel.Top;
     }

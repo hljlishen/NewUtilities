@@ -34,8 +34,8 @@ namespace Utilities.RadarWorks.framework.ButtonLayout
 
     public class ViewRightBottom : RightBottomButtonLayout
     {
-        public override int Right => Displayer.Panel.Left;
+        public override int Right => Displayer.Panel.Width;
 
-        public override int Bottom => Displayer.Panel.Bottom;
+        public override int Bottom => Displayer.Panel.Height;
     }
 }

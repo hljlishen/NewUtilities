@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Threading;
 using System.Threading.Tasks;
 using Utilities.Mapper;
+using Utilities.Models;
 using Utilities.Signals;
 
 namespace Utilities.RadarWorks
@@ -21,7 +22,7 @@ namespace Utilities.RadarWorks
         public double Right { get; protected set; }
         public double Top { get; protected set; }
         public double Bottom { get; protected set; }
-        public PointF ScreenOriginalPoint { get; private set; }
+        public PointD ScreenOriginalPoint { get; private set; }
         public double ScreenLeft { get; private set; }
         public double ScreenRight { get; private set; }
         public double ScreenTop { get; private set; }
@@ -31,6 +32,8 @@ namespace Utilities.RadarWorks
         public double XDistance => Math.Abs(Right - Left);
         public double YDistance => Math.Abs(Top - Bottom);
         public IScreenToCoordinateMapper Mapper { get; private set; }
+
+        public event Action<ReferenceSystem> StateChanged;
         public void SetMapper(IScreenToCoordinateMapper mapper)
         {
             Mapper = mapper;
@@ -57,10 +60,7 @@ namespace Utilities.RadarWorks
                 AnimateSetArea(left, right, top, bottom);
         }
 
-        public void SetArea(Area area)
-        {
-            SetArea(area.Left, area.Right, area.Top, area.Bottom);
-        }
+        public void SetArea(Area area) => SetArea(area.Left, area.Right, area.Top, area.Bottom);
 
         internal void DoSetArea(double left, double right, double top, double bottom)
         {
@@ -69,6 +69,7 @@ namespace Utilities.RadarWorks
             Top = top;
             Bottom = bottom;
             Mapper.SetCoordinateArea(left, right, top, bottom);
+            StateChanged?.Invoke(this);
         }
 
         internal void AnimateSetArea(double left, double right, double top, double bottom)

@@ -12,8 +12,21 @@ namespace Utilities.RadarWorks
         private Brush frameBrush;
         private Rectangle selectedRect;
         public MouseDragDetector dragDetector;
+        private SelectStrategy selectStrategy;
+
         public bool Animation { get; set; } = true;
-        public SelectStrategy SelectStrategy { get; protected set; }
+        public SelectStrategy SelectStrategy
+        {
+            get => selectStrategy;
+            set
+            {
+                lock (Locker)
+                {
+                    selectStrategy = value;
+                    value.SetZoomController(this);
+                }
+            }
+        }
 
         public string Name { get; set; } = "放缩控制";
 
@@ -97,14 +110,14 @@ namespace Utilities.RadarWorks
             SelectStrategy.DrawZoomView(selectedRect.ToRectF(), rt, fillBrush, frameBrush, 2);
         }
 
-        public void SetStrategy(SelectStrategy s)
-        {
-            lock (Locker)
-            {
-                SelectStrategy = s;
-                s.SetZoomController(this);
-            }
-        }
+        //public void SetStrategy(SelectStrategy s)
+        //{
+        //    lock (Locker)
+        //    {
+        //        SelectStrategy = s;
+        //        s.SetZoomController(this);
+        //    }
+        //}
 
         public void On() => dragDetector.On();
         public void Off() => dragDetector.Off();

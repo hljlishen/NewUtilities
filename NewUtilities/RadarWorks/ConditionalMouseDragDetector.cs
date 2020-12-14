@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks
+namespace Utilities.RadarWorks
 {
     public class ConditionalMouseDragDetector : MouseDragDetector
     {

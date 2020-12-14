@@ -6,7 +6,7 @@ using Utilities.Coordinates;
 using Utilities.RadarWorks;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
-namespace NewUtilities.RadarWorks.Elements.Ppi
+namespace Utilities.RadarWorks.Elements.Ppi
 {
     public class WaveGateModel
     {
@@ -18,13 +18,17 @@ namespace NewUtilities.RadarWorks.Elements.Ppi
     class WaveGateElement : RotatableElement<WaveGateModel>
     {
         private Brush frameBrush, normalFillBrush, selectedFillBrush;
+
+        public Color FrameColor { get; set; }
+        public Color NormalFillColor { get; set; }
+        public Color SelectedFillColor { get; set; }
         protected override void InitializeComponents(RenderTarget rt)
         {
             base.InitializeComponents(rt);
-            frameBrush = Color.White.SolidBrush(rt);
-            normalFillBrush = Color.Yellow.SolidBrush(rt);
+            frameBrush = FrameColor.SolidBrush(rt);
+            normalFillBrush = NormalFillColor.SolidBrush(rt);
             normalFillBrush.Opacity = 0.5f;
-            selectedFillBrush = Color.Orange.SolidBrush(rt);
+            selectedFillBrush = SelectedFillColor.SolidBrush(rt);
             selectedFillBrush.Opacity = 0.5f;
         }
         public override void Dispose()
@@ -56,7 +60,7 @@ namespace NewUtilities.RadarWorks.Elements.Ppi
             var scrCnr1 = Mapper.GetScreenLocation(corner1.X, corner1.Y);
             var scrCnr2 = Mapper.GetScreenLocation(corner2.X, corner2.Y);
 
-            yield return new LiveSectorRing(scrCnr1, scrCnr2, ReferenceSystem.ScreenOriginalPoint);
+            yield return new LiveSectorRing(scrCnr1.ToPoinF(), scrCnr2.ToPoinF(), ReferenceSystem.ScreenOriginalPoint.ToPoinF());
         }
 
         public void Update(PointF scrP1, PointF scrP2)

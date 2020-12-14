@@ -21,7 +21,6 @@ namespace Utilities.RadarWorks
             Panel = panel;
             Panel.MouseDown += Panel_MouseDown;
             Panel.MouseUp += Panel_MouseUp;
-            //Panel.MouseMove += Panel_MouseMove;
             Panel.MouseDoubleClick += Panel_MouseDoubleClick;
         }
 
@@ -44,15 +43,8 @@ namespace Utilities.RadarWorks
                 return;
             mouseDown = false;
             Panel.MouseMove -= Panel_MouseMove;
-            //if (!IsMouseMoved())
-            //    return;
             MouseUp?.Invoke(e.Location);
             MouseDragFinish?.Invoke(mouseDownPos, mouseCurrentPos);
-        }
-
-        private bool IsMouseMoved()
-        {
-            return Math.Abs(mouseCurrentPos.X - mouseDownPos.X) > 5 && Math.Abs(mouseCurrentPos.Y - mouseDownPos.Y) > 5;
         }
 
         private void Panel_MouseMove(object sender, MouseEventArgs e)
@@ -60,8 +52,6 @@ namespace Utilities.RadarWorks
             if (!mouseDown)
                 return;
             mouseCurrentPos = e.Location;
-            //if (!IsMouseMoved())
-            //    return;
             MouseDrag?.Invoke(mouseDownPos, mouseCurrentPos);
         }
 
@@ -81,7 +71,6 @@ namespace Utilities.RadarWorks
             Panel.MouseDown -= Panel_MouseDown;
             Panel.MouseUp -= Panel_MouseUp;
             Panel.MouseDoubleClick -= Panel_MouseDoubleClick;
-            //Panel.MouseMove -= Panel_MouseMove;
         }
 
         public void On() => isOn = true;

@@ -7,7 +7,7 @@ using Utilities.RadarWorks;
 using Utilities.Tools;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
     public class PolarAngleMarker : RotatableElement<double>, IMarkerInterface
     {
@@ -76,7 +76,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             var radius = InnerMapper.GetScreenLocation(ReferenceSystem.Right, 0).X - center.X;
             var x = center.X + radius * (float)Math.Sin(Functions.DegreeToRadian(Model + RotateAngle));
             var y = center.Y - radius * (float)Math.Cos(Functions.DegreeToRadian(Model + RotateAngle));
-            yield return new LiveLine(center, new PointF(x, y));
+            yield return new LiveLine(center.ToPoinF(), new PointF((float)x, (float)y));
         }
     }
 }

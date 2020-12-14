@@ -67,7 +67,7 @@ namespace Utilities.RadarWorks
         }
         protected override void DrawElement(RenderTarget rt)
         {
-            geo = LiveSectorRing.GetPathGeometry(rt, ReferenceSystem.ScreenOriginalPoint, corner1, corner2);
+            geo = LiveSectorRing.GetPathGeometry(rt, ReferenceSystem.ScreenOriginalPoint.ToPoinF(), corner1, corner2);
             rt.FillGeometry(geo, fillBrush);
         }
 

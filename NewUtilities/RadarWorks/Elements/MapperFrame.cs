@@ -2,7 +2,7 @@
 using System.Drawing;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.Elements
+namespace Utilities.RadarWorks.Elements
 {
     public class MapperFrame : GraphicElement
     {

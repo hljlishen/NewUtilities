@@ -4,7 +4,7 @@ using System.Drawing;
 using Utilities.RadarWorks;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
     public abstract class MarkerElement : DynamicElement<double>, IMarkerInterface
     {
@@ -31,6 +31,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             normalBrush = Color.SolidBrush(rt);
             normalBrush.Opacity = Opacity;
             selectBrush = SelectColor.SolidBrush(rt);
+            selectBrush.Opacity = Opacity;
             strokeStyle = rt.Factory.CreateStrokeStyle(new StrokeStyleProperties() { DashStyle = DashStyle.Dash });
         }
 

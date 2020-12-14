@@ -48,7 +48,7 @@ namespace Utilities.RadarWorks
             Ellipse e = new Ellipse(scrP.ToPoint2F(), 5, 5);
             rt.FillEllipse(e, TargetBrush);
 
-            RectangleF rect = new RectangleF(scrP.X - 20, scrP.Y - 20, 40, 15);
+            RectangleF rect = new RectangleF((float)(scrP.X - 20), (float)(scrP.Y - 20), 40, 15);
             rt.FillRectangle(rect.ToRectF(), TagBrush);
             rt.DrawText("1", TextFormat, rect.ToRectF(), TextBrush);
         }

@@ -1,15 +1,20 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.Elements.Ppi.WaveGateController
+namespace Utilities.RadarWorks.Elements.Ppi.WaveGateController
 {
     public class WaveGateManager : GraphicElement, ISwtichable
     {
         private WaveGateSelector gateSelector = new WaveGateSelector();
         private readonly List<WaveGateElement> waveGates = new List<WaveGateElement>();
         public event Action<WaveGateModel> WaveGateDeleted;
+
+        public Color FrameColor { get; set; } = Color.BlanchedAlmond;
+        public Color NormalFillColor { get; set; } = Color.BlueViolet;
+        public Color SelectedFillColor { get; set; } = Color.Brown;
 
         public bool IsOn => gateSelector.IsOn;
 
@@ -43,9 +48,9 @@ namespace NewUtilities.RadarWorks.Elements.Ppi.WaveGateController
             w.Dispose();
         }
 
-        private void GateSelector_SelectionFinish(System.Drawing.PointF arg1, System.Drawing.PointF arg2)
+        private void GateSelector_SelectionFinish(PointF arg1, PointF arg2)
         {
-            WaveGateElement wg = new WaveGateElement() { Sensor = new MouseClickSensor1() };
+            WaveGateElement wg = new WaveGateElement() { Sensor = new MouseClickSensor1(), FrameColor = FrameColor, NormalFillColor = NormalFillColor, SelectedFillColor = SelectedFillColor};
             waveGates.Add(wg);
             ParentDisplayer.Elements.Add(LayerId, wg);
             wg.Update(arg1, arg2);

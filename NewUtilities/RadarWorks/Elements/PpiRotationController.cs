@@ -9,6 +9,8 @@ namespace Utilities.RadarWorks
 {
     public class PpiRotationController : RotationController
     {
+        public Color TextColor { get; set; } = Color.Black;
+        public Color SelectedMarkerColor { get; set; } = Color.Orange;
         private Brush markerBrush;
         private Brush selectedMarkerBrush;
         private TextFormat textFormat;
@@ -18,10 +20,10 @@ namespace Utilities.RadarWorks
         {
             base.InitializeComponents(rt);
             markerBrush = Color.Gray.SolidBrush(rt);
-            selectedMarkerBrush = Color.Yellow.SolidBrush(rt);
-            textBrush = Color.White.SolidBrush(rt);
+            selectedMarkerBrush = SelectedMarkerColor.SolidBrush(rt);
+            textBrush = TextColor.SolidBrush(rt);
             string fontName = "微软雅黑";
-            textFormat = fontName.MakeFormat(10);
+            textFormat = fontName.MakeFormat(12);
         }
 
         protected override void DrawDynamicElement(RenderTarget rt)
@@ -51,7 +53,7 @@ namespace Utilities.RadarWorks
                 }
 
                 if (i % 5 == 0)
-                    rt.DrawText(i.ToString(), textFormat, new RectangleF(scrP3.X - 5, scrP3.Y - 5, 100, 100).ToRectF(), textBrush);
+                    rt.DrawText(i.ToString(), textFormat, new RectangleF((float)(scrP3.X - 5), (float)(scrP3.Y - 5), 100, 100).ToRectF(), textBrush);
             }
         }
 

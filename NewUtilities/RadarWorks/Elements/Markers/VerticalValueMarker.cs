@@ -1,20 +1,15 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Utilities.RadarWorks;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
-    public class VerticalValueMarker : MarkerElement
+    public abstract class VerticalValueMarker : MarkerElement
     {        
         public Color RectFillColor { get; set; } = Color.White;
-
-        public override double MinValue => Mapper.CoordinateLeft;
-
-        public override double MaxValue => Mapper.CoordinateRight;
 
         protected Brush rectFillBrush;
 

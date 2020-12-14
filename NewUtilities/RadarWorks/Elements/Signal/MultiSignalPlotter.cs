@@ -1,5 +1,5 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
-using NewUtilities.Models;
+using Utilities.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -27,11 +27,11 @@ namespace Utilities.RadarWorks.Elements.Signal
 
         public void UpdateSerie(string serieName, IEnumerable<PointD> points)
         {
-            if (isLocked)   //锁定状态不更新数据
+            if (isLocked || points == null)   //锁定状态不更新数据
                 return;
             if (!plotterMap.ContainsKey(serieName))
                 throw new ArgumentException($"{serieName}不存在");
-            plotterMap[serieName].Update(points.ToList());
+            plotterMap[serieName].Update(points.ToArray());
 
             if (AdaptToSignal)//此处可能有性能损耗，每次更新信号数据时都需要计算一次数据范围，应该是所有信号数据更新完毕同一更新一次
             {
@@ -86,7 +86,14 @@ namespace Utilities.RadarWorks.Elements.Signal
             if (plotterMap.ContainsKey(serieName))
                 throw new ArgumentException($"{serieName}已经存在");
             var plotter = new SeriePlotter(properties);
-            var button = new PushDownButton(MakeButtonStyle(properties));
+
+            AddSeriePlotter(plotter);
+        }
+
+        private void AddSeriePlotter(SeriePlotter plotter)
+        {
+            string serieName = plotter.SeriesProperties.Name;
+            var button = new PushDownButton(MakeButtonStyle(plotter.SeriesProperties));
             button.Clicked += Button_Clicked;
             lock (Locker)
             {
@@ -98,6 +105,13 @@ namespace Utilities.RadarWorks.Elements.Signal
             ParentDisplayer.Elements.Add(1000, button);
         }
 
+        public void AddMaxiunMaintainSerie(string maintainSignalName, SeriesProperties properties)
+        {
+            var signal = plotterMap[maintainSignalName];
+            MaxiumMaintainSgnal maintainSgnal = new MaxiumMaintainSgnal(signal);
+            AddSeriePlotter(maintainSgnal);
+        }
+
         private ButtenProperties MakeButtonStyle(SeriesProperties properties)
         {
             string serieName = properties.Name;
@@ -105,7 +119,8 @@ namespace Utilities.RadarWorks.Elements.Signal
             {
                 ForeColor = properties.StrokeColor,
                 SelectedColor = Color.Gray,
-                ForeFontColor = properties.StrokeColor.ReverseColor(),
+                //ForeFontColor = properties.StrokeColor.ReverseColor(),
+                ForeFontColor = Color.Black,
                 SelectedFontColor = Color.White,
                 ForeFrameColor = Color.Black,
                 SelectedFrameColor = properties.StrokeColor,

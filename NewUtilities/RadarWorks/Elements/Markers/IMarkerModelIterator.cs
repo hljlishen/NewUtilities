@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
     public interface IMarkerModelIterator
     {

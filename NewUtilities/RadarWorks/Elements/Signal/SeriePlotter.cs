@@ -1,17 +1,17 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
-using NewUtilities.Models;
-using NewUtilities.RadarWorks.Elements.Signal;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Utilities.Mapper;
+using Utilities.Models;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
 namespace Utilities.RadarWorks.Elements.Signal
 {
-    class SeriePlotter : DynamicElement<List<PointD>>, ISwtichable
+    class SeriePlotter : DynamicElement<PointD[]>, ISwtichable
     {
+        public event Action<SeriePlotter> Updated;
         public SeriesProperties SeriesProperties { get; private set; }
 
         private List<SignalMarker> Markers = new List<SignalMarker>();
@@ -55,7 +55,7 @@ namespace Utilities.RadarWorks.Elements.Signal
 
         private void DrawAnalog(RenderTarget rt)
         {
-            for (int i = 0; i < Model.Count - 1; i++)
+            for (int i = 0; i < Model.Length - 1; i++)
             {
                 var p1 = Mapper.GetScreenLocation(Model[i].X, Model[i].Y);
                 var p2 = Mapper.GetScreenLocation(Model[i + 1].X, Model[i + 1].Y);
@@ -63,21 +63,21 @@ namespace Utilities.RadarWorks.Elements.Signal
             }
         }
 
-        private bool IsDataValid() => Model != null && Model.Count > 0;
+        private bool IsDataValid() => Model != null && Model.Length > 0;
 
         private void DrawDiscrete(RenderTarget rt)
         {
             var yBottom = Mapper.GetScreenY(0);
-            for (int i = 0; i < Model.Count; i++)
+            for (int i = 0; i < Model.Length; i++)
             {
                 var p = Mapper.GetScreenLocation(Model[i].X, Model[i].Y);
-                rt.DrawLine(new Point2F(p.X, p.Y), new Point2F(p.X, (float)yBottom), signalBrush, 1);
+                rt.DrawLine(p.ToPoint2F(), new Point2F((float)p.X, (float)yBottom), signalBrush, 1);
             }
         }
 
         private void DrawDots(RenderTarget rt)
         {
-            for (int i = 0; i < Model.Count; i++)
+            for (int i = 0; i < Model.Length; i++)
             {
                 var str = $"{Model[i].X:0.00}";
                 var font = "微软雅黑";
@@ -87,7 +87,7 @@ namespace Utilities.RadarWorks.Elements.Signal
                 {
                     var p1 = Mapper.GetScreenLocation(Model[i].X, Model[i].Y);
                     rt.FillEllipse(new Ellipse(p1.ToPoint2F(), 6, 6), signalBrush);
-                    rt.DrawTextLayout(new Point2F(p1.X - layout.MaxWidth / 2, p1.Y - 20), layout, brush);
+                    rt.DrawTextLayout(new Point2F((float)p1.X - layout.MaxWidth / 2, (float)p1.Y - 20), layout, brush);
                 }
             }
         }
@@ -123,7 +123,7 @@ namespace Utilities.RadarWorks.Elements.Signal
             }
         }
 
-        public void Off()
+        public virtual void Off()
         {
             IsOn = false;
             HideMarkers();
@@ -132,6 +132,10 @@ namespace Utilities.RadarWorks.Elements.Signal
 
         public void AddMarker(Color c, float x = 0, bool locked = false)
         {
+            if(x == 0)
+            {
+                x = RandomX();
+            }
             var marker = new SignalMarker(c, this) { Model = new PointD(x, 0) };
             marker.On();
             marker.Locked = locked;
@@ -140,6 +144,15 @@ namespace Utilities.RadarWorks.Elements.Signal
             lock (markerLocker)
             {
                 Markers.Add(marker);
+            }
+
+            float RandomX()
+            {
+                var distance = Math.Abs(ReferenceSystem.Left - ReferenceSystem.Right) * 0.25;
+                var center = ReferenceSystem.Left + (ReferenceSystem.Right - ReferenceSystem.Left) / 2;
+                Random r = new Random(DateTime.Now.Millisecond);
+                
+                return (float)r.NextDouble(center - distance, center + distance);
             }
         }
 
@@ -165,11 +178,12 @@ namespace Utilities.RadarWorks.Elements.Signal
             }
         }
 
-        protected override void DoUpdate(List<PointD> t)
+        protected override void DoUpdate(PointD[] t)
         {
             base.DoUpdate(t);
             RefreshMarkers();
             SetModelArea();
+            Updated?.Invoke(this);
         }
 
         private void RefreshMarkers()
@@ -190,11 +204,11 @@ namespace Utilities.RadarWorks.Elements.Signal
             var left = Model[0].X;
             double right = 0;
             var yBottom = Mapper.GetScreenY(0);
-            for (int i = 0; i < Model.Count; i++)
+            for (int i = 0; i < Model.Length; i++)
             {
                 top = Math.Max(Model[i].Y, top);
                 bottom = Math.Min(Model[i].Y, bottom);
-                if (i == Model.Count - 1)
+                if (i == Model.Length - 1)
                     right = Model[i].X;
             }
             if (ModelArea == null)

@@ -5,56 +5,7 @@ using Utilities.Mapper;
 
 namespace Utilities.Signals
 {
-    //public class AreaAnimateIterator
-    //{
-    //    private Area area;
-    //    private Area targetArea;
-    //    public uint Frames
-    //    {
-    //        get => frames;
-    //        set
-    //        {
-    //            frames = value;
-    //            CalSteps();
-    //        }
-    //    }
-    //    private uint FrameIndex = 0;
-    //    private double xLeftStep, xRightStep;
-    //    private double yTopStep, yBottomStep;
-    //    private uint frames = 15;
-
-    //    public AreaAnimateIterator(Area area, Area targetArea)
-    //    {
-    //        this.area = area;
-    //        this.targetArea = targetArea;
-    //        CalSteps();
-    //    }
-
-    //    private void CalSteps()
-    //    {
-    //        xLeftStep = (targetArea.Left - area.Left) / frames;
-    //        xRightStep = (targetArea.Right - area.Right) / frames;
-    //        yTopStep = (targetArea.Top - area.Top) / frames;
-    //        yBottomStep = (targetArea.Bottom - area.Bottom) / frames;
-    //    }
-
-    //    public Area NextArea()
-    //    {
-    //        Area ret;
-    //        if (FrameIndex < Frames - 1)
-    //        {
-    //            ret = new Area(area.Left + xLeftStep * FrameIndex, area.Right + xRightStep * FrameIndex, area.Top + yTopStep * FrameIndex, area.Bottom + yBottomStep * FrameIndex);
-    //        }
-    //        else if (FrameIndex == Frames - 1)
-    //            ret = targetArea;
-    //        else
-    //            throw new Exception("No Frames Left");
-    //        FrameIndex++;
-    //        return ret;
-    //    }
-    //}
-
-    abstract class ValueAnimator<T>
+    public abstract class ValueAnimator<T>
     {
         public T Source { get; private set; }
         public T Destny { get; private set; }
@@ -89,7 +40,7 @@ namespace Utilities.Signals
         }
     }
 
-    class DoubleAnimator : ValueAnimator<double>
+    public class DoubleAnimator : ValueAnimator<double>
     {
         public DoubleAnimator(double source, double destny, uint frameCount = 15) : base(source, destny, frameCount)
         {

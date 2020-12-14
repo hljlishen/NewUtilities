@@ -6,12 +6,6 @@
         {
         }
 
-        public void SetRange(double range)
-        {
-            Left = -range;
-            Right = range;
-            Top = range;
-            Bottom = -range;
-        }
+        public void SetRange(double range) => SetArea(-range, range, range, -range);
     }
 }

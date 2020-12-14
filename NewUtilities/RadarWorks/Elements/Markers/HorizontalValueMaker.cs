@@ -5,15 +5,11 @@ using System.Drawing;
 using Utilities.RadarWorks;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
-    public class HorizontalValueMaker : MarkerElement
+    public abstract class HorizontalValueMarker : MarkerElement
     {
         public Color RectFillColor { get; set; } = Color.White;
-
-        public override double MinValue => Mapper.CoordinateBottom;
-
-        public override double MaxValue => Mapper.CoordinateTop;
 
         protected Brush rectFillBrush;
 

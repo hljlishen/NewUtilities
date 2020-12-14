@@ -1,8 +1,9 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using System.Collections.Generic;
+using System.Drawing;
 using Utilities.RadarWorks;
 
-namespace NewUtilities.RadarWorks.Elements.Markers
+namespace Utilities.RadarWorks.Elements.Markers
 {
     public class MultiMarker<T> : GraphicElement where T : IMarkerInterface, new()
     {
@@ -11,7 +12,6 @@ namespace NewUtilities.RadarWorks.Elements.Markers
 
         public float TextSize { get; private set; }
         public string TextFont { get; private set; }
-
         public string Unit
         {
             get
@@ -56,7 +56,7 @@ namespace NewUtilities.RadarWorks.Elements.Markers
 
         public MarkerIteratorType IteratorType { get; set; } = MarkerIteratorType.NoLeftOrRight;
 
-        public MultiMarker(int markerCount, float textSize = 12, string textFont = "Consolas")
+        public MultiMarker(int markerCount, float opacity = 1, float textSize = 12, string textFont = "Consolas")
         {
             this.markerCount = markerCount;
             TextSize = textSize;
@@ -64,6 +64,17 @@ namespace NewUtilities.RadarWorks.Elements.Markers
             for (int i = 0; i < markerCount; i++)
             {
                 markers.Add(new T() { Sensor = new MouseMoveSensor(), TextFont = TextFont, TextSize = TextSize });
+            }
+        }
+
+        public MultiMarker(int markerCount, Color color, float opacity = 1, float textSize = 12, string textFont = "Consolas")
+        {
+            this.markerCount = markerCount;
+            TextSize = textSize;
+            TextFont = textFont;
+            for (int i = 0; i < markerCount; i++)
+            {
+                markers.Add(new T() { Sensor = new MouseMoveSensor(), TextFont = TextFont, TextSize = TextSize, Color = color });
             }
         }
 

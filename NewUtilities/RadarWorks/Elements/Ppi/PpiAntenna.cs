@@ -7,10 +7,10 @@ namespace Utilities.RadarWorks
     public class PpiAntenna : RotatableElement<double>
     {
         //private double preDegree = 0;
-        private double degree = 0;
+        //private double degree = 0;
         //private int shadeLen = 1;
         //private double shadeStep = 0.1f;
-        private Color antennaColor = Color.White;
+        public Color Color { get; set; } = Color.White;
         public Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush antennaBrush = null;
 
         public PpiAntenna(string rotateDecoratorName = "default") : base(rotateDecoratorName)
@@ -41,15 +41,9 @@ namespace Utilities.RadarWorks
             //    antennaBrush.Opacity = 1 - i * opStep;
             //    g.DrawLine(new Point2F(beginPoint.X, beginPoint.Y), new Point2F(endPoint.X, endPoint.Y), antennaBrush, 2);
             //}
-            var r = new PolarCoordinate(degree, 0, ReferenceSystem.Right).Rectangular;
+            var r = new PolarCoordinate(Model, 0, ReferenceSystem.Right).Rectangular;
             var p1 = Mapper.GetScreenLocation(r.X, r.Y);
             g.DrawLine(p1.ToPoint2F(), ReferenceSystem.ScreenOriginalPoint.ToPoint2F(), antennaBrush, 2);
-        }
-
-        protected override void DoUpdate(double t)
-        {
-            //preDegree = degree;
-            degree = t;
         }
 
         public override void Dispose()
@@ -60,7 +54,7 @@ namespace Utilities.RadarWorks
 
         protected override void InitializeComponents(RenderTarget rt)
         {
-            antennaBrush = antennaColor.SolidBrush(rt);
+            antennaBrush = Color.SolidBrush(rt);
         }
     }
 }

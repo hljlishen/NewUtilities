@@ -21,9 +21,9 @@ namespace Utilities.RadarWorks
 
     public class ViewLeftTop : LeftTopButtonLayout
     {
-        protected override int Left => Displayer.Panel.Left;
+        protected override int Left => 0;
 
-        protected override int Top => Displayer.Panel.Top;
+        protected override int Top => 0;
     }
 
     public class MapperLeftTop : LeftTopButtonLayout

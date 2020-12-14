@@ -1,14 +1,15 @@
 ﻿using Microsoft.WindowsAPICodePack.DirectX.Direct2D1;
 using Microsoft.WindowsAPICodePack.DirectX.DirectWrite;
-using NewUtilities.Models;
+using Utilities.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Utilities.RadarWorks;
 using Utilities.RadarWorks.Elements.Signal;
 using Brush = Microsoft.WindowsAPICodePack.DirectX.Direct2D1.Brush;
+using System.Linq;
 
-namespace NewUtilities.RadarWorks.Elements.Signal
+namespace Utilities.RadarWorks.Elements.Signal
 {
     class SignalMarker : DynamicElement<PointD>, ISwtichable
     {
@@ -47,8 +48,8 @@ namespace NewUtilities.RadarWorks.Elements.Signal
         protected override IEnumerable<LiveObject> GetObjects()
         {
             var p1 = Mapper.GetScreenLocation(Model.X, Model.Y);
-            var p2 = new PointF(p1.X - 10, p1.Y - 20);
-            var p3 = new PointF(p1.X + 10, p1.Y - 20);
+            var p2 = new PointF((float)p1.X - 10, (float)p1.Y - 20);
+            var p3 = new PointF((float)p1.X + 10, (float)p1.Y - 20);
 
             yield return new LiveLineGeometry(p1.ToPoint2F(), p2.ToPoint2F(), p3.ToPoint2F());
         }
@@ -58,7 +59,7 @@ namespace NewUtilities.RadarWorks.Elements.Signal
             if (Locked)
                 return;
 
-            base.Update(base.Mapper.GetCoordinateLocation(arg2.X, arg2.Y).ToPointD());
+            base.Update(base.Mapper.GetCoordinateLocation(arg2.X, arg2.Y));
         }
 
         protected override void DoUpdate(PointD t)
@@ -71,9 +72,9 @@ namespace NewUtilities.RadarWorks.Elements.Signal
             }
         }
 
-        public static PointD FindNearestPoint(List<PointD> data, double x)
+        public static PointD FindNearestPoint(PointD[] data, double x)
         {
-            if (data == null || data.Count == 0)
+            if (data == null || data.Length == 0)
                 return new PointD();
             PointD lastPoint = data[0];
             foreach (var p in data)
@@ -105,7 +106,8 @@ namespace NewUtilities.RadarWorks.Elements.Signal
             using (var textBrush = Color.Black.SolidBrush(rt))
             {
                 layout.TextAlignment = TextAlignment.Center;
-                rt.DrawTextLayout(new Point2F(scr.X - 50, scr.Y - 40), layout, textBrush);
+                //rt.DrawTextLayout(new Point2F(scr.X - 50, scr.Y - 40), layout, textBrush);
+                rt.DrawTextLayout(scr.Move(-50, -40).ToPoint2F(), layout, textBrush);
             }
         }
 
